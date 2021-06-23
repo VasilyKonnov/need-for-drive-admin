@@ -1,0 +1,24 @@
+.wrap {
+  margin-bottom: 15px;
+}
+.label {
+  font-size: 11px;
+  line-height: 11px;
+  color: #495057;
+  margin-bottom: 9px;
+  display: block;
+}
+.input {
+  border: 0.5px solid #becad6;
+  box-sizing: border-box;
+  border-radius: 3px;
+  height: 29px;
+  width: 100%;
+  input {
+    text-indent: 11px;
+    font-family: Helvetica;
+    font-size: 11px;
+    line-height: 11px;
+    color: #3d5170;
+  }
+}

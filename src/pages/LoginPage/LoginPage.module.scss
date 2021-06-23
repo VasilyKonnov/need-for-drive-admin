@@ -1,0 +1,46 @@
+.layout {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  background: #f5f6f8;
+}
+
+.wrapForm {
+  margin-top: 167px;
+  width: 377px;
+}
+.title {
+  text-align: center;
+  color: #3d5170;
+  margin-top: 0;
+  margin-bottom: 35px;
+  font-size: 17px;
+}
+.wrapLogo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 16px;
+  span {
+    font-size: 24px;
+    color: #3d5170;
+    display: inline-block;
+    margin-left: 12px;
+  }
+}
+
+.footerForm {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .btnSubmit {
+    width: 110px;
+    font-size: 12px;
+  }
+  .requestAccess {
+    color: #007bff;
+    font-size: 11px;
+    display: block;
+  }
+}
