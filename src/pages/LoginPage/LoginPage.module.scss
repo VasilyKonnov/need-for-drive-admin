@@ -7,8 +7,9 @@
 }
 
 .wrapForm {
-  margin-top: 167px;
-  width: 377px;
+  margin-top: 20vh;
+  width: 100%;
+  max-width: 320px;
 }
 .title {
   text-align: center;
@@ -42,5 +43,17 @@
     color: #007bff;
     font-size: 11px;
     display: block;
+  }
+}
+
+@media screen and (min-width: '768px') {
+  .footerForm {
+    .btnSubmit {
+      width: 110px;
+    }
+  }
+  .wrapForm {
+    margin-top: 167px;
+    max-width: 377px;
   }
 }
