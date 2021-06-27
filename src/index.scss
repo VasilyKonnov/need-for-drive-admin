@@ -5,9 +5,16 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: #f5f6f8;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+.admin-page-title {
+  margin: 0 0 30px;
+  color: #3d5170;
+  font-family: Helvetica;
+  font-size: 29px;
 }

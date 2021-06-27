@@ -1,5 +1,6 @@
 export type TButtonPrimary = {
-  handlerClick?: () => void | null
+  onClick?: () => void
   children?: any
   className?: string
+  disabled?: boolean
 }

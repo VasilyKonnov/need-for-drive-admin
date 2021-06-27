@@ -1,1 +1,1 @@
-export { default as fetchAxios } from './api'
+export { authAxios, updateToken } from './api'

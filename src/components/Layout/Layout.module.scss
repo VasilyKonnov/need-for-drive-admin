@@ -1,0 +1,180 @@
+.container {
+  width: 100%;
+  flex-wrap: initial !important;
+}
+.sidebar {
+  display: none;
+}
+.pageContent {
+  width: 100%;
+  background: transparent;
+  z-index: 0;
+}
+
+.sidebarHeader {
+  height: 68px;
+  border-bottom: solid 1px #e1e5eb;
+  display: flex;
+  padding-left: 55px;
+  align-items: center;
+  .logoWrap {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    img {
+      width: 22px;
+      height: 22px;
+      margin-right: 7px;
+    }
+    span {
+      color: #3d5170;
+      font-size: 16px;
+      font-family: Helvetica;
+    }
+  }
+}
+
+header {
+  box-shadow: 0px 2.5px 9.5px rgba(90, 97, 105, 0.12);
+  background: #fff;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  .search {
+    width: 100%;
+    padding-left: 10px;
+    box-sizing: border-box;
+  }
+  .features {
+    display: flex;
+    height: 100%;
+    .notificationWrap {
+      height: 100%;
+      width: 20px;
+      min-width: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .avatarWrap {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      justify-content: end;
+      align-items: center;
+      .avatar {
+        margin-left: 10px;
+        margin-right: 10px;
+      }
+      .select {
+        display: none;
+      }
+      .mobileMenu {
+        display: block;
+        margin-left: 5px;
+      }
+      .nameAdmin {
+        display: none;
+      }
+    }
+  }
+}
+
+.exitBtn {
+  width: 100%;
+  text-align: left;
+  padding-left: 30px !important;
+  height: 58px;
+  border-bottom: solid 1px #e1e5eb !important;
+  border-radius: 0 !important;
+  span {
+    justify-content: start;
+    text-transform: initial;
+    color: #3d5170;
+    font-size: 15px;
+    font-family: Helvetica;
+    span {
+      color: #cacedb;
+      margin-right: 13px;
+    }
+  }
+}
+
+.mobileMenuList {
+  display: block;
+}
+
+.menuWrap {
+  width: 270px;
+}
+.content {
+  width: 100%;
+  height: 100%;
+  padding: 27px;
+  box-sizing: border-box;
+}
+
+@media screen and (min-width: 768px) {
+  header {
+    height: 68px;
+    .search {
+      width: 100%;
+      padding-left: 10px;
+    }
+    .features {
+      width: 287px;
+      min-width: 287px;
+      .notificationWrap {
+        width: 68px;
+        min-width: 68px;
+        border-left: solid 1px #cacedb;
+        border-right: solid 1px #cacedb;
+      }
+      .avatarWrap {
+        .avatar {
+          margin-left: 25px;
+          margin-right: 13px;
+        }
+        .select {
+          margin-left: 26px;
+        }
+      }
+      .nameAdmin {
+        display: block;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .mobileMenuList {
+    display: none;
+  }
+  header {
+    .features {
+      .avatarWrap {
+        .select {
+          display: block;
+        }
+        .mobileMenu {
+          display: none;
+        }
+      }
+    }
+  }
+
+  .sidebar {
+    display: block;
+    background: #ffffff;
+    box-shadow: 0px 1px 75px rgba(90, 97, 105, 0.11),
+      0px 2px 4px rgba(90, 97, 105, 0.12), 0px 7.5px 11px rgba(90, 97, 105, 0.1),
+      0px 3.5px 17.5px rgba(165, 182, 201, 0.1);
+    height: 100vh;
+    width: 100%;
+    max-width: 285px;
+    z-index: 1;
+  }
+}
+
+@media screen and (min-width: 1439px) {
+}

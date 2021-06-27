@@ -1,10 +1,24 @@
 import axios from 'axios'
+import { xApiFactory, secret, apiUrl, routes } from '../../constans/constans'
 
-const fetchAxios = axios.create({
-  baseURL: 'https://api-factory.simbirsoft1.com/api/',
+const authAxios = axios.create({
+  baseURL: apiUrl,
   headers: {
-    'X-Api-Factory-Application-Id': '5e25c641099b810b946c5d5b',
+    'X-Api-Factory-Application-Id': xApiFactory,
   },
 })
 
-export default fetchAxios
+authAxios.interceptors.request.use((config) => ({
+  ...config,
+  data: {
+    ...config.data,
+    client_secret: secret,
+    client_id: '111111',
+  },
+}))
+
+const updateToken = (requestBody: any) => {
+  authAxios.post(routes.REFRESH, requestBody)
+}
+
+export { authAxios, updateToken }

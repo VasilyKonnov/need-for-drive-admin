@@ -3,4 +3,5 @@ export type TInputVsLabel = {
   classInput?: string
   label?: any
   id: string
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }

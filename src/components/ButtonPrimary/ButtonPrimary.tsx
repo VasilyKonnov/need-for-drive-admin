@@ -11,23 +11,31 @@ const useStyles = makeStyles({
     '&:hover': {
       background: '#004DFF',
     },
+    '&:disabled': {
+      background: '#F5F6F8',
+    },
   },
 })
 
 export const ButtonPrimary: React.FC<TButtonPrimary> = ({
-  handlerClick,
+  onClick,
   children,
   className,
+  disabled,
 }) => {
   const classes = useStyles()
   const classNameButton = classNames(classes.button, className ? className : '')
-  if (handlerClick) {
+  if (onClick) {
     return (
-      <Button onClick={handlerClick} className={classNameButton}>
+      <Button disabled={disabled} onClick={onClick} className={classNameButton}>
         {children}
       </Button>
     )
   } else {
-    return <Button className={classNameButton}>{children}</Button>
+    return (
+      <Button disabled={disabled} className={classNameButton}>
+        {children}
+      </Button>
+    )
   }
 }

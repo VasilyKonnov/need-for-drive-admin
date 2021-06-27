@@ -1,0 +1,36 @@
+.menu {
+  a {
+    text-decoration: none;
+    .menuItem {
+      width: 100%;
+      text-align: left;
+      padding-left: 30px;
+      height: 58px;
+      border-bottom: solid 1px #e1e5eb;
+      border-radius: 0;
+      span {
+        justify-content: start;
+        text-transform: initial;
+        color: #3d5170;
+        font-size: 15px;
+        font-family: Helvetica;
+        span {
+          color: #cacedb;
+          margin-right: 13px;
+        }
+      }
+    }
+    &.active {
+      .menuItem {
+        border-left: solid 4px #007bff;
+        padding-left: 26px;
+        span {
+          color: #007bff;
+          span {
+            color: #007bff;
+          }
+        }
+      }
+    }
+  }
+}

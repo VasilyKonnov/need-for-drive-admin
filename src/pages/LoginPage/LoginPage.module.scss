@@ -46,6 +46,14 @@
   }
 }
 
+.authError {
+  background: #fff4e5;
+  padding: 5px;
+  border-radius: 4px;
+  color: rgb(102, 60, 0);
+  text-align: center;
+}
+
 @media screen and (min-width: '768px') {
   .footerForm {
     .btnSubmit {

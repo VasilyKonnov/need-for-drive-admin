@@ -8,6 +8,7 @@ export const InputVsLabel: React.FC<TInputVsLabel> = ({
   classInput,
   label,
   id,
+  onChange,
 }) => {
   const classesLabel = classNames(classLabel ? classLabel : '', styles.label)
   const classesInput = classNames(classInput ? classInput : '', styles.input)
@@ -16,7 +17,7 @@ export const InputVsLabel: React.FC<TInputVsLabel> = ({
       <label htmlFor={id} className={classesLabel}>
         {label}
       </label>
-      <InputBase id={id} className={classesInput} />
+      <InputBase id={id} className={classesInput} onChange={onChange} />
     </div>
   )
 }
