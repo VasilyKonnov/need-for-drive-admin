@@ -22,18 +22,28 @@ export const ButtonPrimary: React.FC<TButtonPrimary> = ({
   children,
   className,
   disabled,
+  type,
 }) => {
   const classes = useStyles()
   const classNameButton = classNames(classes.button, className ? className : '')
   if (onClick) {
     return (
-      <Button disabled={disabled} onClick={onClick} className={classNameButton}>
+      <Button
+        type={type ? type : 'button'}
+        disabled={disabled}
+        onClick={onClick}
+        className={classNameButton}
+      >
         {children}
       </Button>
     )
   } else {
     return (
-      <Button disabled={disabled} className={classNameButton}>
+      <Button
+        type={type ? type : 'button'}
+        disabled={disabled}
+        className={classNameButton}
+      >
         {children}
       </Button>
     )

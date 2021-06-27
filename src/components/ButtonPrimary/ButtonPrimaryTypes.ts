@@ -3,4 +3,5 @@ export type TButtonPrimary = {
   children?: any
   className?: string
   disabled?: boolean
+  type?: 'button' | 'reset' | 'submit' | undefined
 }

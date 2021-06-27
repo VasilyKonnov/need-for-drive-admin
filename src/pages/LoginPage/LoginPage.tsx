@@ -55,7 +55,8 @@ export const LoginPage = () => {
     }
   }, [history])
 
-  const handlerAuth = () => {
+  const handlerAuth = (e: { preventDefault: () => void }) => {
+    e.preventDefault()
     if (userName && userLogin) {
       userApi
         .auth({ username: userName, password: userLogin })
@@ -92,7 +93,7 @@ export const LoginPage = () => {
         </div>
         <Card className={classes.root}>
           <p className={styles.title}>Вход</p>
-          <form>
+          <form onSubmit={handlerAuth}>
             <InputVsLabel
               id="inputMail"
               label="Почта"
@@ -101,6 +102,7 @@ export const LoginPage = () => {
             <InputVsLabel
               id="inputPass"
               label="Пароль"
+              type="password"
               onChange={handlerUserLogin}
             />
             <div className={styles.footerForm}>
@@ -108,7 +110,7 @@ export const LoginPage = () => {
               <ButtonPrimary
                 disabled={userName && userLogin ? false : true}
                 className={styles.btnSubmit}
-                onClick={handlerAuth}
+                type={'submit'}
               >
                 Войти
               </ButtonPrimary>
