@@ -4,7 +4,7 @@ const apiUrl = 'https://api-factory.simbirsoft1.com/api/'
 const routes = {
   LOGIN: '/auth/login',
   REFRESH: '/auth/refresh',
-  ORDER: 'db/order',
+  ORDERS: 'db/orders',
   CITY: 'db/city',
   POINT: 'db/point',
   RATE: 'db/rate',

@@ -1,7 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit'
 import thunk from 'redux-thunk'
+import { userReducer } from './user'
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+    user: userReducer,
+  },
   middleware: [thunk],
 })
 

@@ -3,6 +3,12 @@ import { ButtonPrimary, InputVsLabel } from '../../components'
 import { useHistory } from 'react-router-dom'
 import { useState, useCallback, useEffect } from 'react'
 import userApi from '../../utils/api/user'
+import {
+  getAccessToken,
+  setAccessRefreshTokens,
+} from '../../helpers/cookieHelper'
+import { useDispatch } from 'react-redux'
+import { userAction } from '../../store/user/userAction'
 import logo from '../../assets/image/LogoIcon.svg'
 import { makeStyles } from '@material-ui/core/styles'
 import styles from './LoginPage.module.scss'
@@ -19,6 +25,7 @@ const useStyles = makeStyles({
 export const LoginPage = () => {
   const classes = useStyles()
   const history = useHistory()
+  const dispatch = useDispatch()
 
   const [userName, setUserName] = useState<null | string>(null)
   const [userLogin, setUserLogin] = useState<null | string>(null)
@@ -41,15 +48,16 @@ export const LoginPage = () => {
     [setUserLogin],
   )
 
-  // useEffect(() => {
-  //   if (errorLogin) {
-
-  //   }
-  // }, [errorLogin])
+  useEffect(() => {
+    const token = getAccessToken()
+    if (token) {
+      history.push('./orders')
+    }
+  }, [history])
 
   const handlerAuth = () => {
     if (userName && userLogin) {
-      const auth = userApi
+      userApi
         .auth({ username: userName, password: userLogin })
         .catch(function (error) {
           if (error.response) {
@@ -60,8 +68,15 @@ export const LoginPage = () => {
             console.log('Error', error.message)
           }
         })
-        .then((response) => {
+        .then((response: any) => {
           if (response) {
+            console.log('response - ', response.data)
+            setAccessRefreshTokens(
+              response.data.access_token,
+              response.data.refresh_token,
+              response.data.expires_in,
+            )
+            dispatch(userAction.getToken(response.data.access_token))
             history.push('/orders')
           }
         })
