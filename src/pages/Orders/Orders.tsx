@@ -1,10 +1,10 @@
 import { Layout } from '../../components'
-import styles from './Orders.module.scss'
+import { OrdersView } from './OrdersView'
 
 export const Orders: React.FC = () => {
   return (
     <Layout>
-      <h1 className="admin-page-title">Заказы</h1>
+      <OrdersView />
     </Layout>
   )
 }

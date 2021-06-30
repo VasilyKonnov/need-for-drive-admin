@@ -16,14 +16,39 @@ export const Menu: React.FC<TMenu> = ({ className }) => {
           Карточка автомобиля
         </Button>
       </NavLink>
+      <NavLink to="/orders" exact activeClassName={styles.active}>
+        <Button startIcon={<NoteAddIcon />} className={styles.menuItem}>
+          Заказы
+        </Button>
+      </NavLink>
       <NavLink to="/list-cars" exact activeClassName={styles.active}>
         <Button startIcon={<VerticalSplitIcon />} className={styles.menuItem}>
           Список авто
         </Button>
       </NavLink>
-      <NavLink to="/orders" exact activeClassName={styles.active}>
-        <Button startIcon={<NoteAddIcon />} className={styles.menuItem}>
-          Заказы
+
+      <NavLink to="/list-cars-category" exact activeClassName={styles.active}>
+        <Button startIcon={<VerticalSplitIcon />} className={styles.menuItem}>
+          Категории машин
+        </Button>
+      </NavLink>
+      <NavLink
+        to="/list-cities-and-streets"
+        exact
+        activeClassName={styles.active}
+      >
+        <Button startIcon={<VerticalSplitIcon />} className={styles.menuItem}>
+          Города и точки выдачи
+        </Button>
+      </NavLink>
+      <NavLink to="/list-order-status" exact activeClassName={styles.active}>
+        <Button startIcon={<VerticalSplitIcon />} className={styles.menuItem}>
+          Статусы закозов
+        </Button>
+      </NavLink>
+      <NavLink to="/list-tariffs" exact activeClassName={styles.active}>
+        <Button startIcon={<VerticalSplitIcon />} className={styles.menuItem}>
+          Тарифов и типы тарифов
         </Button>
       </NavLink>
     </div>
