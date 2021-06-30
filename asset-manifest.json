@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/need-for-drive-admin/static/css/main.3f8d7048.chunk.css",
-    "main.js": "/need-for-drive-admin/static/js/main.a1fa413f.chunk.js",
-    "main.js.map": "/need-for-drive-admin/static/js/main.a1fa413f.chunk.js.map",
-    "runtime-main.js": "/need-for-drive-admin/static/js/runtime-main.ff40f0a0.js",
-    "runtime-main.js.map": "/need-for-drive-admin/static/js/runtime-main.ff40f0a0.js.map",
-    "static/js/2.4237d446.chunk.js": "/need-for-drive-admin/static/js/2.4237d446.chunk.js",
-    "static/js/2.4237d446.chunk.js.map": "/need-for-drive-admin/static/js/2.4237d446.chunk.js.map",
-    "static/js/3.3c541489.chunk.js": "/need-for-drive-admin/static/js/3.3c541489.chunk.js",
-    "static/js/3.3c541489.chunk.js.map": "/need-for-drive-admin/static/js/3.3c541489.chunk.js.map",
+    "main.css": "/need-for-drive-admin/static/css/main.60e9234d.chunk.css",
+    "main.js": "/need-for-drive-admin/static/js/main.61555988.chunk.js",
+    "main.js.map": "/need-for-drive-admin/static/js/main.61555988.chunk.js.map",
+    "runtime-main.js": "/need-for-drive-admin/static/js/runtime-main.ebea6b60.js",
+    "runtime-main.js.map": "/need-for-drive-admin/static/js/runtime-main.ebea6b60.js.map",
+    "static/js/2.8f4d4f39.chunk.js": "/need-for-drive-admin/static/js/2.8f4d4f39.chunk.js",
+    "static/js/2.8f4d4f39.chunk.js.map": "/need-for-drive-admin/static/js/2.8f4d4f39.chunk.js.map",
+    "static/js/3.69f42fa0.chunk.js": "/need-for-drive-admin/static/js/3.69f42fa0.chunk.js",
+    "static/js/3.69f42fa0.chunk.js.map": "/need-for-drive-admin/static/js/3.69f42fa0.chunk.js.map",
     "index.html": "/need-for-drive-admin/index.html",
-    "static/css/main.3f8d7048.chunk.css.map": "/need-for-drive-admin/static/css/main.3f8d7048.chunk.css.map",
-    "static/js/2.4237d446.chunk.js.LICENSE.txt": "/need-for-drive-admin/static/js/2.4237d446.chunk.js.LICENSE.txt",
+    "static/css/main.60e9234d.chunk.css.map": "/need-for-drive-admin/static/css/main.60e9234d.chunk.css.map",
+    "static/js/2.8f4d4f39.chunk.js.LICENSE.txt": "/need-for-drive-admin/static/js/2.8f4d4f39.chunk.js.LICENSE.txt",
     "static/media/LogoIcon.42a15795.svg": "/need-for-drive-admin/static/media/LogoIcon.42a15795.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.ff40f0a0.js",
-    "static/js/2.4237d446.chunk.js",
-    "static/css/main.3f8d7048.chunk.css",
-    "static/js/main.a1fa413f.chunk.js"
+    "static/js/runtime-main.ebea6b60.js",
+    "static/js/2.8f4d4f39.chunk.js",
+    "static/css/main.60e9234d.chunk.css",
+    "static/js/main.61555988.chunk.js"
   ]
 }
