@@ -1,0 +1,38 @@
+.MuiFormControl-root.CustomSelect {
+  min-width: 110px;
+  margin-right: 15px;
+  .MuiInputLabel-outlined.MuiInputLabel-shrink {
+    display: none;
+  }
+  .MuiInputLabel-outlined {
+    font-size: 11px;
+    line-height: 11px;
+  }
+  .MuiOutlinedInput-input {
+    padding: 5.5px 14px;
+  }
+  .MuiInputLabel-formControl {
+    transform: translate(14px, 10px) scale(1);
+  }
+  .MuiOutlinedInput-input {
+    font-size: 12px;
+  }
+  .MuiSvgIcon-root {
+    font-size: 13px;
+    padding-right: 10px;
+  }
+  .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+    border-color: #007bff;
+    border-width: 1px;
+  }
+
+  // .MuiInputBase-root {
+  //   font-size: 11px;
+  // }
+  // .MuiOutlinedInput-input {
+  //   padding: 8.5px 15px;
+  // }
+  // .MuiSvgIcon-root {
+  //   font-size: 17px;
+  // }
+}
