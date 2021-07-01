@@ -1,6 +1,9 @@
 .MuiFormControl-root.CustomSelect {
-  min-width: 110px;
-  margin-right: 15px;
+  min-width: 200px;
+  width: 100%;
+  max-width: 100%;
+  margin-right: 0px;
+  margin-bottom: 15px;
   .MuiInputLabel-outlined.MuiInputLabel-shrink {
     display: none;
   }
@@ -25,14 +28,19 @@
     border-color: #007bff;
     border-width: 1px;
   }
-
-  // .MuiInputBase-root {
-  //   font-size: 11px;
-  // }
-  // .MuiOutlinedInput-input {
-  //   padding: 8.5px 15px;
-  // }
-  // .MuiSvgIcon-root {
-  //   font-size: 17px;
-  // }
+}
+@media screen and(min-width: '485px') {
+  .MuiFormControl-root.CustomSelect {
+    min-width: 200px;
+    max-width: 200px;
+    margin-right: 15px;
+  }
+}
+@media screen and (min-width: '767px') {
+  .MuiFormControl-root.CustomSelect {
+    min-width: 110px;
+    max-width: 110px;
+    margin-right: 15px;
+    margin-bottom: 0px;
+  }
 }

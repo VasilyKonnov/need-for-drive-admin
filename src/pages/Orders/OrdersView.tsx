@@ -1,6 +1,10 @@
 import { ButtonPrimary, Select } from '../../components'
 import { useState } from 'react'
+import ReactPaginate from 'react-paginate'
+import FastRewindIcon from '@material-ui/icons/FastRewind'
+import FastForwardIcon from '@material-ui/icons/FastForward'
 import styles from './Orders.module.scss'
+import { OrderCard } from '../../components/OrderCard'
 
 const data = ['раз', 'два', 'три', 'четыре', 'пять']
 
@@ -16,7 +20,7 @@ export const OrdersView: React.FC = () => {
       <h1 className="admin-page-title">Заказы</h1>
       <div className="content-wrap">
         <div className="content-wrap--header">
-          <div>
+          <div className="select-wrap">
             <Select
               label="Модель"
               labelId="labelId-1"
@@ -42,9 +46,22 @@ export const OrdersView: React.FC = () => {
           <ButtonPrimary>Применить</ButtonPrimary>
         </div>
         <div className="content-wrap--body">
-          <p>content</p>
+          <OrderCard />
         </div>
-        <div className="content-wrap--footer"></div>
+        <div className="content-wrap--footer">
+          <ReactPaginate
+            previousLabel={<FastRewindIcon />}
+            nextLabel={<FastForwardIcon />}
+            breakLabel={'...'}
+            breakClassName={'break-me'}
+            pageCount={50}
+            marginPagesDisplayed={1}
+            pageRangeDisplayed={3}
+            onPageChange={(e: any) => console.log(e)}
+            containerClassName={'pagination'}
+            activeClassName={'active'}
+          />
+        </div>
       </div>
     </>
   )
