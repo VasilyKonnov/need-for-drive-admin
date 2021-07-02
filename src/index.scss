@@ -36,6 +36,8 @@ code {
 }
 .content-wrap--body {
   padding: 15px 20px;
+  max-height: 500px;
+  overflow: auto;
 }
 
 .content-wrap--footer {
@@ -93,5 +95,10 @@ code {
     align-items: center;
     height: 60px;
     border-bottom: solid 1px #e0e2e8;
+  }
+  .content-wrap--body {
+    height: calc(100vh - 407px);
+    max-height: 700px;
+    overflow: auto;
   }
 }

@@ -107,6 +107,12 @@ export const LayoutView: React.FC<TLayoutView> = ({
             </div>
           </header>
           <div className={styles.content}>{children}</div>
+          <footer>
+            <Link className={styles.footerLink} to="/">
+              Главная страница
+            </Link>
+            <p className={styles.copyRight}>Copyright © 2020 Simbirsoft</p>
+          </footer>
         </Grid>
       </Grid>
     </>

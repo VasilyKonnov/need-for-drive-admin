@@ -1,14 +1,145 @@
 .cardWrap {
   display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  color: #121212;
+  margin-bottom: 25px;
   .car {
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 15px;
+    .imgWrap {
+      margin-right: 16px;
+      margin-bottom: 10px;
+    }
+    .carInfo {
+      p {
+        font-size: 13px;
+        color: #868e96;
+        margin: 0;
+        margin-bottom: 2px;
+        b {
+          color: #121212;
+        }
+      }
+    }
+  }
+  .additionally {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 15px;
+    p {
+      font-size: 10px;
+      color: #868e96;
+      margin: 0;
+      margin-bottom: 2px;
+      position: relative;
+      padding-left: 22.5px;
+      &::before {
+        content: '';
+        display: block;
+        position: absolute;
+        width: 15px;
+        height: 15px;
+        left: 1px;
+        top: 0px;
+        background-repeat: no-repeat !important;
+        background-position: center !important;
+        background: url('../../assets/image/noCheckIcon.svg');
+      }
+      &.active {
+        &::before {
+          background: url('../../assets/image/checkboxIcon.svg');
+        }
+      }
+    }
+  }
+  .price {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: 500;
+    font-family: Helvetica;
+    margin-bottom: 15px;
+  }
+  .buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    button {
+      background-color: transparent !important;
+      outline: none;
+      border: solid 1px #becad6;
+      margin: 0;
+      padding: 5.5px 16px 5.5px 19.5px;
+      text-align: center;
+      color: #5a6169;
+      font-size: 11px;
+      position: relative;
+      &::before {
+        content: '';
+        display: block;
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        left: 8px;
+        top: 7px;
+        background-repeat: no-repeat !important;
+        background-position: center !important;
+      }
+    }
+    button.btnDone {
+      border-radius: 4px 0px 0px 4px;
+      &::before {
+        background: url('../../assets/image/checkIcon.svg');
+      }
+    }
+    button.btnUndo {
+      // border-left: 0;
+      // border-right: 0;
+      &::before {
+        background: url('../../assets/image/cancelIcon.svg');
+      }
+    }
+    button.btnChange {
+      border-radius: 0px 4px 4px 0px;
+      &::before {
+        background: url('../../assets/image/iconDots.svg');
+      }
+    }
+  }
+}
+@media screen and(min-width: 767px) {
+  .cardWrap {
+    flex-direction: row;
+    .car {
+      flex-direction: row;
+    }
+    .buttons {
+      flex-direction: column;
+    }
   }
 }
 
-@media screen and(min-width: 767px) {
+@media screen and(min-width: 1023px) {
 }
 
-@media screen and(min-width: 1023px) {
+@media screen and(min-width: 1200px) {
+  .cardWrap {
+    .buttons {
+      flex-direction: row;
+      button.btnUndo {
+        border-left: 0;
+        border-right: 0;
+      }
+    }
+  }
 }
 
 @media screen and(min-width: 1439px) {

@@ -1,5 +1,5 @@
-import styles from './OrderCard.module.scss'
 import imgCar from '../../assets/image/car-stab.png'
+import styles from './OrderCard.module.scss'
 
 export const OrderCard = () => {
   return (
@@ -9,16 +9,28 @@ export const OrderCard = () => {
           <img src={imgCar} alt="Картинка машины" />
         </div>
         <div className={styles.carInfo}>
-          <p>ELANTRA в Ульяновск, Нариманова 42</p>
+          <p>
+            <b>ELANTRA</b> в <b>Ульяновск</b>, Нариманова 42
+          </p>
           <p>11.05.2020, 14:01 — 13.05.2020, 20:20</p>
-          <p>Цвет: Голубой</p>
+          <p>
+            Цвет: <b>Голубой</b>
+          </p>
         </div>
       </div>
-      <div className={styles.additionally}></div>
+      <div className={styles.additionally}>
+        <p className={styles.active}>Полный бак</p>
+        <p>Детское кресло</p>
+        <p>Правый руль</p>
+      </div>
       <div className={styles.price}>
         <span>4 300 ₽</span>
       </div>
-      <div className={styles.buttons}></div>
+      <div className={styles.buttons}>
+        <button className={styles.btnDone}>Готово</button>
+        <button className={styles.btnUndo}>Отмена</button>
+        <button className={styles.btnChange}>Изменить</button>
+      </div>
     </div>
   )
 }

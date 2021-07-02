@@ -3,9 +3,8 @@ import FastRewindIcon from '@material-ui/icons/FastRewind'
 import FastForwardIcon from '@material-ui/icons/FastForward'
 import ReactPaginate from 'react-paginate'
 import { useState } from 'react'
-
+import { CarsTable } from '../../components'
 import styles from './CarList.module.scss'
-import { OrderCard } from '../../components/OrderCard'
 
 const data = ['раз', 'два', 'три', 'четыре', 'пять']
 
@@ -33,7 +32,7 @@ export const CarListView: React.FC = () => {
           <ButtonPrimary>Применить</ButtonPrimary>
         </div>
         <div className="content-wrap--body">
-          <OrderCard />
+          <CarsTable />
         </div>
         <div className="content-wrap--footer">
           <ReactPaginate

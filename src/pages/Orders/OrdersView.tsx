@@ -47,6 +47,13 @@ export const OrdersView: React.FC = () => {
         </div>
         <div className="content-wrap--body">
           <OrderCard />
+          <OrderCard />
+          <OrderCard />
+          <OrderCard />
+          <OrderCard />
+          <OrderCard />
+          <OrderCard />
+          <OrderCard />
         </div>
         <div className="content-wrap--footer">
           <ReactPaginate
