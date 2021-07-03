@@ -44,34 +44,39 @@ export const CarsTable = () => {
   const classes = useStyles()
 
   return (
-    <TableContainer component={Paper} className={classes.table}>
+    <TableContainer className={classes.table}>
       <Table stickyHeader size="small" aria-label="sticky table">
         <TableHead>
           <TableRow>
             <TableCell>
-              <ButtonPrimary>
+              <ButtonPrimary className={'buttonInTable'}>
                 <AddIcon />
               </ButtonPrimary>
             </TableCell>
-            <TableCell align="right">Модель</TableCell>
-            <TableCell align="right">Изображение</TableCell>
-            <TableCell align="right">Мин. цена</TableCell>
-            <TableCell align="right">Макс. цена</TableCell>
-            <TableCell align="right">Номер</TableCell>
-            <TableCell align="right">Описание</TableCell>
-            <TableCell align="right">Категория</TableCell>
+            <TableCell>Модель</TableCell>
+            <TableCell>Изображение</TableCell>
+            <TableCell>Мин. цена</TableCell>
+            <TableCell>Макс. цена</TableCell>
+            <TableCell>Номер</TableCell>
+            <TableCell>Описание</TableCell>
+            <TableCell>Категория</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row) => (
             <TableRow key={row.name}>
               <TableCell component="th" scope="row">
-                {row.name}
+                <ButtonPrimary className={'buttonInTable'}>
+                  <CreateIcon />
+                </ButtonPrimary>
               </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
+              <TableCell>{row.calories}</TableCell>
+              <TableCell>{row.fat}</TableCell>
+              <TableCell>{row.carbs}</TableCell>
+              <TableCell>{row.protein}</TableCell>
+              <TableCell>{row.carbs}</TableCell>
+              <TableCell>{row.protein}</TableCell>
+              <TableCell>{row.protein}</TableCell>
             </TableRow>
           ))}
         </TableBody>

@@ -3,8 +3,8 @@ import { useState } from 'react'
 import ReactPaginate from 'react-paginate'
 import FastRewindIcon from '@material-ui/icons/FastRewind'
 import FastForwardIcon from '@material-ui/icons/FastForward'
-import styles from './Orders.module.scss'
 import { OrderCard } from '../../components/OrderCard'
+import styles from './Orders.module.scss'
 
 const data = ['раз', 'два', 'три', 'четыре', 'пять']
 

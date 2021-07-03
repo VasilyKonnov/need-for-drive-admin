@@ -24,6 +24,11 @@ code {
     0px 2px 4px rgba(90, 97, 105, 0.12), 0px 5px 5px rgba(90, 97, 105, 0.06),
     0px 3.5px 35px rgba(90, 97, 105, 0.1);
   border-radius: 9px;
+  overflow: hidden;
+}
+.content-wrap.withOutHeaderFooter {
+  height: calc(100vh - 280px);
+  overflow: auto;
 }
 .content-wrap--header {
   display: flex;
@@ -84,6 +89,25 @@ code {
       }
     }
   }
+}
+
+.buttonInTable {
+  min-width: 25px !important;
+  height: 25px;
+  font-size: 15px;
+  .MuiSvgIcon-root {
+    font-size: 17px;
+  }
+}
+
+.gridContainer {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  margin: 0 !important;
+}
+
+.gridItem {
+  box-sizing: border-box !important;
 }
 
 @media screen and(min-width: '767px') {

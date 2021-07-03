@@ -8,6 +8,7 @@ import {
   CitiesAndStreetsList,
   OrderStatus,
   Tariffs,
+  ErrorPage,
 } from './pages'
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
       <Route path="/list-cities-and-streets" component={CitiesAndStreetsList} />
       <Route path="/list-order-status" component={OrderStatus} />
       <Route path="/list-tariffs" component={Tariffs} />
+      <Route path="/error-500" component={ErrorPage} />
     </Switch>
   )
 }

@@ -55,6 +55,7 @@ footer {
   }
   .copyRight {
     color: #818ea3;
+    text-align: right;
   }
 }
 
@@ -134,7 +135,7 @@ header {
 .content {
   padding: 27px 5px;
   width: 100%;
-  height: calc(100% - 258px);
+  height: calc(100vh - 138px);
   justify-content: center;
   box-sizing: border-box;
 }

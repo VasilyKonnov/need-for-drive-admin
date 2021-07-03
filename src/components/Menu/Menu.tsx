@@ -51,6 +51,11 @@ export const Menu: React.FC<TMenu> = ({ className }) => {
           Тарифов и типы тарифов
         </Button>
       </NavLink>
+      <NavLink to="/error-500" exact activeClassName={styles.active}>
+        <Button startIcon={<VerticalSplitIcon />} className={styles.menuItem}>
+          Пример ошибки 500
+        </Button>
+      </NavLink>
     </div>
   )
 }
