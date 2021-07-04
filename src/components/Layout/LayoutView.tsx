@@ -40,7 +40,7 @@ export const LayoutView: React.FC<TLayoutView> = ({
           </div>
           <Menu />
         </Grid>
-        <Grid className={styles.pageContent}>
+        <Grid item className={styles.pageContent}>
           <header>
             <div className={styles.search}>
               <IconButton className={classes.searchBtn}>
