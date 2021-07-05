@@ -20,7 +20,7 @@
         color: #868e96;
         margin: 0;
         margin-bottom: 2px;
-        b {
+        span {
           color: #121212;
         }
       }
@@ -95,20 +95,21 @@
       }
     }
     button.btnDone {
-      border-radius: 4px 0px 0px 4px;
+      margin-bottom: 3px;
+      border-radius: 4px;
       &::before {
         background: url('../../assets/image/checkIcon.svg');
       }
     }
     button.btnUndo {
-      // border-left: 0;
-      // border-right: 0;
+      margin-bottom: 3px;
+      border-radius: 4px;
       &::before {
         background: url('../../assets/image/cancelIcon.svg');
       }
     }
     button.btnChange {
-      border-radius: 0px 4px 4px 0px;
+      border-radius: 4px;
       &::before {
         background: url('../../assets/image/iconDots.svg');
       }
@@ -137,6 +138,16 @@
       button.btnUndo {
         border-left: 0;
         border-right: 0;
+        border-radius: 0;
+        margin-bottom: 0;
+      }
+      button.btnDone {
+        border-radius: 4px 0px 0px 4px;
+        margin-bottom: 0;
+      }
+
+      button.btnChange {
+        border-radius: 0px 4px 4px 0px;
       }
     }
   }

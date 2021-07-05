@@ -137,6 +137,7 @@ header {
   width: 100%;
   justify-content: center;
   box-sizing: border-box;
+  min-height: calc(100vh - 138px);
 }
 
 @media screen and (min-width: 767px) {

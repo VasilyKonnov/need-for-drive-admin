@@ -10,11 +10,11 @@ export const OrderCard = () => {
         </div>
         <div className={styles.carInfo}>
           <p>
-            <b>ELANTRA</b> в <b>Ульяновск</b>, Нариманова 42
+            <span>ELANTRA</span> в <span>Ульяновск</span>, Нариманова 42
           </p>
           <p>11.05.2020, 14:01 — 13.05.2020, 20:20</p>
           <p>
-            Цвет: <b>Голубой</b>
+            Цвет: <span>Голубой</span>
           </p>
         </div>
       </div>

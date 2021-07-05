@@ -45,8 +45,8 @@ export const CitiesAndStreetsListView: React.FC = () => {
   const classes = useStyles()
 
   return (
-    <Grid container spacing={3} className="gridContainer">
-      <Grid item xs={12} sm={6} className={'gridItem'}>
+    <Grid container className="gridContainer">
+      <Grid item xs={12} sm={6} className={'gridItem '}>
         <h2 className="admin-page-title">Города</h2>
         <div className="content-wrap withOutHeaderFooter">
           <TableContainer className={classes.table}>

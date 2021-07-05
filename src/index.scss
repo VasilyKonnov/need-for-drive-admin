@@ -25,6 +25,7 @@ code {
     0px 3.5px 35px rgba(90, 97, 105, 0.1);
   border-radius: 9px;
   overflow: hidden;
+  margin-bottom: 35px;
 }
 .content-wrap.withOutHeaderFooter {
   height: calc(100vh - 280px);
@@ -108,6 +109,16 @@ code {
 
 .gridItem {
   box-sizing: border-box !important;
+  padding: 0 !important;
+}
+
+@media screen and(min-width: '600px') {
+  .content-wrap {
+    margin-bottom: 0;
+  }
+  .gridItem {
+    padding: 12px !important;
+  }
 }
 
 @media screen and(min-width: '767px') {
@@ -125,4 +136,14 @@ code {
     max-height: 700px;
     overflow: auto;
   }
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+  background-color: #e0e0e0;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 5px;
 }

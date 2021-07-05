@@ -43,7 +43,7 @@ export const OrdersView: React.FC = () => {
               handlerChange={handlerModel}
             />
           </div>
-          <ButtonPrimary>Применить</ButtonPrimary>
+          <ButtonPrimary className={styles.prymaryBtn}>Применить</ButtonPrimary>
         </div>
         <div className="content-wrap--body">
           <OrderCard />
