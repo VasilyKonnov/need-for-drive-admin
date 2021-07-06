@@ -1,26 +1,29 @@
 {
   "files": {
-    "main.css": "/need-for-drive-admin/static/css/main.dad861a6.chunk.css",
-    "main.js": "/need-for-drive-admin/static/js/main.8762ba4d.chunk.js",
-    "main.js.map": "/need-for-drive-admin/static/js/main.8762ba4d.chunk.js.map",
-    "runtime-main.js": "/need-for-drive-admin/static/js/runtime-main.9a1a6228.js",
-    "runtime-main.js.map": "/need-for-drive-admin/static/js/runtime-main.9a1a6228.js.map",
-    "static/js/2.471c7992.chunk.js": "/need-for-drive-admin/static/js/2.471c7992.chunk.js",
-    "static/js/2.471c7992.chunk.js.map": "/need-for-drive-admin/static/js/2.471c7992.chunk.js.map",
-    "static/js/3.42013b19.chunk.js": "/need-for-drive-admin/static/js/3.42013b19.chunk.js",
-    "static/js/3.42013b19.chunk.js.map": "/need-for-drive-admin/static/js/3.42013b19.chunk.js.map",
+    "main.css": "/need-for-drive-admin/static/css/main.c0d3aa70.chunk.css",
+    "main.js": "/need-for-drive-admin/static/js/main.0f7d7944.chunk.js",
+    "main.js.map": "/need-for-drive-admin/static/js/main.0f7d7944.chunk.js.map",
+    "runtime-main.js": "/need-for-drive-admin/static/js/runtime-main.2e6bf94e.js",
+    "runtime-main.js.map": "/need-for-drive-admin/static/js/runtime-main.2e6bf94e.js.map",
+    "static/css/2.4bd8e119.chunk.css": "/need-for-drive-admin/static/css/2.4bd8e119.chunk.css",
+    "static/js/2.58ea472c.chunk.js": "/need-for-drive-admin/static/js/2.58ea472c.chunk.js",
+    "static/js/2.58ea472c.chunk.js.map": "/need-for-drive-admin/static/js/2.58ea472c.chunk.js.map",
+    "static/js/3.fdde167d.chunk.js": "/need-for-drive-admin/static/js/3.fdde167d.chunk.js",
+    "static/js/3.fdde167d.chunk.js.map": "/need-for-drive-admin/static/js/3.fdde167d.chunk.js.map",
     "index.html": "/need-for-drive-admin/index.html",
-    "static/css/main.dad861a6.chunk.css.map": "/need-for-drive-admin/static/css/main.dad861a6.chunk.css.map",
-    "static/js/2.471c7992.chunk.js.LICENSE.txt": "/need-for-drive-admin/static/js/2.471c7992.chunk.js.LICENSE.txt",
+    "static/css/2.4bd8e119.chunk.css.map": "/need-for-drive-admin/static/css/2.4bd8e119.chunk.css.map",
+    "static/css/main.c0d3aa70.chunk.css.map": "/need-for-drive-admin/static/css/main.c0d3aa70.chunk.css.map",
+    "static/js/2.58ea472c.chunk.js.LICENSE.txt": "/need-for-drive-admin/static/js/2.58ea472c.chunk.js.LICENSE.txt",
     "static/media/LogoIcon.42a15795.svg": "/need-for-drive-admin/static/media/LogoIcon.42a15795.svg",
     "static/media/OrderCard.module.scss": "/need-for-drive-admin/static/media/noCheckIcon.abc0c92f.svg",
     "static/media/car-stab.9b6f92c9.png": "/need-for-drive-admin/static/media/car-stab.9b6f92c9.png",
     "static/media/AddCar.module.scss": "/need-for-drive-admin/static/media/check.a990c35d.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.9a1a6228.js",
-    "static/js/2.471c7992.chunk.js",
-    "static/css/main.dad861a6.chunk.css",
-    "static/js/main.8762ba4d.chunk.js"
+    "static/js/runtime-main.2e6bf94e.js",
+    "static/css/2.4bd8e119.chunk.css",
+    "static/js/2.58ea472c.chunk.js",
+    "static/css/main.c0d3aa70.chunk.css",
+    "static/js/main.0f7d7944.chunk.js"
   ]
 }
