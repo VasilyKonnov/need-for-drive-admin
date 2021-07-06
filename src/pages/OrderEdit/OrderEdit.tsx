@@ -130,6 +130,7 @@ export const OrderEdit = () => {
               <div className="additionalServices">
                 <p className="additionalServices--title">Цвет</p>
                 <FormControlLabel
+                  className="LabelRadioBtn"
                   value="female"
                   control={
                     <Radio
@@ -144,6 +145,7 @@ export const OrderEdit = () => {
                   label="Синий"
                 />
                 <FormControlLabel
+                  className="LabelRadioBtn"
                   value="female"
                   control={
                     <Radio
@@ -158,6 +160,7 @@ export const OrderEdit = () => {
                   label="Красный"
                 />
                 <FormControlLabel
+                  className="LabelRadioBtn"
                   value="female"
                   control={
                     <Radio
@@ -172,6 +175,7 @@ export const OrderEdit = () => {
                   label="Зелёный"
                 />
                 <FormControlLabel
+                  className="LabelRadioBtn"
                   value="female"
                   control={
                     <Radio
