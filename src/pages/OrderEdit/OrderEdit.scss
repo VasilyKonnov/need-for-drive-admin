@@ -1,0 +1,20 @@
+.edit-order-footer {
+  justify-content: start;
+  .edit-order-footer--btn-primary {
+    margin-right: 15px;
+    font-size: 11px;
+  }
+  .edit-order-footer--btn-secondary {
+    font-size: 11px;
+  }
+}
+@media screen and(min-width: '1024px') {
+  .edit-order-footer {
+    .edit-order-footer--btn-primary {
+      width: 110px;
+    }
+    .edit-order-footer--btn-secondary {
+      width: 110px;
+    }
+  }
+}

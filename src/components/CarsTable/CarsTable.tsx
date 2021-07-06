@@ -10,6 +10,7 @@ import AddIcon from '@material-ui/icons/Add'
 import CreateIcon from '@material-ui/icons/Create'
 import styles from './CarList.module.scss'
 import { ButtonPrimary } from './../ButtonPrimary/ButtonPrimary'
+import { Link } from 'react-router-dom'
 
 const useStyles = makeStyles({
   table: {
@@ -49,9 +50,11 @@ export const CarsTable = () => {
         <TableHead>
           <TableRow>
             <TableCell>
-              <ButtonPrimary className={'buttonInTable'}>
-                <AddIcon />
-              </ButtonPrimary>
+              <Link to="/add-car">
+                <ButtonPrimary className={'buttonInTable'}>
+                  <AddIcon />
+                </ButtonPrimary>
+              </Link>
             </TableCell>
             <TableCell>Модель</TableCell>
             <TableCell>Изображение</TableCell>
@@ -66,9 +69,11 @@ export const CarsTable = () => {
           {rows.map((row) => (
             <TableRow key={row.name}>
               <TableCell component="th" scope="row">
-                <ButtonPrimary className={'buttonInTable'}>
-                  <CreateIcon />
-                </ButtonPrimary>
+                <Link to="/add-car">
+                  <ButtonPrimary className={'buttonInTable'}>
+                    <CreateIcon />
+                  </ButtonPrimary>
+                </Link>
               </TableCell>
               <TableCell>{row.calories}</TableCell>
               <TableCell>{row.fat}</TableCell>

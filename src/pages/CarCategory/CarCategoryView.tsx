@@ -8,7 +8,11 @@ import TableRow from '@material-ui/core/TableRow'
 import AddIcon from '@material-ui/icons/Add'
 import CreateIcon from '@material-ui/icons/Create'
 import { ButtonPrimary } from './../../components/ButtonPrimary/ButtonPrimary'
+import { TCarCategory } from './CarCategoryTypes'
 import styles from './CarCategory.module.scss'
+import { Modal } from '../../components'
+import { InputVsLabel } from './../../components/InputVsLabel/InputVsLabel'
+import { memo } from 'react'
 
 const useStyles = makeStyles({
   table: {
@@ -34,42 +38,66 @@ const rows = [
   createData('Gingerbread', 356, 16.0, 49, 3.9),
 ]
 
-export const CarCategoryView: React.FC = () => {
-  const classes = useStyles()
+export const CarCategoryView: React.FC<TCarCategory> = memo(
+  ({ isOpen, handlerOpen, handlerClose, handlerEdit, isEdit }) => {
+    const classes = useStyles()
 
-  return (
-    <>
-      <h1 className="admin-page-title">Категории машин</h1>
-      <div className="content-wrap withOutHeaderFooter">
-        <TableContainer className={classes.table}>
-          <Table stickyHeader size="small" aria-label="sticky table">
-            <TableHead>
-              <TableRow>
-                <TableCell>
-                  <ButtonPrimary className={'buttonInTable'}>
-                    <AddIcon />
-                  </ButtonPrimary>
-                </TableCell>
-                <TableCell>Название</TableCell>
-                <TableCell>Описание</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows.map((row) => (
-                <TableRow key={row.name}>
-                  <TableCell component="th" scope="row">
-                    <ButtonPrimary className={'buttonInTable'}>
-                      <CreateIcon />
+    return (
+      <>
+        <h1 className="admin-page-title">Категории машин</h1>
+        <div className="content-wrap withOutHeaderFooter">
+          <TableContainer className={classes.table}>
+            <Table stickyHeader size="small" aria-label="sticky table">
+              <TableHead>
+                <TableRow>
+                  <TableCell>
+                    <ButtonPrimary
+                      className={'buttonInTable'}
+                      onClick={handlerOpen}
+                    >
+                      <AddIcon />
                     </ButtonPrimary>
                   </TableCell>
-                  <TableCell>{row.fat}</TableCell>
-                  <TableCell>{row.carbs}</TableCell>
+                  <TableCell>Название</TableCell>
+                  <TableCell>Описание</TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </div>
-    </>
-  )
-}
+              </TableHead>
+              <TableBody>
+                {rows.map((row) => (
+                  <TableRow key={row.name}>
+                    <TableCell component="th" scope="row">
+                      <ButtonPrimary
+                        className={'buttonInTable'}
+                        onClick={handlerEdit}
+                      >
+                        <CreateIcon />
+                      </ButtonPrimary>
+                    </TableCell>
+                    <TableCell>{row.fat}</TableCell>
+                    <TableCell>{row.carbs}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </div>
+
+        <Modal open={isOpen} onClose={handlerClose}>
+          <h3 className="modalTitle">
+            {isEdit ? 'Редактировать' : 'Добавить'} категорию
+          </h3>
+          <InputVsLabel
+            id="name-category"
+            label="Название категории"
+            onChange={() => console.log('k')}
+          />
+          <div className={styles.textareaWrap}>
+            <p>Описание</p>
+            <textarea></textarea>
+          </div>
+          <ButtonPrimary className="modalBtn">Добавить</ButtonPrimary>
+        </Modal>
+      </>
+    )
+  },
+)

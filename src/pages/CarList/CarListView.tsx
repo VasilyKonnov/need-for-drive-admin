@@ -29,7 +29,7 @@ export const CarListView: React.FC = () => {
               handlerChange={handlerModel}
             />
           </div>
-          <ButtonPrimary>Применить</ButtonPrimary>
+          <ButtonPrimary className={'prymaryBtn'}>Применить</ButtonPrimary>
         </div>
         <div className="content-wrap--body">
           <CarsTable />

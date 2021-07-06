@@ -118,6 +118,7 @@
 .carSettingRow {
   padding: 20px;
   width: 100%;
+  position: relative;
   h2 {
     color: #3d5170;
     font-weight: 500;
@@ -127,6 +128,8 @@
   .settingWrap {
     display: flex;
     flex-direction: column;
+    position: relative;
+    box-sizing: border-box;
     .settingItemsWrap {
       width: 100%;
     }
@@ -199,7 +202,21 @@
     left: 0;
   }
 }
-
+.buttonWrap {
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
+  margin-top: 50px;
+}
+.btnPrimary,
+.btnDefault,
+.btnSecondary {
+  font-size: 11.5px !important;
+  width: initial1 !important;
+}
+.btnPrimary {
+  margin-right: 12px !important;
+}
 @media screen and(min-width: '767px') {
   .container {
     flex-direction: row;
@@ -229,5 +246,12 @@
         }
       }
     }
+  }
+}
+@media screen and(min-width: '1200px') {
+  .btnPrimary,
+  .btnDefault,
+  .btnSecondary {
+    width: 110px;
   }
 }

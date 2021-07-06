@@ -10,6 +10,9 @@ import { ButtonPrimary } from './../../components/ButtonPrimary/ButtonPrimary'
 import AddIcon from '@material-ui/icons/Add'
 import CreateIcon from '@material-ui/icons/Create'
 import styles from './CitiesAndStreetsList.module.scss'
+import { Modal } from '../../components'
+import { TCitiesAndStreetsList } from './CitiesAndStreetsListTypes'
+import { InputVsLabel } from './../../components/InputVsLabel/InputVsLabel'
 
 const useStyles = makeStyles({
   table: {
@@ -41,9 +44,19 @@ const rowsStreets = [
   createDataStreets('dote-Владик', 'city-Владик', 'Владик'),
 ]
 
-export const CitiesAndStreetsListView: React.FC = () => {
+export const CitiesAndStreetsListView: React.FC<TCitiesAndStreetsList> = ({
+  isOpenCity,
+  isOpenStreet,
+  isEditStreet,
+  isEditCity,
+  handleOpenModalCity,
+  handleCloseModalCity,
+  handleOpenModalStreet,
+  handleCloseModalStreet,
+  handleEditStreet,
+  handleEditCity,
+}) => {
   const classes = useStyles()
-
   return (
     <Grid container className="gridContainer">
       <Grid item xs={12} sm={6} className={'gridItem '}>
@@ -54,7 +67,10 @@ export const CitiesAndStreetsListView: React.FC = () => {
               <TableHead>
                 <TableRow>
                   <TableCell>
-                    <ButtonPrimary className={'buttonInTable'}>
+                    <ButtonPrimary
+                      className={'buttonInTable'}
+                      onClick={handleOpenModalCity}
+                    >
                       <AddIcon />
                     </ButtonPrimary>
                   </TableCell>
@@ -65,7 +81,10 @@ export const CitiesAndStreetsListView: React.FC = () => {
                 {rows.map((row) => (
                   <TableRow key={row.name}>
                     <TableCell component="th" scope="row">
-                      <ButtonPrimary className="buttonInTable">
+                      <ButtonPrimary
+                        className="buttonInTable"
+                        onClick={handleEditCity}
+                      >
                         <CreateIcon />
                       </ButtonPrimary>
                     </TableCell>
@@ -87,7 +106,10 @@ export const CitiesAndStreetsListView: React.FC = () => {
               <TableHead>
                 <TableRow>
                   <TableCell>
-                    <ButtonPrimary className={'buttonInTable'}>
+                    <ButtonPrimary
+                      className={'buttonInTable'}
+                      onClick={handleOpenModalStreet}
+                    >
                       <AddIcon />
                     </ButtonPrimary>
                   </TableCell>
@@ -100,7 +122,10 @@ export const CitiesAndStreetsListView: React.FC = () => {
                 {rowsStreets.map((row) => (
                   <TableRow key={row.dote}>
                     <TableCell component="th" scope="row">
-                      <ButtonPrimary className="buttonInTable">
+                      <ButtonPrimary
+                        className="buttonInTable"
+                        onClick={handleEditStreet}
+                      >
                         <CreateIcon />
                       </ButtonPrimary>
                     </TableCell>
@@ -118,6 +143,39 @@ export const CitiesAndStreetsListView: React.FC = () => {
           </TableContainer>
         </div>
       </Grid>
+
+      <Modal open={isOpenCity} onClose={handleCloseModalCity}>
+        <h3 className="modalTitle">
+          {isEditCity ? 'Редактировать' : 'Добавить'} город
+        </h3>
+        <InputVsLabel
+          id="city"
+          label="Введите город"
+          onChange={() => console.log('k')}
+        />
+        <ButtonPrimary className="modalBtn">Сохранить</ButtonPrimary>
+      </Modal>
+      <Modal open={isOpenStreet} onClose={handleCloseModalStreet}>
+        <h3 className="modalTitle">
+          {isEditStreet ? 'Редактировать' : 'Добавить'} точку выдачи
+        </h3>
+        <InputVsLabel
+          id="street"
+          label="Введите точку выдачи"
+          onChange={() => console.log('k')}
+        />
+        <InputVsLabel
+          id="street"
+          label="Введите город"
+          onChange={() => console.log('k')}
+        />
+        <InputVsLabel
+          id="street"
+          label="Введите адрес"
+          onChange={() => console.log('k')}
+        />
+        <ButtonPrimary className="modalBtn">Сохранить</ButtonPrimary>
+      </Modal>
     </Grid>
   )
 }

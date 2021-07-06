@@ -38,9 +38,8 @@
 }
 @media screen and (min-width: '767px') {
   .MuiFormControl-root.CustomSelect {
-    min-width: 110px;
-    max-width: 110px;
+    min-width: 100%;
+    max-width: 100%;
     margin-right: 15px;
-    margin-bottom: 0px;
   }
 }

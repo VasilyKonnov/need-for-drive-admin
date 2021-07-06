@@ -7,8 +7,11 @@ import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import AddIcon from '@material-ui/icons/Add'
 import CreateIcon from '@material-ui/icons/Create'
+import { Modal } from '../../components'
 import { ButtonPrimary } from './../../components/ButtonPrimary/ButtonPrimary'
 import styles from './OrderStatus.module.scss'
+import { TOrderStatus } from './OrderStatusTypes'
+import { InputVsLabel } from './../../components/InputVsLabel/InputVsLabel'
 
 const useStyles = makeStyles({
   table: {
@@ -34,7 +37,13 @@ const rows = [
   createData('Gingerbread', 356, 16.0, 49, 3.9),
 ]
 
-export const OrderStatusView: React.FC = () => {
+export const OrderStatusView: React.FC<TOrderStatus> = ({
+  isOpen,
+  isEdit,
+  handleOpen,
+  handleClose,
+  handleEdit,
+}) => {
   const classes = useStyles()
 
   return (
@@ -46,7 +55,10 @@ export const OrderStatusView: React.FC = () => {
             <TableHead>
               <TableRow>
                 <TableCell>
-                  <ButtonPrimary className={'buttonInTable'}>
+                  <ButtonPrimary
+                    className={'buttonInTable'}
+                    onClick={handleOpen}
+                  >
                     <AddIcon />
                   </ButtonPrimary>
                 </TableCell>
@@ -57,7 +69,10 @@ export const OrderStatusView: React.FC = () => {
               {rows.map((row) => (
                 <TableRow key={row.name}>
                   <TableCell component="th" scope="row">
-                    <ButtonPrimary className={'buttonInTable'}>
+                    <ButtonPrimary
+                      className={'buttonInTable'}
+                      onClick={handleEdit}
+                    >
                       <CreateIcon />
                     </ButtonPrimary>
                   </TableCell>
@@ -68,6 +83,17 @@ export const OrderStatusView: React.FC = () => {
           </Table>
         </TableContainer>
       </div>
+      <Modal open={isOpen} onClose={handleClose}>
+        <h3 className="modalTitle">
+          {isEdit ? 'Редактировать' : 'Добавить'} статус заказа
+        </h3>
+        <InputVsLabel
+          id="status"
+          label="Введите статус"
+          onChange={() => console.log('k')}
+        />
+        <ButtonPrimary className="modalBtn">Сохранить</ButtonPrimary>
+      </Modal>
     </>
   )
 }

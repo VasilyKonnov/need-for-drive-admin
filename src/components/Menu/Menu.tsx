@@ -16,6 +16,11 @@ export const Menu: React.FC<TMenu> = ({ className }) => {
           Карточка автомобиля
         </Button>
       </NavLink>
+      <NavLink to="/edit-order" exact activeClassName={styles.active}>
+        <Button startIcon={<CreateIcon />} className={styles.menuItem}>
+          Редактировать заказ
+        </Button>
+      </NavLink>
       <NavLink to="/orders" exact activeClassName={styles.active}>
         <Button startIcon={<NoteAddIcon />} className={styles.menuItem}>
           Заказы

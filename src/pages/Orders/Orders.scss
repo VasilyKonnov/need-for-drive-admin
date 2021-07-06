@@ -1,0 +1,13 @@
+.prymaryBtn {
+  font-size: 11px !important;
+  width: 95px;
+}
+@media screen and (min-width: '767px') {
+  .selectWrap {
+    .MuiFormControl-root.CustomSelect {
+      min-width: 110px;
+      max-width: 110px;
+      margin-bottom: 0;
+    }
+  }
+}

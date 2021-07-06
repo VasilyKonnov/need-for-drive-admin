@@ -111,6 +111,13 @@ code {
   box-sizing: border-box !important;
   padding: 0 !important;
 }
+.modalBtn {
+  display: block !important;
+  margin: 0 auto !important;
+}
+.modalTitle {
+  text-align: center;
+}
 
 @media screen and(min-width: '600px') {
   .content-wrap {
@@ -120,7 +127,9 @@ code {
     padding: 12px !important;
   }
 }
-
+.select-wrap {
+  min-width: 110px;
+}
 @media screen and(min-width: '767px') {
   .content-wrap--header {
     display: flex;

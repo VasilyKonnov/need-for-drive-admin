@@ -9,6 +9,9 @@ import AddIcon from '@material-ui/icons/Add'
 import CreateIcon from '@material-ui/icons/Create'
 import { ButtonPrimary } from './../../components/ButtonPrimary/ButtonPrimary'
 import { makeStyles } from '@material-ui/core/styles'
+import { TTariffs } from './TariffsTypes'
+import { Modal } from '../../components'
+import { InputVsLabel } from './../../components/InputVsLabel/InputVsLabel'
 import styles from './Tariffs.module.scss'
 
 const useStyles = makeStyles({
@@ -35,7 +38,18 @@ const rows = [
   createData('Gingerbread', 356, 16.0, 49, 3.9),
 ]
 
-export const TariffsView: React.FC = () => {
+export const TariffsView: React.FC<TTariffs> = ({
+  isModalRate,
+  isModalRateType,
+  isEditRate,
+  isEditRateType,
+  handleModalRateOpen,
+  handleModalRateClose,
+  handleModalRateTypeOpen,
+  handleModalRateTypeClose,
+  handleEditRate,
+  handleEditRateType,
+}) => {
   const classes = useStyles()
 
   return (
@@ -48,7 +62,10 @@ export const TariffsView: React.FC = () => {
               <TableHead>
                 <TableRow>
                   <TableCell>
-                    <ButtonPrimary className={'buttonInTable'}>
+                    <ButtonPrimary
+                      className={'buttonInTable'}
+                      onClick={handleModalRateOpen}
+                    >
                       <AddIcon />
                     </ButtonPrimary>
                   </TableCell>
@@ -60,7 +77,10 @@ export const TariffsView: React.FC = () => {
                 {rows.map((row) => (
                   <TableRow key={row.name}>
                     <TableCell component="th" scope="row">
-                      <ButtonPrimary className={'buttonInTable'}>
+                      <ButtonPrimary
+                        className={'buttonInTable'}
+                        onClick={handleEditRate}
+                      >
                         <CreateIcon />
                       </ButtonPrimary>
                     </TableCell>
@@ -81,7 +101,10 @@ export const TariffsView: React.FC = () => {
               <TableHead>
                 <TableRow>
                   <TableCell>
-                    <ButtonPrimary className={'buttonInTable'}>
+                    <ButtonPrimary
+                      className={'buttonInTable'}
+                      onClick={handleModalRateTypeOpen}
+                    >
                       <AddIcon />
                     </ButtonPrimary>
                   </TableCell>
@@ -93,7 +116,10 @@ export const TariffsView: React.FC = () => {
                 {rows.map((row) => (
                   <TableRow key={row.name}>
                     <TableCell component="th" scope="row">
-                      <ButtonPrimary className={'buttonInTable'}>
+                      <ButtonPrimary
+                        className={'buttonInTable'}
+                        onClick={handleEditRateType}
+                      >
                         <CreateIcon />
                       </ButtonPrimary>
                     </TableCell>
@@ -106,6 +132,38 @@ export const TariffsView: React.FC = () => {
           </TableContainer>
         </div>
       </Grid>
+      <Modal open={isModalRate} onClose={handleModalRateClose}>
+        <h3 className="modalTitle">
+          {isEditRate ? 'Редактировать' : 'Добавить'} тариф
+        </h3>
+        <InputVsLabel
+          id="rate-name"
+          label="Введите название"
+          onChange={() => console.log('k')}
+        />
+        <InputVsLabel
+          id="rate-price"
+          label="Введите цену"
+          onChange={() => console.log('k')}
+        />
+        <ButtonPrimary className="modalBtn">Сохранить</ButtonPrimary>
+      </Modal>
+      <Modal open={isModalRateType} onClose={handleModalRateTypeClose}>
+        <h3 className="modalTitle">
+          {isEditRateType ? 'Редактировать' : 'Добавить'} тип тарифа
+        </h3>
+        <InputVsLabel
+          id="rate-name"
+          label="Введите название"
+          onChange={() => console.log('k')}
+        />
+        <InputVsLabel
+          id="rate-price"
+          label="Введите единицу измерения"
+          onChange={() => console.log('k')}
+        />
+        <ButtonPrimary className="modalBtn">Сохранить</ButtonPrimary>
+      </Modal>
     </Grid>
   )
 }

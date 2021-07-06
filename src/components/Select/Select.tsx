@@ -1,21 +1,7 @@
 import { FormControl, InputLabel, Select, MenuItem } from '@material-ui/core'
 import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore'
 import { TSelect } from './SelectTypes'
-import {
-  createStyles,
-  makeStyles,
-  withStyles,
-  Theme,
-} from '@material-ui/core/styles'
 import './Select.scss'
-
-// const useStyles = makeStyles((theme: Theme) =>
-//   createStyles({
-//     margin: {
-//       margin: theme.spacing(1),
-//     },
-//   }),
-// )
 
 export const CustomSelect: React.FC<TSelect> = ({
   handlerChange,
@@ -24,7 +10,6 @@ export const CustomSelect: React.FC<TSelect> = ({
   data,
   label,
 }) => {
-  // const classes = useStyles()
   return (
     <FormControl className="CustomSelect" variant="outlined">
       <InputLabel id={id}>{label}</InputLabel>

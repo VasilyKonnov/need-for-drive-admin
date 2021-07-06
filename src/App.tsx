@@ -9,6 +9,7 @@ import {
   OrderStatus,
   Tariffs,
   ErrorPage,
+  OrderEdit,
 } from './pages'
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
       <Route path="/list-order-status" component={OrderStatus} />
       <Route path="/list-tariffs" component={Tariffs} />
       <Route path="/error-500" component={ErrorPage} />
+      <Route path="/edit-order" component={OrderEdit} />
     </Switch>
   )
 }

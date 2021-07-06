@@ -1,7 +1,14 @@
-import { InputVsLabel, Layout, ProgressLine } from '../../components'
+import {
+  ButtonDefault,
+  ButtonPrimary,
+  InputVsLabel,
+  Layout,
+  ProgressLine,
+} from '../../components'
 import stabImg from '../../assets/image/placeholder.png'
 import AddIcon from '@material-ui/icons/Add'
 import styles from './AddCar.module.scss'
+import { ButtonSecondary } from './../../components/ButtonSecondary/ButtonSecondary'
 
 export const AddCar: React.FC = () => {
   return (
@@ -99,6 +106,19 @@ export const AddCar: React.FC = () => {
                 <p className={styles.colorItem}>Красный</p>
               </div>
             </div>
+          </div>
+          <div className={styles.buttonWrap}>
+            <div className={styles.leftCol}>
+              <ButtonPrimary className={styles.btnPrimary}>
+                Сохранить
+              </ButtonPrimary>
+              <ButtonDefault className={styles.btnDefault}>
+                Отменить
+              </ButtonDefault>
+            </div>
+            <ButtonSecondary className={styles.btnSecondary}>
+              Удалить
+            </ButtonSecondary>
           </div>
         </div>
       </div>

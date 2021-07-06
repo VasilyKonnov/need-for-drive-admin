@@ -4,7 +4,7 @@ import ReactPaginate from 'react-paginate'
 import FastRewindIcon from '@material-ui/icons/FastRewind'
 import FastForwardIcon from '@material-ui/icons/FastForward'
 import { OrderCard } from '../../components/OrderCard'
-import styles from './Orders.module.scss'
+import './Orders.scss'
 
 const data = ['раз', 'два', 'три', 'четыре', 'пять']
 
@@ -20,7 +20,7 @@ export const OrdersView: React.FC = () => {
       <h1 className="admin-page-title">Заказы</h1>
       <div className="content-wrap">
         <div className="content-wrap--header">
-          <div className="select-wrap">
+          <div className={'selectWrap'}>
             <Select
               label="Модель"
               labelId="labelId-1"
@@ -43,7 +43,7 @@ export const OrdersView: React.FC = () => {
               handlerChange={handlerModel}
             />
           </div>
-          <ButtonPrimary className={styles.prymaryBtn}>Применить</ButtonPrimary>
+          <ButtonPrimary className={'prymaryBtn'}>Применить</ButtonPrimary>
         </div>
         <div className="content-wrap--body">
           <OrderCard />
