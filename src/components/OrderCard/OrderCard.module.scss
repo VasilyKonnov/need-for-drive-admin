@@ -82,6 +82,7 @@
       color: #5a6169;
       font-size: 11px;
       position: relative;
+      cursor: pointer;
       &::before {
         content: '';
         display: block;
@@ -96,6 +97,7 @@
     }
     button.btnDone {
       margin-bottom: 3px;
+      margin-right: 2px;
       border-radius: 4px;
       &::before {
         background: url('../../assets/image/checkIcon.svg');
@@ -103,12 +105,14 @@
     }
     button.btnUndo {
       margin-bottom: 3px;
+      margin-right: 2px;
       border-radius: 4px;
       &::before {
         background: url('../../assets/image/cancelIcon.svg');
       }
     }
     button.btnChange {
+      margin-bottom: 3px;
       border-radius: 4px;
       &::before {
         background: url('../../assets/image/iconDots.svg');
@@ -140,14 +144,18 @@
         border-right: 0;
         border-radius: 0;
         margin-bottom: 0;
+        margin-right: 0;
       }
       button.btnDone {
         border-radius: 4px 0px 0px 4px;
         margin-bottom: 0;
+        margin-right: 0;
       }
 
       button.btnChange {
         border-radius: 0px 4px 4px 0px;
+        margin-right: 0;
+        margin-bottom: 0px;
       }
     }
   }

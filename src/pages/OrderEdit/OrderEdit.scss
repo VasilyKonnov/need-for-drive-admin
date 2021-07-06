@@ -8,6 +8,42 @@
     font-size: 11px;
   }
 }
+
+.additionalServices {
+  margin-bottom: 15px;
+  .additionalServices--title {
+    font-size: 13px;
+    margin-top: 0;
+  }
+}
+.LabelCheckboxPrimary {
+  display: block !important;
+  height: 22px;
+  margin-bottom: 15px;
+  .MuiFormControlLabel-label {
+    font-size: 12px;
+  }
+}
+.checkboxPrimary {
+  color: #007bff !important;
+  padding: 0;
+}
+.radioButton {
+  color: #007bff !important;
+}
+
+.wrapperDate {
+  margin-bottom: 15px;
+  span {
+    display: inline-block;
+    font-size: 14px;
+    line-height: 16px;
+    color: #121212;
+    margin-right: 8px;
+    text-align: right;
+  }
+}
+
 @media screen and(min-width: '1024px') {
   .edit-order-footer {
     .edit-order-footer--btn-primary {
