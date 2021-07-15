@@ -82,10 +82,13 @@ export const CarCategoryView: React.FC<TCarCategory> = memo(
           </TableContainer>
         </div>
 
-        <Modal open={isOpen} onClose={handlerClose}>
-          <h3 className="modalTitle">
-            {isEdit ? 'Редактировать' : 'Добавить'} категорию
-          </h3>
+        <Modal
+          open={isOpen}
+          onClose={handlerClose}
+          title={isEdit ? 'Редактировать' : 'Добавить' + ' категорию'}
+          buttonClick={() => console.log('r')}
+          buttonTitle="Сохранить"
+        >
           <InputVsLabel
             id="name-category"
             label="Название категории"
@@ -95,7 +98,6 @@ export const CarCategoryView: React.FC<TCarCategory> = memo(
             <p>Описание</p>
             <textarea></textarea>
           </div>
-          <ButtonPrimary className="modalBtn">Добавить</ButtonPrimary>
         </Modal>
       </>
     )

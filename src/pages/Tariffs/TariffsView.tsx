@@ -132,10 +132,13 @@ export const TariffsView: React.FC<TTariffs> = ({
           </TableContainer>
         </div>
       </Grid>
-      <Modal open={isModalRate} onClose={handleModalRateClose}>
-        <h3 className="modalTitle">
-          {isEditRate ? 'Редактировать' : 'Добавить'} тариф
-        </h3>
+      <Modal
+        open={isModalRate}
+        onClose={handleModalRateClose}
+        title={isEditRate ? 'Редактировать' : 'Добавить' + ' тариф'}
+        buttonClick={() => console.log('r')}
+        buttonTitle="Сохранить"
+      >
         <InputVsLabel
           id="rate-name"
           label="Введите название"
@@ -146,12 +149,14 @@ export const TariffsView: React.FC<TTariffs> = ({
           label="Введите цену"
           onChange={() => console.log('k')}
         />
-        <ButtonPrimary className="modalBtn">Сохранить</ButtonPrimary>
       </Modal>
-      <Modal open={isModalRateType} onClose={handleModalRateTypeClose}>
-        <h3 className="modalTitle">
-          {isEditRateType ? 'Редактировать' : 'Добавить'} тип тарифа
-        </h3>
+      <Modal
+        open={isModalRateType}
+        onClose={handleModalRateTypeClose}
+        title={isEditRateType ? 'Редактировать' : 'Добавить' + ' тариф'}
+        buttonClick={() => console.log('r')}
+        buttonTitle="Сохранить"
+      >
         <InputVsLabel
           id="rate-name"
           label="Введите название"
@@ -162,7 +167,6 @@ export const TariffsView: React.FC<TTariffs> = ({
           label="Введите единицу измерения"
           onChange={() => console.log('k')}
         />
-        <ButtonPrimary className="modalBtn">Сохранить</ButtonPrimary>
       </Modal>
     </Grid>
   )

@@ -144,21 +144,26 @@ export const CitiesAndStreetsListView: React.FC<TCitiesAndStreetsList> = ({
         </div>
       </Grid>
 
-      <Modal open={isOpenCity} onClose={handleCloseModalCity}>
-        <h3 className="modalTitle">
-          {isEditCity ? 'Редактировать' : 'Добавить'} город
-        </h3>
+      <Modal
+        open={isOpenCity}
+        onClose={handleCloseModalCity}
+        title={isEditCity ? 'Редактировать' : 'Добавить' + ' город'}
+        buttonClick={() => console.log('r')}
+        buttonTitle="Сохранить"
+      >
         <InputVsLabel
           id="city"
           label="Введите город"
           onChange={() => console.log('k')}
         />
-        <ButtonPrimary className="modalBtn">Сохранить</ButtonPrimary>
       </Modal>
-      <Modal open={isOpenStreet} onClose={handleCloseModalStreet}>
-        <h3 className="modalTitle">
-          {isEditStreet ? 'Редактировать' : 'Добавить'} точку выдачи
-        </h3>
+      <Modal
+        open={isOpenStreet}
+        onClose={handleCloseModalStreet}
+        title={isEditStreet ? 'Редактировать' : 'Добавить' + ' точку выдачи'}
+        buttonClick={() => console.log('r')}
+        buttonTitle="Сохранить"
+      >
         <InputVsLabel
           id="street"
           label="Введите точку выдачи"
@@ -174,7 +179,6 @@ export const CitiesAndStreetsListView: React.FC<TCitiesAndStreetsList> = ({
           label="Введите адрес"
           onChange={() => console.log('k')}
         />
-        <ButtonPrimary className="modalBtn">Сохранить</ButtonPrimary>
       </Modal>
     </Grid>
   )

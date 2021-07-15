@@ -83,16 +83,18 @@ export const OrderStatusView: React.FC<TOrderStatus> = ({
           </Table>
         </TableContainer>
       </div>
-      <Modal open={isOpen} onClose={handleClose}>
-        <h3 className="modalTitle">
-          {isEdit ? 'Редактировать' : 'Добавить'} статус заказа
-        </h3>
+      <Modal
+        open={isOpen}
+        onClose={handleClose}
+        title={isEdit ? 'Редактировать' : 'Добавить' + ' статус заказа'}
+        buttonClick={() => console.log('r')}
+        buttonTitle="Сохранить"
+      >
         <InputVsLabel
           id="status"
           label="Введите статус"
           onChange={() => console.log('k')}
         />
-        <ButtonPrimary className="modalBtn">Сохранить</ButtonPrimary>
       </Modal>
     </>
   )
