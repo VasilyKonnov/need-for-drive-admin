@@ -2,7 +2,18 @@
   font-size: 11px !important;
   width: 95px;
 }
+
+.content-wrap--header {
+  .CustomSelect {
+    margin-bottom: 10px;
+  }
+}
 @media screen and (min-width: '767px') {
+  .content-wrap--header {
+    .CustomSelect {
+      margin-bottom: 0px;
+    }
+  }
   .selectWrap {
     .MuiFormControl-root.CustomSelect {
       min-width: 110px;

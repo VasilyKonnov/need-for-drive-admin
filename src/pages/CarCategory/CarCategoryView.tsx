@@ -81,7 +81,6 @@ export const CarCategoryView: React.FC<TCarCategory> = memo(
             </Table>
           </TableContainer>
         </div>
-
         <Modal
           open={isOpen}
           onClose={handlerClose}
