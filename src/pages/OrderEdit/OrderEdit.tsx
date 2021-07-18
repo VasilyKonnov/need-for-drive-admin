@@ -5,10 +5,11 @@ import { Grid } from '@material-ui/core'
 import DatePicker from 'react-datepicker'
 import Checkbox from '@material-ui/core/Checkbox'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
-import './OrderEdit.scss'
 import 'react-datepicker/dist/react-datepicker.css'
 import './datePickerStyled.scss'
 import Radio from '@material-ui/core/Radio'
+import './OrderEdit.scss'
+import { SelectVsLabel } from './../../components/SelectVsLabel/SelectVsLabel'
 
 const data = ['раз', 'два', 'три', 'четыре', 'пять']
 
@@ -66,28 +67,28 @@ export const OrderEdit = () => {
         <div className="content-wrap--body">
           <Grid container className="gridContainer">
             <Grid item xs={12} sm={6} className={'gridItem '}>
-              <Select
+              <SelectVsLabel
                 label="Город"
                 labelId="labelId-1"
                 id="select-1"
                 data={data}
                 handlerChange={handlerModel}
               />
-              <Select
+              <SelectVsLabel
                 label="Пункт выдачи"
                 labelId="labelId-1"
                 id="select-1"
                 data={data}
                 handlerChange={handlerModel}
               />
-              <Select
+              <SelectVsLabel
                 label="Статус"
                 labelId="labelId-1"
                 id="select-1"
                 data={data}
                 handlerChange={handlerModel}
               />
-              <Select
+              <SelectVsLabel
                 label="Тариф"
                 labelId="labelId-1"
                 id="select-1"
@@ -95,10 +96,9 @@ export const OrderEdit = () => {
                 handlerChange={handlerModel}
               />
               <div className="wrapperDate">
-                <span>Аренда от:</span>
+                <span>Аренда от</span>
                 <DatePicker
                   minDate={startDate ? startDate : new Date()}
-                  placeholderText="Введите дату и время"
                   showTimeSelect
                   dateFormat={'dd-MM-yyyy, hh:mm'}
                   filterTime={filterPassedTime}
@@ -111,10 +111,9 @@ export const OrderEdit = () => {
                 />
               </div>
               <div className="wrapperDate">
-                <span>Аренда до:</span>
+                <span>Аренда до</span>
                 <DatePicker
                   minDate={startDate ? startDate : new Date()}
-                  placeholderText="Введите дату и время"
                   showTimeSelect
                   dateFormat={'dd-MM-yyyy, hh:mm'}
                   filterTime={filterPassedEndTime}

@@ -48,7 +48,7 @@ export const Menu: React.FC<TMenu> = ({ className }) => {
       </NavLink>
       <NavLink to="/list-order-status" exact activeClassName={styles.active}>
         <Button startIcon={<VerticalSplitIcon />} className={styles.menuItem}>
-          Статусы закозов
+          Статусы заказов
         </Button>
       </NavLink>
       <NavLink to="/list-tariffs" exact activeClassName={styles.active}>

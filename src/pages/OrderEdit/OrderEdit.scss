@@ -33,19 +33,30 @@
 .checkboxPrimary {
   color: #007bff !important;
   padding: 0;
+  .MuiIconButton-label {
+    .MuiSvgIcon-root {
+      font-size: 19px !important;
+    }
+  }
 }
 .radioButton {
   color: #007bff !important;
+  .MuiIconButton-label {
+    .MuiSvgIcon-root {
+      font-size: 19px !important;
+    }
+  }
 }
 
 .wrapperDate {
-  margin-bottom: 15px;
+  margin-bottom: 9px;
   span {
     display: inline-block;
-    font-size: 14px;
+    font-size: 11px;
     line-height: 16px;
     color: #121212;
     margin-right: 8px;
+    margin-bottom: 9px;
     text-align: right;
   }
 }
