@@ -1,1 +1,1 @@
-export { authAxios, updateToken } from './api'
+export { authAxios, updateToken, crudAxios } from './api'

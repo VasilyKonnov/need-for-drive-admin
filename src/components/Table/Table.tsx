@@ -17,11 +17,9 @@ const useStyles = makeStyles({
 })
 
 export const CustomTable: React.FC<TTable> = ({
-  handlerOpenEdit,
   handlerOpenAdd,
   children,
   tableHeadData,
-  tableData,
 }) => {
   const classes = useStyles()
   return (
@@ -32,7 +30,7 @@ export const CustomTable: React.FC<TTable> = ({
             <TableCell>
               <ButtonPrimary
                 className={'buttonInTable'}
-                onClick={handlerOpenEdit}
+                onClick={handlerOpenAdd}
               >
                 <AddIcon />
               </ButtonPrimary>
@@ -42,22 +40,7 @@ export const CustomTable: React.FC<TTable> = ({
             })}
           </TableRow>
         </TableHead>
-        <TableBody>
-          <TableRow>
-            <TableCell component="th" scope="row">
-              <ButtonPrimary
-                className={'buttonInTable'}
-                onClick={handlerOpenAdd}
-              >
-                <CreateIcon />
-              </ButtonPrimary>
-            </TableCell>
-            {tableData.map((item) => {
-              return <TableCell>item</TableCell>
-            })}
-            {/* {children} */}
-          </TableRow>
-        </TableBody>
+        <TableBody>{children}</TableBody>
       </Table>
     </TableContainer>
   )

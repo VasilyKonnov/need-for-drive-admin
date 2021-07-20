@@ -1,23 +1,10 @@
-import { makeStyles } from '@material-ui/core/styles'
-import Table from '@material-ui/core/Table'
-import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
-import TableContainer from '@material-ui/core/TableContainer'
-import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
-import AddIcon from '@material-ui/icons/Add'
 import CreateIcon from '@material-ui/icons/Create'
-import { Modal } from '../../components'
+import { Modal, Table } from '../../components'
 import { ButtonPrimary } from './../../components/ButtonPrimary/ButtonPrimary'
-import styles from './OrderStatus.module.scss'
 import { TOrderStatus } from './OrderStatusTypes'
 import { InputVsLabel } from './../../components/InputVsLabel/InputVsLabel'
-
-const useStyles = makeStyles({
-  table: {
-    maxHeight: '100%',
-  },
-})
 
 function createData(
   name: string,
@@ -44,44 +31,27 @@ export const OrderStatusView: React.FC<TOrderStatus> = ({
   handleClose,
   handleEdit,
 }) => {
-  const classes = useStyles()
-
   return (
     <>
       <h1 className="admin-page-title">Статус заказа</h1>
       <div className="content-wrap withOutHeaderFooter">
-        <TableContainer className={classes.table}>
-          <Table stickyHeader size="small" aria-label="sticky table">
-            <TableHead>
+        <Table handlerOpenAdd={handleOpen} tableHeadData={['Статус']}>
+          {rows.map((row) => {
+            return (
               <TableRow>
-                <TableCell>
+                <TableCell component="th" scope="row">
                   <ButtonPrimary
+                    onClick={handleEdit}
                     className={'buttonInTable'}
-                    onClick={handleOpen}
                   >
-                    <AddIcon />
+                    <CreateIcon />
                   </ButtonPrimary>
                 </TableCell>
-                <TableCell>Название</TableCell>
+                <TableCell>{row.name}</TableCell>
               </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows.map((row) => (
-                <TableRow key={row.name}>
-                  <TableCell component="th" scope="row">
-                    <ButtonPrimary
-                      className={'buttonInTable'}
-                      onClick={handleEdit}
-                    >
-                      <CreateIcon />
-                    </ButtonPrimary>
-                  </TableCell>
-                  <TableCell>{row.calories}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+            )
+          })}
+        </Table>
       </div>
       <Modal
         open={isOpen}

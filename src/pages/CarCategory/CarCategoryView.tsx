@@ -1,11 +1,5 @@
-import { makeStyles } from '@material-ui/core/styles'
-import Table from '@material-ui/core/Table'
-import TableBody from '@material-ui/core/TableBody'
-import TableCell from '@material-ui/core/TableCell'
-import TableContainer from '@material-ui/core/TableContainer'
-import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
-import AddIcon from '@material-ui/icons/Add'
+import TableCell from '@material-ui/core/TableCell'
 import CreateIcon from '@material-ui/icons/Create'
 import { ButtonPrimary } from './../../components/ButtonPrimary/ButtonPrimary'
 import { TCarCategory } from './CarCategoryTypes'
@@ -13,12 +7,7 @@ import styles from './CarCategory.module.scss'
 import { Modal } from '../../components'
 import { InputVsLabel } from './../../components/InputVsLabel/InputVsLabel'
 import { memo } from 'react'
-
-const useStyles = makeStyles({
-  table: {
-    maxHeight: '100%',
-  },
-})
+import { Table } from '../../components'
 
 function createData(
   name: string,
@@ -40,46 +29,31 @@ const rows = [
 
 export const CarCategoryView: React.FC<TCarCategory> = memo(
   ({ isOpen, handlerOpen, handlerClose, handlerEdit, isEdit }) => {
-    const classes = useStyles()
-
     return (
       <>
         <h1 className="admin-page-title">Категории машин</h1>
         <div className="content-wrap withOutHeaderFooter">
-          <TableContainer className={classes.table}>
-            <Table stickyHeader size="small" aria-label="sticky table">
-              <TableHead>
+          <Table
+            handlerOpenAdd={handlerOpen}
+            tableHeadData={['Название', 'Описание']}
+          >
+            {rows.map((row) => {
+              return (
                 <TableRow>
-                  <TableCell>
+                  <TableCell component="th" scope="row">
                     <ButtonPrimary
-                      className={'buttonInTable'}
                       onClick={handlerOpen}
+                      className={'buttonInTable'}
                     >
-                      <AddIcon />
+                      <CreateIcon />
                     </ButtonPrimary>
                   </TableCell>
-                  <TableCell>Название</TableCell>
-                  <TableCell>Описание</TableCell>
+                  <TableCell>{row.name}</TableCell>
+                  <TableCell>{row.name}</TableCell>
                 </TableRow>
-              </TableHead>
-              <TableBody>
-                {rows.map((row) => (
-                  <TableRow key={row.name}>
-                    <TableCell component="th" scope="row">
-                      <ButtonPrimary
-                        className={'buttonInTable'}
-                        onClick={handlerEdit}
-                      >
-                        <CreateIcon />
-                      </ButtonPrimary>
-                    </TableCell>
-                    <TableCell>{row.fat}</TableCell>
-                    <TableCell>{row.carbs}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+              )
+            })}
+          </Table>
         </div>
         <Modal
           open={isOpen}

@@ -71,7 +71,6 @@ export const LoginPage = () => {
         })
         .then((response: any) => {
           if (response) {
-            console.log('response - ', response.data)
             setAccessRefreshTokens(
               response.data.access_token,
               response.data.refresh_token,

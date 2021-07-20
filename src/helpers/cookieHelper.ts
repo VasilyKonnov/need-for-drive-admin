@@ -25,8 +25,6 @@ const setAccessRefreshTokens = (
 ) => {
   const expiresAccessToken = new Date(Date.now() + (expiresIn - 600) * 1000)
   const expiresRefreshToken = new Date(Date.now() + ONE_WEEK * 1000)
-  console.log('expiresAccessToken - ', expiresAccessToken)
-  console.log('expiresRefreshToken - ', expiresRefreshToken)
   setAccessToken(accessToken, expiresAccessToken)
   setRefreshToken(refreshToken, expiresRefreshToken)
 }

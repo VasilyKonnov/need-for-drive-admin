@@ -1,22 +1,10 @@
 import TableCell from '@material-ui/core/TableCell'
-import { makeStyles } from '@material-ui/core/styles'
-import Table from '@material-ui/core/Table'
-import TableBody from '@material-ui/core/TableBody'
-import TableContainer from '@material-ui/core/TableContainer'
-import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
-import Paper from '@material-ui/core/Paper'
-import AddIcon from '@material-ui/icons/Add'
+import { Table } from '../../components'
 import CreateIcon from '@material-ui/icons/Create'
-import styles from './CarList.module.scss'
 import { ButtonPrimary } from './../ButtonPrimary/ButtonPrimary'
 import { Link } from 'react-router-dom'
-
-const useStyles = makeStyles({
-  table: {
-    maxHeight: '100%',
-  },
-})
+import { useHistory } from 'react-router-dom'
 
 function createData(
   name: string,
@@ -42,50 +30,41 @@ const rows = [
 ]
 
 export const CarsTable = () => {
-  const classes = useStyles()
-
+  const addCar = () => {
+    history.push('/add-car')
+  }
+  const history = useHistory()
   return (
-    <TableContainer className={classes.table}>
-      <Table stickyHeader size="small" aria-label="sticky table">
-        <TableHead>
-          <TableRow>
-            <TableCell>
-              <Link to="/add-car">
-                <ButtonPrimary className={'buttonInTable'}>
-                  <AddIcon />
-                </ButtonPrimary>
-              </Link>
-            </TableCell>
-            <TableCell>Модель</TableCell>
-            <TableCell>Изображение</TableCell>
-            <TableCell>Мин. цена</TableCell>
-            <TableCell>Макс. цена</TableCell>
-            <TableCell>Номер</TableCell>
-            <TableCell>Описание</TableCell>
-            <TableCell>Категория</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.name}>
-              <TableCell component="th" scope="row">
-                <Link to="/add-car">
-                  <ButtonPrimary className={'buttonInTable'}>
-                    <CreateIcon />
-                  </ButtonPrimary>
-                </Link>
-              </TableCell>
-              <TableCell>{row.calories}</TableCell>
-              <TableCell>{row.fat}</TableCell>
-              <TableCell>{row.carbs}</TableCell>
-              <TableCell>{row.protein}</TableCell>
-              <TableCell>{row.carbs}</TableCell>
-              <TableCell>{row.protein}</TableCell>
-              <TableCell>{row.protein}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <Table
+      handlerOpenAdd={addCar}
+      tableHeadData={[
+        'Модель',
+        'Изображение',
+        'Мин. цена',
+        'Макс. цена',
+        'Номер',
+        'Описание',
+        'Категория',
+      ]}
+    >
+      {rows.map((row) => (
+        <TableRow key={row.name}>
+          <TableCell component="th" scope="row">
+            <Link to="/add-car">
+              <ButtonPrimary className={'buttonInTable'}>
+                <CreateIcon />
+              </ButtonPrimary>
+            </Link>
+          </TableCell>
+          <TableCell>{row.calories}</TableCell>
+          <TableCell>{row.fat}</TableCell>
+          <TableCell>{row.carbs}</TableCell>
+          <TableCell>{row.protein}</TableCell>
+          <TableCell>{row.carbs}</TableCell>
+          <TableCell>{row.protein}</TableCell>
+          <TableCell>{row.protein}</TableCell>
+        </TableRow>
+      ))}
+    </Table>
   )
 }

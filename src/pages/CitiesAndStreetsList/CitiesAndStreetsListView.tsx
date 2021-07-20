@@ -1,24 +1,11 @@
 import { Grid } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
-import Table from '@material-ui/core/Table'
-import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
-import TableContainer from '@material-ui/core/TableContainer'
-import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import { ButtonPrimary } from './../../components/ButtonPrimary/ButtonPrimary'
-import AddIcon from '@material-ui/icons/Add'
 import CreateIcon from '@material-ui/icons/Create'
-import styles from './CitiesAndStreetsList.module.scss'
-import { Modal } from '../../components'
+import { Modal, Table } from '../../components'
 import { TCitiesAndStreetsList } from './CitiesAndStreetsListTypes'
 import { InputVsLabel } from './../../components/InputVsLabel/InputVsLabel'
-
-const useStyles = makeStyles({
-  table: {
-    maxHeight: '100%',
-  },
-})
 
 function createData(name: string) {
   return { name }
@@ -56,91 +43,55 @@ export const CitiesAndStreetsListView: React.FC<TCitiesAndStreetsList> = ({
   handleEditStreet,
   handleEditCity,
 }) => {
-  const classes = useStyles()
   return (
     <Grid container className="gridContainer">
       <Grid item xs={12} sm={6} className={'gridItem '}>
         <h2 className="admin-page-title">Города</h2>
         <div className="content-wrap withOutHeaderFooter">
-          <TableContainer className={classes.table}>
-            <Table stickyHeader size="small" aria-label="sticky table">
-              <TableHead>
+          <Table handlerOpenAdd={handleOpenModalCity} tableHeadData={['Город']}>
+            {rows.map((row) => {
+              return (
                 <TableRow>
-                  <TableCell>
+                  <TableCell component="th" scope="row">
                     <ButtonPrimary
+                      onClick={handleEditCity}
                       className={'buttonInTable'}
-                      onClick={handleOpenModalCity}
                     >
-                      <AddIcon />
+                      <CreateIcon />
                     </ButtonPrimary>
                   </TableCell>
-                  <TableCell>Город</TableCell>
+                  <TableCell>{row.name}</TableCell>
                 </TableRow>
-              </TableHead>
-              <TableBody>
-                {rows.map((row) => (
-                  <TableRow key={row.name}>
-                    <TableCell component="th" scope="row">
-                      <ButtonPrimary
-                        className="buttonInTable"
-                        onClick={handleEditCity}
-                      >
-                        <CreateIcon />
-                      </ButtonPrimary>
-                    </TableCell>
-                    <TableCell component="th" scope="row">
-                      {row.name}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+              )
+            })}
+          </Table>
         </div>
       </Grid>
       <Grid item xs={12} sm={6} className={'gridItem'}>
         <h2 className="admin-page-title">Точки выдачи</h2>
         <div className="content-wrap withOutHeaderFooter">
-          <TableContainer className={classes.table}>
-            <Table stickyHeader size="small" aria-label="sticky table">
-              <TableHead>
+          <Table
+            handlerOpenAdd={handleOpenModalStreet}
+            tableHeadData={['Город', 'Улица', 'Точка выдачи']}
+          >
+            {rowsStreets.map((row) => {
+              return (
                 <TableRow>
-                  <TableCell>
+                  <TableCell component="th" scope="row">
                     <ButtonPrimary
+                      onClick={handleEditStreet}
                       className={'buttonInTable'}
-                      onClick={handleOpenModalStreet}
                     >
-                      <AddIcon />
+                      <CreateIcon />
                     </ButtonPrimary>
                   </TableCell>
-                  <TableCell>Точка выдачи</TableCell>
-                  <TableCell>Город</TableCell>
-                  <TableCell>Адрес</TableCell>
+                  <TableCell>{row.city}</TableCell>
+                  <TableCell>{row.street}</TableCell>
+                  <TableCell>{row.dote}</TableCell>
                 </TableRow>
-              </TableHead>
-              <TableBody>
-                {rowsStreets.map((row) => (
-                  <TableRow key={row.dote}>
-                    <TableCell component="th" scope="row">
-                      <ButtonPrimary
-                        className="buttonInTable"
-                        onClick={handleEditStreet}
-                      >
-                        <CreateIcon />
-                      </ButtonPrimary>
-                    </TableCell>
-                    <TableCell component="th" scope="row">
-                      {row.dote}
-                    </TableCell>
-                    <TableCell component="th" scope="row">
-                      {row.city}
-                    </TableCell>
-                    <TableCell>{row.street}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+              )
+            })}
+          </Table>
         </div>
       </Grid>
 

@@ -1,24 +1,11 @@
 import { Grid } from '@material-ui/core'
-import Table from '@material-ui/core/Table'
-import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
-import TableContainer from '@material-ui/core/TableContainer'
-import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
-import AddIcon from '@material-ui/icons/Add'
 import CreateIcon from '@material-ui/icons/Create'
 import { ButtonPrimary } from './../../components/ButtonPrimary/ButtonPrimary'
-import { makeStyles } from '@material-ui/core/styles'
 import { TTariffs } from './TariffsTypes'
-import { Modal } from '../../components'
+import { Modal, Table } from '../../components'
 import { InputVsLabel } from './../../components/InputVsLabel/InputVsLabel'
-import styles from './Tariffs.module.scss'
-
-const useStyles = makeStyles({
-  table: {
-    maxHeight: '100%',
-  },
-})
 
 function createData(
   name: string,
@@ -50,86 +37,58 @@ export const TariffsView: React.FC<TTariffs> = ({
   handleEditRate,
   handleEditRateType,
 }) => {
-  const classes = useStyles()
-
   return (
     <Grid container spacing={5}>
       <Grid item xs={12} sm={6}>
         <h2 className="admin-page-title">Тарифы</h2>
         <div className="content-wrap withOutHeaderFooter">
-          <TableContainer className={classes.table}>
-            <Table stickyHeader size="small" aria-label="sticky table">
-              <TableHead>
+          <Table
+            handlerOpenAdd={handleModalRateOpen}
+            tableHeadData={['Название', 'Цена']}
+          >
+            {rows.map((row) => {
+              return (
                 <TableRow>
-                  <TableCell>
+                  <TableCell component="th" scope="row">
                     <ButtonPrimary
+                      onClick={handleEditRate}
                       className={'buttonInTable'}
-                      onClick={handleModalRateOpen}
                     >
-                      <AddIcon />
+                      <CreateIcon />
                     </ButtonPrimary>
                   </TableCell>
-                  <TableCell>Название</TableCell>
-                  <TableCell>Цена</TableCell>
+                  <TableCell>{row.name}</TableCell>
+                  <TableCell>{row.name}</TableCell>
                 </TableRow>
-              </TableHead>
-              <TableBody>
-                {rows.map((row) => (
-                  <TableRow key={row.name}>
-                    <TableCell component="th" scope="row">
-                      <ButtonPrimary
-                        className={'buttonInTable'}
-                        onClick={handleEditRate}
-                      >
-                        <CreateIcon />
-                      </ButtonPrimary>
-                    </TableCell>
-                    <TableCell>{row.calories}</TableCell>
-                    <TableCell>{row.fat}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+              )
+            })}
+          </Table>
         </div>
       </Grid>
       <Grid item xs={12} sm={6}>
         <h2 className="admin-page-title">Типы тарифов</h2>
         <div className="content-wrap withOutHeaderFooter">
-          <TableContainer className={classes.table}>
-            <Table stickyHeader size="small" aria-label="sticky table">
-              <TableHead>
+          <Table
+            handlerOpenAdd={handleModalRateTypeOpen}
+            tableHeadData={['Название', 'Единици измерения']}
+          >
+            {rows.map((row) => {
+              return (
                 <TableRow>
-                  <TableCell>
+                  <TableCell component="th" scope="row">
                     <ButtonPrimary
+                      onClick={handleEditRateType}
                       className={'buttonInTable'}
-                      onClick={handleModalRateTypeOpen}
                     >
-                      <AddIcon />
+                      <CreateIcon />
                     </ButtonPrimary>
                   </TableCell>
-                  <TableCell>Название</TableCell>
-                  <TableCell>Единицы измерения</TableCell>
+                  <TableCell>{row.name}</TableCell>
+                  <TableCell>{row.name}</TableCell>
                 </TableRow>
-              </TableHead>
-              <TableBody>
-                {rows.map((row) => (
-                  <TableRow key={row.name}>
-                    <TableCell component="th" scope="row">
-                      <ButtonPrimary
-                        className={'buttonInTable'}
-                        onClick={handleEditRateType}
-                      >
-                        <CreateIcon />
-                      </ButtonPrimary>
-                    </TableCell>
-                    <TableCell>{row.calories}</TableCell>
-                    <TableCell>{row.fat}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+              )
+            })}
+          </Table>
         </div>
       </Grid>
       <Modal
