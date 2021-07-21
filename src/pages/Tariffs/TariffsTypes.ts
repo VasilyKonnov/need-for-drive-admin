@@ -1,3 +1,6 @@
+import { TRate } from '../../store/rates'
+import { TRateType } from '../../store/rateTypes'
+
 export type TTariffs = {
   isModalRate: boolean
   isModalRateType: boolean
@@ -9,4 +12,6 @@ export type TTariffs = {
   handleModalRateTypeClose: () => void
   handleEditRate: () => void
   handleEditRateType: () => void
+  rates: TRate[]
+  rateTypes: TRateType[]
 }

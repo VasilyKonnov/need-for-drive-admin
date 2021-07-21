@@ -6,6 +6,7 @@ import { ButtonPrimary } from './../../components/ButtonPrimary/ButtonPrimary'
 import { TTariffs } from './TariffsTypes'
 import { Modal, Table } from '../../components'
 import { InputVsLabel } from './../../components/InputVsLabel/InputVsLabel'
+import { Spinner } from '..'
 
 function createData(
   name: string,
@@ -36,59 +37,69 @@ export const TariffsView: React.FC<TTariffs> = ({
   handleModalRateTypeClose,
   handleEditRate,
   handleEditRateType,
+  rates,
+  rateTypes,
 }) => {
   return (
     <Grid container spacing={5}>
       <Grid item xs={12} sm={6}>
         <h2 className="admin-page-title">Тарифы</h2>
         <div className="content-wrap withOutHeaderFooter">
-          <Table
-            handlerOpenAdd={handleModalRateOpen}
-            tableHeadData={['Название', 'Цена']}
-          >
-            {rows.map((row) => {
-              return (
-                <TableRow>
-                  <TableCell component="th" scope="row">
-                    <ButtonPrimary
-                      onClick={handleEditRate}
-                      className={'buttonInTable'}
-                    >
-                      <CreateIcon />
-                    </ButtonPrimary>
-                  </TableCell>
-                  <TableCell>{row.name}</TableCell>
-                  <TableCell>{row.name}</TableCell>
-                </TableRow>
-              )
-            })}
-          </Table>
+          {rates ? (
+            <Table
+              handlerOpenAdd={handleModalRateOpen}
+              tableHeadData={['Название', 'Цена']}
+            >
+              {rates.map((rate) => {
+                return (
+                  <TableRow>
+                    <TableCell component="th" scope="row">
+                      <ButtonPrimary
+                        onClick={handleEditRate}
+                        className={'buttonInTable'}
+                      >
+                        <CreateIcon />
+                      </ButtonPrimary>
+                    </TableCell>
+                    <TableCell>{rate.rateTypeId.name}</TableCell>
+                    <TableCell>{rate.price}</TableCell>
+                  </TableRow>
+                )
+              })}
+            </Table>
+          ) : (
+            <Spinner />
+          )}
         </div>
       </Grid>
       <Grid item xs={12} sm={6}>
         <h2 className="admin-page-title">Типы тарифов</h2>
         <div className="content-wrap withOutHeaderFooter">
-          <Table
-            handlerOpenAdd={handleModalRateTypeOpen}
-            tableHeadData={['Название', 'Единици измерения']}
-          >
-            {rows.map((row) => {
-              return (
-                <TableRow>
-                  <TableCell component="th" scope="row">
-                    <ButtonPrimary
-                      onClick={handleEditRateType}
-                      className={'buttonInTable'}
-                    >
-                      <CreateIcon />
-                    </ButtonPrimary>
-                  </TableCell>
-                  <TableCell>{row.name}</TableCell>
-                  <TableCell>{row.name}</TableCell>
-                </TableRow>
-              )
-            })}
-          </Table>
+          {rateTypes ? (
+            <Table
+              handlerOpenAdd={handleModalRateTypeOpen}
+              tableHeadData={['Название', 'Единици измерения']}
+            >
+              {rateTypes.map((type) => {
+                return (
+                  <TableRow>
+                    <TableCell component="th" scope="row">
+                      <ButtonPrimary
+                        onClick={handleEditRateType}
+                        className={'buttonInTable'}
+                      >
+                        <CreateIcon />
+                      </ButtonPrimary>
+                    </TableCell>
+                    <TableCell>{type.name}</TableCell>
+                    <TableCell>{type.unit}</TableCell>
+                  </TableRow>
+                )
+              })}
+            </Table>
+          ) : (
+            <Spinner />
+          )}
         </div>
       </Grid>
       <Modal

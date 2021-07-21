@@ -47,8 +47,9 @@ const crud = {
   deletePoints(id: string) {
     return crudAxios.delete(`${routes.POINT}/${id}`)
   },
-  getRates() {
-    return crudAxios.get(`${routes.RATE}`)
+  async getRates() {
+    const response = await crudAxios.get(`${routes.RATE}`)
+    return response.data.data
   },
   putRates(id: string, body: any) {
     return crudAxios.put(`${routes.RATE}/${id}`, body)
@@ -59,8 +60,9 @@ const crud = {
   deleteRates(id: string) {
     return crudAxios.delete(`${routes.RATE}/${id}`)
   },
-  getRateTypes() {
-    return crudAxios.get(`${routes.RATETYPE}`)
+  async getRateTypes() {
+    const response = await crudAxios.get(`${routes.RATETYPE}`)
+    return response.data.data
   },
   putRateTypes(id: string, body: any) {
     return crudAxios.put(`${routes.RATETYPE}/${id}`, body)
