@@ -1,30 +1,59 @@
-import imgCar from '../../assets/image/car-stab.png'
+import { imgUrl } from '../../constans/constans'
 import styles from './OrderCard.module.scss'
+import { TOrderCard } from './OrderCardTypes'
 
-export const OrderCard = () => {
+export const OrderCard: React.FC<TOrderCard> = ({
+  imgSrc,
+  carName,
+  city,
+  pointAddress,
+  dateFrom,
+  dateTo,
+  isFullTank,
+  isNeedChildChair,
+  isRightWheel,
+  price,
+  colors,
+}) => {
   return (
     <div className={styles.cardWrap}>
       <div className={styles.car}>
         <div className={styles.imgWrap}>
-          <img src={imgCar} alt="Картинка машины" />
+          {imgSrc ? (
+            <img
+              src={
+                imgSrc.toString().slice(0, 4) === 'data'
+                  ? imgSrc
+                  : imgUrl + imgSrc
+              }
+              alt={carName}
+            />
+          ) : (
+            '---'
+          )}
         </div>
         <div className={styles.carInfo}>
           <p>
-            <span>ELANTRA</span> в <span>Ульяновск</span>, Нариманова 42
+            <span>{carName}</span> в <span>{city}</span>, {pointAddress}
           </p>
-          <p>11.05.2020, 14:01 — 13.05.2020, 20:20</p>
           <p>
-            Цвет: <span>Голубой</span>
+            {dateFrom} — {dateTo}
+          </p>
+          <p>
+            Цвет:{' '}
+            {colors.map((color: string, id: number) => (
+              <span key={id}>{color} </span>
+            ))}
           </p>
         </div>
       </div>
       <div className={styles.additionally}>
-        <p className={styles.active}>Полный бак</p>
-        <p>Детское кресло</p>
-        <p>Правый руль</p>
+        <p className={isFullTank ? styles.active : ''}>Полный бак</p>
+        <p className={isNeedChildChair ? styles.active : ''}>Детское кресло</p>
+        <p className={isRightWheel ? styles.active : ''}>Правый руль</p>
       </div>
       <div className={styles.price}>
-        <span>4 300 ₽</span>
+        <span>{price} ₽</span>
       </div>
       <div className={styles.buttons}>
         <button className={styles.btnDone}>Готово</button>

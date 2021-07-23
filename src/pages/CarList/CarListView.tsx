@@ -1,4 +1,4 @@
-import { ButtonPrimary, Select, Spinner, Table } from '../../components'
+import { ButtonPrimary, Select, Table, ListEmpty } from '../../components'
 import FastRewindIcon from '@material-ui/icons/FastRewind'
 import FastForwardIcon from '@material-ui/icons/FastForward'
 import ReactPaginate from 'react-paginate'
@@ -83,6 +83,7 @@ export const CarListView: React.FC<TCarListView> = ({
                   </TableCell>
                   <TableCell>{car.priceMin ? car.priceMin : '---'}</TableCell>
                   <TableCell>{car.priceMax ? car.priceMax : '---'}</TableCell>
+                  <TableCell>{car.number ? car.number : '---'}</TableCell>
                   <TableCell>
                     {car.description ? car.description : '---'}
                   </TableCell>
@@ -93,7 +94,7 @@ export const CarListView: React.FC<TCarListView> = ({
               ))}
             </Table>
           ) : (
-            <Spinner />
+            <ListEmpty />
           )}
         </div>
         <div className="content-wrap--footer">

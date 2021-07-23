@@ -1,10 +1,152 @@
 import { Layout } from '../../components'
 import { OrdersView } from './OrdersView'
+import { useEffect, useState } from 'react'
+import { FetchingStateTypes } from '../../store'
+import { useDispatch, useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
+
+import { ordersSelector } from '../../store/orders/ordersSelector'
+import { ordersAction } from '../../store/orders/ordersAction'
+
+import { citiesSelector } from '../../store/cities/citiesSelector'
+import { citiesAction } from '../../store/cities/citiesAction'
+import { orderStatusSelector } from '../../store/orderStatus/orderStatusSelector'
+import { orderStatusAction } from '../../store/orderStatus/orderStatusAction'
+
+import { TOrder } from '../../store/orders'
+import { perPage } from '../../constans/constans'
 
 export const Orders: React.FC = () => {
+  const history = useHistory()
+  const dispatch = useDispatch()
+
+  const [city, setCity] = useState<string | null>(null)
+  const [status, setStatus] = useState<string | null>(null)
+  const [amountPages, setAmountPages] = useState(1)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [ordersState, setOrdersState] = useState<TOrder[]>([])
+  const [ordersFiltered, setOrdersFiltered] = useState<TOrder[] | null>([])
+  const [_orders, set_Orders] = useState<TOrder[]>([])
+
+  const handlePaginationClick = (data: { selected: number }) => {
+    setCurrentPage(data.selected + 1)
+  }
+
+  const { data: orders, fetchingState: fetchingStateOrders } = useSelector(
+    ordersSelector,
+  )
+  const { data: cities, fetchingState: fetchingStateCities } = useSelector(
+    citiesSelector,
+  )
+  const {
+    data: orderStatus,
+    fetchingState: fetchingStateOrderStatus,
+  } = useSelector(orderStatusSelector)
+
+  const handleCity = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setCity(event.target.value as string)
+  }
+  const handleStatus = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setStatus(event.target.value as string)
+  }
+  const handleFilterOrders = () => {
+    if (!status && city && city.length > 0 && ordersState.length > 0) {
+      const data = ordersState.filter((order) => {
+        return order.cityId && order.cityId.id === city
+      })
+      if (data.length > 0) {
+        setOrdersFiltered(data)
+      } else {
+        setOrdersFiltered(null)
+      }
+    } else if (!city && status && status.length > 0 && orderStatus.length > 0) {
+      const data = ordersState.filter((order) => {
+        return order.orderStatusId && order.orderStatusId.id === status
+      })
+      if (data.length > 0) {
+        setOrdersFiltered(data)
+      } else {
+        setOrdersFiltered(null)
+      }
+    } else if (
+      city &&
+      city.length > 0 &&
+      status &&
+      status.length > 0 &&
+      orderStatus.length > 0
+    ) {
+      const data = ordersState.filter((order) => {
+        return (
+          order.cityId &&
+          order.orderStatusId &&
+          order.cityId.id === city &&
+          order.orderStatusId.id === status
+        )
+      })
+      if (data.length > 0) {
+        setOrdersFiltered(data)
+      } else {
+        setOrdersFiltered(null)
+      }
+    } else {
+      setOrdersFiltered(ordersState)
+    }
+  }
+
+  useEffect(() => {
+    if (fetchingStateOrders === FetchingStateTypes.none) {
+      dispatch(ordersAction.list())
+    }
+  }, [dispatch, fetchingStateOrders, orders])
+
+  useEffect(() => {
+    if (fetchingStateCities === FetchingStateTypes.none) {
+      dispatch(citiesAction.list())
+    }
+  }, [dispatch, fetchingStateCities, cities])
+
+  useEffect(() => {
+    if (fetchingStateOrderStatus === FetchingStateTypes.none) {
+      dispatch(orderStatusAction.list())
+    }
+  }, [dispatch, fetchingStateOrderStatus, orderStatus])
+  useEffect(() => {
+    console.log('cities ', cities)
+    console.log('orderStatus ', orderStatus)
+    console.log('orders ', orders)
+  }, [cities, orderStatus, orders])
+  useEffect(() => {
+    if (orders) {
+      setOrdersState(orders)
+    }
+  }, [orders])
+
+  useEffect(() => {
+    const lastCarIndex = currentPage * perPage
+    const firstCarIndex = lastCarIndex - perPage
+    if (ordersFiltered && ordersFiltered.length > 0) {
+      setAmountPages(ordersFiltered.length / perPage)
+      set_Orders(ordersFiltered.slice(firstCarIndex, lastCarIndex))
+    } else if (!ordersFiltered) {
+      set_Orders([])
+    } else {
+      setAmountPages(ordersState.length / perPage)
+      set_Orders(ordersState.slice(firstCarIndex, lastCarIndex))
+    }
+  }, [currentPage, orders, ordersFiltered, ordersState])
+
   return (
     <Layout>
-      <OrdersView />
+      <OrdersView
+        amountPages={amountPages}
+        handleCity={handleCity}
+        handleStatus={handleStatus}
+        cities={cities}
+        orderStatus={orderStatus}
+        orders={_orders}
+        handlePaginationClick={handlePaginationClick}
+        handleFilterOrders={handleFilterOrders}
+      />
     </Layout>
   )
 }

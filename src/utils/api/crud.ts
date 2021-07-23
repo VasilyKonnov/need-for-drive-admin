@@ -2,27 +2,20 @@ import queryString from 'query-string'
 import { routes } from '../../constans/constans'
 import { crudAxios } from '../../serviсes/axios'
 import { TCar } from '../../store/cars'
+import { TOrder } from '../../store/orders'
 
 const stringifyConfig = {
   skipNull: true,
 }
 
 const crud = {
-  getOrders(filters: any) {
-    const params = {
-      limit: filters?.limit,
-      page: filters?.page,
-      cityId: filters?.city,
-      orderStatusId: filters?.status,
-      id: filters?.id,
-    }
-    const stringified = queryString.stringify(params, stringifyConfig)
-    return crudAxios.get(`${routes.ORDER}?${stringified}`)
+  async getOrders() {
+    // const response = await crudAxios.get(`${routes.ORDER}?limit=25`)
+    const response = await crudAxios.get(`${routes.ORDER}`)
+    return response.data.data
   },
-  putOrders(id: string, body: any) {
-    const params = {}
-    const stringified = queryString.stringify(params, stringifyConfig)
-    return crudAxios.put(`${routes.ORDER}/${id}?${stringified}`, body)
+  async putOrder(id: string, data: TOrder) {
+    return crudAxios.put(`${routes.ORDER}/${id}`, data)
   },
   async getCities() {
     const response = await crudAxios.get(`${routes.CITY}`)

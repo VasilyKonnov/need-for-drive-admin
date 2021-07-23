@@ -23,14 +23,13 @@ export const CarList: React.FC = () => {
   } = useSelector(carCategorySelector)
 
   const [_category, setCategory] = useState<string | null>(null)
-  const [currentPage, setCurrentPage] = useState(1)
-  const [_cars, setCars] = useState<TCar[]>([])
+  const [_cars, set_Cars] = useState<TCar[]>([])
   const [carsState, setCarsState] = useState<TCar[]>([])
-  const [filteredCars, setFilteredCars] = useState<TCar[]>([])
+  const [filteredCars, setFilteredCars] = useState<TCar[] | null>([])
   const [amountPages, setAmountPages] = useState(1)
+  const [currentPage, setCurrentPage] = useState(1)
 
-  const handlePaginationClick = (data: any) => {
-    console.log('handlePaginationClick - ', data.selected)
+  const handlePaginationClick = (data: { selected: number }) => {
     setCurrentPage(data.selected + 1)
   }
   const handlerCategory = (event: React.ChangeEvent<{ value: unknown }>) => {
@@ -40,11 +39,15 @@ export const CarList: React.FC = () => {
     history.push('/add-car')
   }
   const handleFilterCategory = () => {
-    if (_category && carsState.length > 0) {
+    if (_category && _category.length > 0 && carsState.length > 0) {
       const data = carsState.filter((car) => {
-        return car.categoryId !== null && car.categoryId.id === _category
+        return car.categoryId && car.categoryId.id === _category
       })
-      setFilteredCars(data)
+      if (data.length > 0) {
+        setFilteredCars(data)
+      } else {
+        setFilteredCars(null)
+      }
     } else {
       setFilteredCars(carsState)
     }
@@ -71,12 +74,14 @@ export const CarList: React.FC = () => {
   useEffect(() => {
     const lastCarIndex = currentPage * perPage
     const firstCarIndex = lastCarIndex - perPage
-    if (filteredCars.length > 0) {
+    if (filteredCars && filteredCars.length > 0) {
       setAmountPages(filteredCars.length / perPage)
-      setCars(filteredCars.slice(firstCarIndex, lastCarIndex))
+      set_Cars(filteredCars.slice(firstCarIndex, lastCarIndex))
+    } else if (!filteredCars) {
+      set_Cars([])
     } else {
       setAmountPages(carsState.length / perPage)
-      setCars(carsState.slice(firstCarIndex, lastCarIndex))
+      set_Cars(carsState.slice(firstCarIndex, lastCarIndex))
     }
   }, [filteredCars, currentPage, carsState])
 

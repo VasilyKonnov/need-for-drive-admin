@@ -1,4 +1,3 @@
-import { TOrders } from '../../pages/Orders/OrdersTypes'
 import { makeStyles } from '@material-ui/core/styles'
 import { useState, useEffect } from 'react'
 import {
@@ -23,7 +22,7 @@ const useStyles = makeStyles({
   },
 })
 
-export const Layout: React.FC<TOrders> = ({ children }) => {
+export const Layout: React.FC = ({ children }) => {
   const classes = useStyles()
   const history = useHistory()
   const dispatch = useDispatch()

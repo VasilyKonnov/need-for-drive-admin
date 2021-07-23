@@ -5,7 +5,7 @@ export type TCarListView = {
   cars: TCar[]
   handlerCategory: (event: React.ChangeEvent<{ value: unknown }>) => void
   addCar: () => void
-  handlePaginationClick: (data: any) => void
+  handlePaginationClick: (data: { selected: number }) => void
   amountPages: number
   carsCategoty: TCarCategory[]
   handleFilterCategory: () => void

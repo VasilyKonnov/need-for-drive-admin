@@ -8,6 +8,7 @@ import { citiesReducer } from './cities'
 import { cityPointsReducer } from './cityPoints'
 import { carCategoryReducer } from './carCategory'
 import { carsReducer } from './cars'
+import { ordersReducer } from './orders'
 export const store = configureStore({
   reducer: {
     user: userReducer,
@@ -18,6 +19,7 @@ export const store = configureStore({
     cityPoints: cityPointsReducer,
     carCategory: carCategoryReducer,
     cars: carsReducer,
+    orders: ordersReducer,
   },
   middleware: [thunk],
 })

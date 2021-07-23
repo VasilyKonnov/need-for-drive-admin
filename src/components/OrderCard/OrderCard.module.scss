@@ -13,8 +13,14 @@
     .imgWrap {
       margin-right: 16px;
       margin-bottom: 10px;
+      width: 136px;
+      text-align: center;
+      img {
+        width: 100%;
+      }
     }
     .carInfo {
+      width: auto;
       p {
         font-size: 13px;
         color: #868e96;
@@ -125,6 +131,18 @@
     flex-direction: row;
     .car {
       flex-direction: row;
+      .carInfo {
+        width: 290px;
+        flex-shrink: 0;
+      }
+    }
+    .additionally {
+      width: 95px;
+      flex-shrink: 0;
+    }
+    .price {
+      width: 90px;
+      flex-shrink: 0;
     }
     .buttons {
       flex-direction: column;
