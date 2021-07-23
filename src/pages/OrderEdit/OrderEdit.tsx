@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import { ButtonPrimary, ButtonSecondary, Select } from '../../components'
+import { ButtonPrimary, ButtonSecondary } from '../../components'
 import { Layout } from './../../components/Layout/Layout'
-import { Grid } from '@material-ui/core'
+import { Grid, MenuItem } from '@material-ui/core'
 import DatePicker from 'react-datepicker'
 import Checkbox from '@material-ui/core/Checkbox'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
@@ -71,30 +71,34 @@ export const OrderEdit = () => {
                 label="Город"
                 labelId="labelId-1"
                 id="select-1"
-                data={data}
                 handlerChange={handlerModel}
-              />
+              >
+                {<MenuItem value={''}>{'category.name'}</MenuItem>}
+              </SelectVsLabel>
               <SelectVsLabel
                 label="Пункт выдачи"
                 labelId="labelId-1"
                 id="select-1"
-                data={data}
                 handlerChange={handlerModel}
-              />
+              >
+                {<MenuItem value={''}>{'category.name'}</MenuItem>}
+              </SelectVsLabel>
               <SelectVsLabel
                 label="Статус"
                 labelId="labelId-1"
                 id="select-1"
-                data={data}
                 handlerChange={handlerModel}
-              />
+              >
+                {<MenuItem value={''}>{'category.name'}</MenuItem>}
+              </SelectVsLabel>
               <SelectVsLabel
                 label="Тариф"
                 labelId="labelId-1"
                 id="select-1"
-                data={data}
                 handlerChange={handlerModel}
-              />
+              >
+                {<MenuItem value={''}>{'category.name'}</MenuItem>}
+              </SelectVsLabel>
               <div className="wrapperDate">
                 <span>Аренда от</span>
                 <DatePicker

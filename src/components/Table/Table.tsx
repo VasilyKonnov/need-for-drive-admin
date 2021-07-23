@@ -6,7 +6,6 @@ import TableContainer from '@material-ui/core/TableContainer'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import AddIcon from '@material-ui/icons/Add'
-import CreateIcon from '@material-ui/icons/Create'
 import { TTable } from './TableTypes'
 import { ButtonPrimary } from '..'
 

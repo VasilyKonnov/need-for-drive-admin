@@ -6,25 +6,7 @@ import { ButtonPrimary } from './../../components/ButtonPrimary/ButtonPrimary'
 import { TTariffs } from './TariffsTypes'
 import { Modal, Table } from '../../components'
 import { InputVsLabel } from './../../components/InputVsLabel/InputVsLabel'
-import { Spinner } from '..'
-
-function createData(
-  name: string,
-  calories: number,
-  fat: number,
-  carbs: number,
-  protein: number,
-) {
-  return { name, calories, fat, carbs, protein }
-}
-
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-]
+import { Spinner } from '../../components'
 
 export const TariffsView: React.FC<TTariffs> = ({
   isModalRate,
@@ -45,7 +27,7 @@ export const TariffsView: React.FC<TTariffs> = ({
       <Grid item xs={12} sm={6}>
         <h2 className="admin-page-title">Тарифы</h2>
         <div className="content-wrap withOutHeaderFooter">
-          {rates ? (
+          {rates.length > 0 ? (
             <Table
               handlerOpenAdd={handleModalRateOpen}
               tableHeadData={['Название', 'Цена']}
@@ -75,7 +57,7 @@ export const TariffsView: React.FC<TTariffs> = ({
       <Grid item xs={12} sm={6}>
         <h2 className="admin-page-title">Типы тарифов</h2>
         <div className="content-wrap withOutHeaderFooter">
-          {rateTypes ? (
+          {rateTypes.length > 0 ? (
             <Table
               handlerOpenAdd={handleModalRateTypeOpen}
               tableHeadData={['Название', 'Единици измерения']}

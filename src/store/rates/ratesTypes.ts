@@ -1,5 +1,3 @@
-import { Dispatch } from 'react'
-
 export type TRatesAction = {
   list: () => (dispatch: any) => void
 }

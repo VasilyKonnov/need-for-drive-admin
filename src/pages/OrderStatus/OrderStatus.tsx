@@ -1,9 +1,18 @@
 import { Layout } from '../../components'
 import { OrderStatusView } from './OrderStatusView'
-import { useState } from 'react'
-import styles from './OrderStatus.module.scss'
+import { useEffect, useState } from 'react'
+import { FetchingStateTypes } from '../../store'
+import { useDispatch, useSelector } from 'react-redux'
+import { orderStatusSelector } from '../../store/orderStatus/orderStatusSelector'
+import { orderStatusAction } from '../../store/orderStatus/orderStatusAction'
 
 export const OrderStatus: React.FC = () => {
+  const dispatch = useDispatch()
+  const {
+    data: orderStatus,
+    fetchingState: fetchingStateOrderStatus,
+  } = useSelector(orderStatusSelector)
+
   const [isOpen, setIsOpen] = useState(false)
   const [isEdit, setIsEdit] = useState(false)
   const handleOpen = () => {
@@ -17,6 +26,13 @@ export const OrderStatus: React.FC = () => {
     setIsEdit(true)
     setIsOpen(true)
   }
+
+  useEffect(() => {
+    if (fetchingStateOrderStatus === FetchingStateTypes.none) {
+      dispatch(orderStatusAction.list())
+    }
+  }, [dispatch, fetchingStateOrderStatus, orderStatus])
+
   return (
     <Layout>
       <OrderStatusView
@@ -25,6 +41,7 @@ export const OrderStatus: React.FC = () => {
         handleOpen={handleOpen}
         handleClose={handleClose}
         handleEdit={handleEdit}
+        orderStatus={orderStatus}
       />
     </Layout>
   )

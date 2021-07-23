@@ -34,7 +34,6 @@ export const Tariffs: React.FC = () => {
       dispatch(rateTypesAction.list())
     }
     if (rateTypes) {
-      console.log('rateTypes', rateTypes)
     }
   }, [dispatch, fetchingStateRateTypes, rateTypes])
 

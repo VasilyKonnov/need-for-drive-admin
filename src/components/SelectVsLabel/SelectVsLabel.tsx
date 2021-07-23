@@ -6,19 +6,15 @@ export const SelectVsLabel: React.FC<TSelect> = ({
   handlerChange,
   labelId,
   id,
-  data,
+  children,
   label,
 }) => {
   return (
     <div className={styles.selectWrap}>
       <p className={styles.title}>{label}</p>
-      <Select
-        labelId={labelId}
-        id={id}
-        label=""
-        data={data}
-        handlerChange={handlerChange}
-      />
+      <Select labelId={labelId} id={id} label="" handlerChange={handlerChange}>
+        {children}
+      </Select>
     </div>
   )
 }

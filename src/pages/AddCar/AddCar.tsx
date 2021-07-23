@@ -6,7 +6,6 @@ import {
   ProgressLine,
 } from '../../components'
 import stabImg from '../../assets/image/placeholder.png'
-import AddIcon from '@material-ui/icons/Add'
 import styles from './AddCar.module.scss'
 import { ButtonSecondary } from './../../components/ButtonSecondary/ButtonSecondary'
 

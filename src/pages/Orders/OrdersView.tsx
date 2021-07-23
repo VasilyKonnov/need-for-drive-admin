@@ -5,6 +5,7 @@ import FastRewindIcon from '@material-ui/icons/FastRewind'
 import FastForwardIcon from '@material-ui/icons/FastForward'
 import { OrderCard } from '../../components/OrderCard'
 import './Orders.scss'
+import { MenuItem } from '@material-ui/core'
 
 const data = ['раз', 'два', 'три', 'четыре', 'пять']
 
@@ -25,23 +26,26 @@ export const OrdersView: React.FC = () => {
               label="Модель"
               labelId="labelId-1"
               id="select-1"
-              data={data}
               handlerChange={handlerModel}
-            />
+            >
+              {<MenuItem value={''}>{'category.name'}</MenuItem>}
+            </Select>
             <Select
               label="Город"
               labelId="labelId-2"
               id="select-2"
-              data={data}
               handlerChange={handlerModel}
-            />
+            >
+              {<MenuItem value={''}>{'category.name'}</MenuItem>}
+            </Select>
             <Select
               label="Статус"
               labelId="labelId-3"
               id="select-3"
-              data={data}
               handlerChange={handlerModel}
-            />
+            >
+              {<MenuItem value={''}>{'category.name'}</MenuItem>}
+            </Select>
           </div>
           <ButtonPrimary className={'prymaryBtn'}>Применить</ButtonPrimary>
         </div>

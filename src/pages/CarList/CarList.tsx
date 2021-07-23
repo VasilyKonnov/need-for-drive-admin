@@ -1,11 +1,96 @@
 import { Layout } from '../../components'
 import { CarListView } from './CarListView'
-import styles from './CarList.module.scss'
+import { useEffect, useState } from 'react'
+import { FetchingStateTypes } from '../../store'
+import { useDispatch, useSelector } from 'react-redux'
+import { carsSelector } from '../../store/cars/carsSelector'
+import { carsAction } from '../../store/cars/carsAction'
+import { useHistory } from 'react-router-dom'
+import { TCar } from '../../store/cars'
+import { perPage } from '../../constans/constans'
+import { carCategorySelector } from '../../store/carCategory/carCategorySelector'
+import { carCategoryAction } from '../../store/carCategory/carCategoryAction'
 
 export const CarList: React.FC = () => {
+  const history = useHistory()
+  const dispatch = useDispatch()
+  const { data: cars, fetchingState: fetchingStateCars } = useSelector(
+    carsSelector,
+  )
+  const {
+    data: carsCategoty,
+    fetchingState: fetchingStateCarsCategory,
+  } = useSelector(carCategorySelector)
+
+  const [_category, setCategory] = useState<string | null>(null)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [_cars, setCars] = useState<TCar[]>([])
+  const [carsState, setCarsState] = useState<TCar[]>([])
+  const [filteredCars, setFilteredCars] = useState<TCar[]>([])
+  const [amountPages, setAmountPages] = useState(1)
+
+  const handlePaginationClick = (data: any) => {
+    console.log('handlePaginationClick - ', data.selected)
+    setCurrentPage(data.selected + 1)
+  }
+  const handlerCategory = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setCategory(event.target.value as string)
+  }
+  const addCar = () => {
+    history.push('/add-car')
+  }
+  const handleFilterCategory = () => {
+    if (_category && carsState.length > 0) {
+      const data = carsState.filter((car) => {
+        return car.categoryId !== null && car.categoryId.id === _category
+      })
+      setFilteredCars(data)
+    } else {
+      setFilteredCars(carsState)
+    }
+  }
+
+  useEffect(() => {
+    if (fetchingStateCars === FetchingStateTypes.none) {
+      dispatch(carsAction.list())
+    }
+  }, [dispatch, fetchingStateCars, cars])
+
+  useEffect(() => {
+    if (fetchingStateCarsCategory === FetchingStateTypes.none) {
+      dispatch(carCategoryAction.list())
+    }
+  }, [dispatch, fetchingStateCarsCategory, carsCategoty])
+
+  useEffect(() => {
+    if (cars) {
+      setCarsState(cars)
+    }
+  }, [cars])
+
+  useEffect(() => {
+    const lastCarIndex = currentPage * perPage
+    const firstCarIndex = lastCarIndex - perPage
+    if (filteredCars.length > 0) {
+      setAmountPages(filteredCars.length / perPage)
+      setCars(filteredCars.slice(firstCarIndex, lastCarIndex))
+    } else {
+      setAmountPages(carsState.length / perPage)
+      setCars(carsState.slice(firstCarIndex, lastCarIndex))
+    }
+  }, [filteredCars, currentPage, carsState])
+
   return (
     <Layout>
-      <CarListView />
+      <CarListView
+        amountPages={amountPages}
+        cars={_cars}
+        handlerCategory={handlerCategory}
+        addCar={addCar}
+        handlePaginationClick={handlePaginationClick}
+        carsCategoty={carsCategoty}
+        handleFilterCategory={handleFilterCategory}
+      />
     </Layout>
   )
 }

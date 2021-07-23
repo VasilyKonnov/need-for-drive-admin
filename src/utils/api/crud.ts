@@ -1,6 +1,7 @@
 import queryString from 'query-string'
 import { routes } from '../../constans/constans'
 import { crudAxios } from '../../serviсes/axios'
+import { TCar } from '../../store/cars'
 
 const stringifyConfig = {
   skipNull: true,
@@ -23,8 +24,9 @@ const crud = {
     const stringified = queryString.stringify(params, stringifyConfig)
     return crudAxios.put(`${routes.ORDER}/${id}?${stringified}`, body)
   },
-  getCities() {
-    return crudAxios.get(`${routes.CITY}`)
+  async getCities() {
+    const response = await crudAxios.get(`${routes.CITY}`)
+    return response.data.data
   },
   putCities(id: string, body: any) {
     return crudAxios.put(`${routes.CITY}/${id}`, body)
@@ -35,16 +37,17 @@ const crud = {
   deleteCities(id: string) {
     return crudAxios.delete(`${routes.CITY}/${id}`)
   },
-  getPoints() {
-    return crudAxios.get(`${routes.POINT}`)
+  async getCityPoints() {
+    const response = await crudAxios.get(`${routes.POINT}`)
+    return response.data.data
   },
-  putPoints(id: string, body: any) {
+  putCityPoints(id: string, body: any) {
     return crudAxios.put(`${routes.POINT}/${id}`, body)
   },
-  postPoints(body: any) {
+  postCityPoints(body: any) {
     return crudAxios.post(`${routes.POINT}`, body)
   },
-  deletePoints(id: string) {
+  deleteCityPoints(id: string) {
     return crudAxios.delete(`${routes.POINT}/${id}`)
   },
   async getRates() {
@@ -73,54 +76,44 @@ const crud = {
   deleteRateTypes(id: string) {
     return crudAxios.delete(`${routes.RATETYPE}/${id}`)
   },
-  getCars(filters: any) {
-    const params = {
-      limit: filters?.limit,
-      page: filters?.page,
-      categoryId: filters?.categoryId,
-      id: filters?.id,
-    }
-    const stringified = queryString.stringify(params, stringifyConfig)
-    return crudAxios.get(`${routes.CAR}?${stringified}`)
+  async getCars() {
+    const response = await crudAxios.get(`${routes.CAR}`)
+    return response.data.data
   },
-  postCars(body: any) {
-    const params = {}
-    const stringified = queryString.stringify(params, stringifyConfig)
-    return crudAxios.post(`${routes.CAR}?${stringified}`, body)
+  postCars(car: TCar) {
+    return crudAxios.post(`${routes.CAR}`, car)
   },
-  putCars(id: string, body: any) {
-    const params = {}
-    const stringified = queryString.stringify(params, stringifyConfig)
-    return crudAxios.put(`${routes.CAR}/${id}?${stringified}`, body)
+  putCars(id: string, car: TCar) {
+    return crudAxios.put(`${routes.CAR}/${id}`, car)
   },
   deleteCars(id: string) {
-    const params = {}
-    const stringified = queryString.stringify(params, stringifyConfig)
-    return crudAxios.delete(`${routes.CAR}/${id}?${stringified}`)
+    return crudAxios.delete(`${routes.CAR}/${id}`)
   },
-  getCategories() {
-    return crudAxios.get(`${routes.CATEGORY}`)
+  async getCarCategories() {
+    const response = await crudAxios.get(`${routes.CATEGORY}`)
+    return response.data.data
   },
-  putCategories(id: string, body: any) {
+  putCarCategories(id: string, body: any) {
     return crudAxios.put(`${routes.CATEGORY}/${id}`, body)
   },
-  postCategories(body: any) {
+  postCarCategories(body: any) {
     return crudAxios.post(`${routes.CATEGORY}`, body)
   },
-  deleteCategories(id: string) {
+  deleteCarCategories(id: string) {
     return crudAxios.delete(`${routes.CATEGORY}/${id}`)
   },
-  getStatuses() {
-    return crudAxios.get(`${routes.STATUS}`)
+  async getOrderStatuses() {
+    const response = await crudAxios.get(`${routes.ORDER_STATUS}`)
+    return response.data.data
   },
-  putStatuses(id: string, body: any) {
-    return crudAxios.put(`${routes.STATUS}/${id}`, body)
+  putOrderStatus(id: string, body: any) {
+    return crudAxios.put(`${routes.ORDER_STATUS}/${id}`, body)
   },
-  postStatuses(body: any) {
-    return crudAxios.post(`${routes.STATUS}`, body)
+  postOrderStatus(body: any) {
+    return crudAxios.post(`${routes.ORDER_STATUS}`, body)
   },
-  deleteStatuses(id: string) {
-    return crudAxios.delete(`${routes.STATUS}/${id}`)
+  deleteOrderStatus(id: string) {
+    return crudAxios.delete(`${routes.ORDER_STATUS}/${id}`)
   },
 }
 

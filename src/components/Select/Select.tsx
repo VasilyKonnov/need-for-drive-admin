@@ -7,7 +7,7 @@ export const CustomSelect: React.FC<TSelect> = ({
   handlerChange,
   labelId,
   id,
-  data,
+  children,
   label,
 }) => {
   return (
@@ -22,11 +22,7 @@ export const CustomSelect: React.FC<TSelect> = ({
         <MenuItem value="">
           <em>-----</em>
         </MenuItem>
-        {data
-          ? data.map((item: string, id: number) => {
-              return <MenuItem value={item}>{item}</MenuItem>
-            })
-          : null}
+        {children}
       </Select>
     </FormControl>
   )

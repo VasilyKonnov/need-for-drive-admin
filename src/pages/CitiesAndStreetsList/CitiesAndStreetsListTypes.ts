@@ -1,3 +1,6 @@
+import { TCity } from '../../store/cities'
+import { TCityPoint } from '../../store/cityPoints'
+
 export type TCitiesAndStreetsList = {
   isOpenCity: boolean
   isOpenStreet: boolean
@@ -9,4 +12,6 @@ export type TCitiesAndStreetsList = {
   handleCloseModalStreet: () => void
   handleEditStreet: () => void
   handleEditCity: () => void
+  cities: TCity[]
+  cityPoints: TCityPoint[]
 }
