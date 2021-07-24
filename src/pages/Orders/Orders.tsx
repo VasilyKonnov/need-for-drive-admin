@@ -1,9 +1,9 @@
-import { Layout } from '../../components'
+import { Layout, Spinner } from '../../components'
 import { OrdersView } from './OrdersView'
 import { useEffect, useState } from 'react'
 import { FetchingStateTypes } from '../../store'
 import { useDispatch, useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { Redirect, useHistory } from 'react-router-dom'
 
 import { ordersSelector } from '../../store/orders/ordersSelector'
 import { ordersAction } from '../../store/orders/ordersAction'
@@ -14,7 +14,7 @@ import { orderStatusSelector } from '../../store/orderStatus/orderStatusSelector
 import { orderStatusAction } from '../../store/orderStatus/orderStatusAction'
 
 import { TOrder } from '../../store/orders'
-import { perPage } from '../../constans/constans'
+import { perPage, routes } from '../../constans/constans'
 
 export const Orders: React.FC = () => {
   const history = useHistory()
@@ -49,6 +49,7 @@ export const Orders: React.FC = () => {
   const handleStatus = (event: React.ChangeEvent<{ value: unknown }>) => {
     setStatus(event.target.value as string)
   }
+
   const handleFilterOrders = () => {
     if (!status && city && city.length > 0 && ordersState.length > 0) {
       const data = ordersState.filter((order) => {
@@ -137,16 +138,22 @@ export const Orders: React.FC = () => {
 
   return (
     <Layout>
-      <OrdersView
-        amountPages={amountPages}
-        handleCity={handleCity}
-        handleStatus={handleStatus}
-        cities={cities}
-        orderStatus={orderStatus}
-        orders={_orders}
-        handlePaginationClick={handlePaginationClick}
-        handleFilterOrders={handleFilterOrders}
-      />
+      {fetchingStateOrders === FetchingStateTypes.loading ? <Spinner /> : null}
+      {fetchingStateOrders === FetchingStateTypes.success ? (
+        <OrdersView
+          amountPages={amountPages}
+          handleCity={handleCity}
+          handleStatus={handleStatus}
+          cities={cities}
+          orderStatus={orderStatus}
+          orders={_orders}
+          handlePaginationClick={handlePaginationClick}
+          handleFilterOrders={handleFilterOrders}
+        />
+      ) : null}
+      {fetchingStateOrders === FetchingStateTypes.failed ? (
+        <Redirect to={routes.ERROR_500} />
+      ) : null}
     </Layout>
   )
 }

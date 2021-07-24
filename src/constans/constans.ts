@@ -14,6 +14,7 @@ const routes = {
   CAR: 'db/car',
   CATEGORY: 'db/category',
   ORDER_STATUS: 'db/orderStatus',
+  ERROR_500: '/error-500',
 }
 const perPage = 10
 export { xApiFactory, secret, apiUrl, routes, imgUrl, perPage }

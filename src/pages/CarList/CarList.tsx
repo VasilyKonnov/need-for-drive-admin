@@ -1,13 +1,14 @@
-import { Layout } from '../../components'
+import { useHistory } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
+import { Layout, Spinner } from '../../components'
 import { CarListView } from './CarListView'
 import { useEffect, useState } from 'react'
 import { FetchingStateTypes } from '../../store'
 import { useDispatch, useSelector } from 'react-redux'
 import { carsSelector } from '../../store/cars/carsSelector'
 import { carsAction } from '../../store/cars/carsAction'
-import { useHistory } from 'react-router-dom'
 import { TCar } from '../../store/cars'
-import { perPage } from '../../constans/constans'
+import { perPage, routes } from '../../constans/constans'
 import { carCategorySelector } from '../../store/carCategory/carCategorySelector'
 import { carCategoryAction } from '../../store/carCategory/carCategoryAction'
 
@@ -87,15 +88,21 @@ export const CarList: React.FC = () => {
 
   return (
     <Layout>
-      <CarListView
-        amountPages={amountPages}
-        cars={_cars}
-        handlerCategory={handlerCategory}
-        addCar={addCar}
-        handlePaginationClick={handlePaginationClick}
-        carsCategoty={carsCategoty}
-        handleFilterCategory={handleFilterCategory}
-      />
+      {fetchingStateCars === FetchingStateTypes.loading ? <Spinner /> : null}
+      {fetchingStateCars === FetchingStateTypes.success ? (
+        <CarListView
+          amountPages={amountPages}
+          cars={_cars}
+          handlerCategory={handlerCategory}
+          addCar={addCar}
+          handlePaginationClick={handlePaginationClick}
+          carsCategoty={carsCategoty}
+          handleFilterCategory={handleFilterCategory}
+        />
+      ) : null}
+      {fetchingStateCars === FetchingStateTypes.failed ? (
+        <Redirect to={routes.ERROR_500} />
+      ) : null}
     </Layout>
   )
 }
