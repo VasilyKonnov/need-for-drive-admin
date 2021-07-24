@@ -141,9 +141,9 @@
   p {
     color: #121212;
     font-size: 11px;
-    font-family: Helvetica;
+    line-height: 11px;
     margin: 0;
-    margin-bottom: 4px;
+    margin-bottom: 9px;
   }
   textarea {
     width: 100%;
@@ -151,12 +151,21 @@
     box-sizing: border-box;
     height: 90px;
     border-radius: 4px;
-    border: 1px solid #becad6;
+    border: 0.5px solid #becad6;
     resize: none;
     outline: none;
-    text-indent: 10px;
+    text-indent: 0px;
     color: #3d5170;
     font-size: 11px;
+    padding: 10px;
+    box-sizing: border-box;
+    font-family: Helvetica;
+    &:hover {
+      border: 0.5px solid #9ba5af;
+    }
+    &:focus {
+      border: 0.5px solid #73b7ff;
+    }
   }
 }
 .addColor {

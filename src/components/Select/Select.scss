@@ -17,20 +17,32 @@
     transform: translate(14px, 10px) scale(1);
   }
   .MuiOutlinedInput-input {
-    font-size: 12px;
+    font-size: 11px;
+    color: #3d5170;
+    font-family: Helvetica;
   }
   .MuiSvgIcon-root {
     font-size: 13px;
     padding-right: 10px;
   }
   .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
-    border-color: #becad6;
-    border-width: 1px;
+    border-color: #73b7ff;
+    border-width: 0.5px;
   }
   .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
-    border-color: #becad6;
+    border-color: #9ba5af;
+    transition: all 0.3s ease;
+    border-width: 0.5px;
   }
 }
+.MuiList-root.MuiMenu-list {
+  .MuiListItem-root {
+    font-size: 11px;
+    color: #3d5170;
+    font-family: Helvetica;
+  }
+}
+
 @media screen and(min-width: '485px') {
   .MuiFormControl-root.CustomSelect {
     min-width: 200px;

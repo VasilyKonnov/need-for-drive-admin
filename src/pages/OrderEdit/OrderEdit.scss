@@ -10,24 +10,28 @@
 }
 
 .additionalServices {
-  margin-bottom: 15px;
+  margin-bottom: 17px;
   display: table;
   .additionalServices--title {
-    font-size: 13px;
+    font-size: 11px;
+    line-height: 11px;
     margin-top: 0;
+    margin-bottom: 3px;
   }
 }
 .LabelCheckboxPrimary {
   display: block !important;
   height: 22px;
-  margin-bottom: 15px;
+  margin-bottom: 11.5px;
   .MuiFormControlLabel-label {
-    font-size: 12px;
+    font-size: 11px;
+    font-family: Helvetica;
   }
 }
 .LabelRadioBtn {
   .MuiFormControlLabel-label {
-    font-size: 12px;
+    font-size: 11px;
+    font-family: Helvetica;
   }
 }
 .checkboxPrimary {
