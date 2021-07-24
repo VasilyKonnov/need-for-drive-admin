@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/need-for-drive-admin/static/css/main.9e2ae952.chunk.css",
+    "main.css": "/need-for-drive-admin/static/css/main.0550d8a4.chunk.css",
     "main.js": "/need-for-drive-admin/static/js/main.38c56485.chunk.js",
     "main.js.map": "/need-for-drive-admin/static/js/main.38c56485.chunk.js.map",
     "runtime-main.js": "/need-for-drive-admin/static/js/runtime-main.52a57f70.js",
@@ -12,7 +12,7 @@
     "static/js/3.95239a68.chunk.js.map": "/need-for-drive-admin/static/js/3.95239a68.chunk.js.map",
     "index.html": "/need-for-drive-admin/index.html",
     "static/css/2.5b5b985f.chunk.css.map": "/need-for-drive-admin/static/css/2.5b5b985f.chunk.css.map",
-    "static/css/main.9e2ae952.chunk.css.map": "/need-for-drive-admin/static/css/main.9e2ae952.chunk.css.map",
+    "static/css/main.0550d8a4.chunk.css.map": "/need-for-drive-admin/static/css/main.0550d8a4.chunk.css.map",
     "static/js/2.32b8a60c.chunk.js.LICENSE.txt": "/need-for-drive-admin/static/js/2.32b8a60c.chunk.js.LICENSE.txt",
     "static/media/LogoIcon.42a15795.svg": "/need-for-drive-admin/static/media/LogoIcon.42a15795.svg",
     "static/media/OrderCard.module.scss": "/need-for-drive-admin/static/media/noCheckIcon.abc0c92f.svg",
@@ -23,7 +23,7 @@
     "static/js/runtime-main.52a57f70.js",
     "static/css/2.5b5b985f.chunk.css",
     "static/js/2.32b8a60c.chunk.js",
-    "static/css/main.9e2ae952.chunk.css",
+    "static/css/main.0550d8a4.chunk.css",
     "static/js/main.38c56485.chunk.js"
   ]
 }
