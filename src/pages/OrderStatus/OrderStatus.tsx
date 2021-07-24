@@ -15,18 +15,35 @@ export const OrderStatus: React.FC = () => {
     fetchingState: fetchingStateOrderStatus,
   } = useSelector(orderStatusSelector)
 
-  const [isOpen, setIsOpen] = useState(false)
-  const [isEdit, setIsEdit] = useState(false)
-  const handleOpen = () => {
-    setIsOpen(true)
+  const [isOpenAdd, setIsOpenAdd] = useState(false)
+  const [isOpenEdit, setIsOpenEdit] = useState(false)
+  const [addStatus, setIsAddStatus] = useState<string>('')
+  const [editStatus, setIsEditStatus] = useState<string>('')
+  const [editStatusId, setIsEditStatusId] = useState<string | number>('')
+
+  const handleAddStatus = (e: React.FormEvent<HTMLInputElement>) => {
+    setIsAddStatus(e.currentTarget.value)
   }
-  const handleClose = () => {
-    setIsOpen(false)
-    setIsEdit(false)
+  const handleEditStatus = (e: React.FormEvent<HTMLInputElement>) => {
+    setIsEditStatus(e.currentTarget.value)
   }
-  const handleEdit = () => {
-    setIsEdit(true)
-    setIsOpen(true)
+  const handleOpenEdit = (id: number | string) => {
+    setIsOpenEdit(true)
+    setIsEditStatusId(id)
+    const status = orderStatus.find((status) => status.id === id)
+    if (status) setIsEditStatus(status.name)
+  }
+  const handleCloseEdit = () => {
+    setIsOpenEdit(false)
+    setIsEditStatus('')
+    setIsEditStatusId('')
+  }
+  const handleOpenAdd = () => {
+    setIsOpenAdd(true)
+  }
+  const handleCloseAdd = () => {
+    setIsOpenAdd(false)
+    setIsAddStatus('')
   }
 
   useEffect(() => {
@@ -35,25 +52,34 @@ export const OrderStatus: React.FC = () => {
     }
   }, [dispatch, fetchingStateOrderStatus, orderStatus])
 
+  useEffect(() => {
+    console.log('editStatusId - ', editStatusId)
+  }, [editStatusId])
+
   return (
     <Layout>
+      {fetchingStateOrderStatus === FetchingStateTypes.success ? (
+        <OrderStatusView
+          isOpenAdd={isOpenAdd}
+          isOpenEdit={isOpenEdit}
+          handleOpenAdd={handleOpenAdd}
+          handleCloseAdd={handleCloseAdd}
+          handleOpenEdit={handleOpenEdit}
+          handleCloseEdit={handleCloseEdit}
+          orderStatus={orderStatus}
+          handleAddStatus={handleAddStatus}
+          handleEditStatus={handleEditStatus}
+          editStatus={editStatus}
+          addStatus={addStatus}
+        />
+      ) : null}
+
       {fetchingStateOrderStatus === FetchingStateTypes.loading ? (
         <Spinner />
       ) : null}
 
       {fetchingStateOrderStatus === FetchingStateTypes.failed ? (
         <Redirect to={routes.ERROR_500} />
-      ) : null}
-
-      {fetchingStateOrderStatus === FetchingStateTypes.success ? (
-        <OrderStatusView
-          isOpen={isOpen}
-          isEdit={isEdit}
-          handleOpen={handleOpen}
-          handleClose={handleClose}
-          handleEdit={handleEdit}
-          orderStatus={orderStatus}
-        />
       ) : null}
     </Layout>
   )

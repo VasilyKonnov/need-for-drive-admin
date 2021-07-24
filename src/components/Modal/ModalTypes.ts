@@ -4,6 +4,6 @@ export type TModalTypes = {
   buttonTitle: string
   onClose: () => void
   children: JSX.Element[] | JSX.Element
-  buttonClick: any
-  // buttonClick: (() => void) | ((val: any) => void)
+  buttonClick: (() => void) | undefined
+  isBtnDisable?: boolean
 }

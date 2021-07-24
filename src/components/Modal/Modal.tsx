@@ -10,6 +10,7 @@ export const Modal: React.FC<TModalTypes> = ({
   children,
   buttonClick,
   buttonTitle,
+  isBtnDisable,
 }) => {
   return (
     <Dialog
@@ -21,7 +22,11 @@ export const Modal: React.FC<TModalTypes> = ({
       <div className={styles.modal}>
         <h3 className="modalTitle">{title}</h3>
         {children}
-        <ButtonPrimary onClick={buttonClick} className="modalBtn">
+        <ButtonPrimary
+          disabled={isBtnDisable}
+          onClick={buttonClick}
+          className="modalBtn"
+        >
           {buttonTitle}
         </ButtonPrimary>
       </div>

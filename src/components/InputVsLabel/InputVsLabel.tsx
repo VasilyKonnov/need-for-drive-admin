@@ -10,9 +10,20 @@ export const InputVsLabel: React.FC<TInputVsLabel> = ({
   id,
   onChange,
   type,
+  isValid,
+  validMesage,
+  value,
 }) => {
-  const classesLabel = classNames(classLabel ? classLabel : '', styles.label)
-  const classesInput = classNames(classInput ? classInput : '', styles.input)
+  const classesLabel = classNames(
+    classLabel ? classLabel : '',
+    styles.label,
+    isValid ? styles.noValid : '',
+  )
+  const classesInput = classNames(
+    classInput ? classInput : '',
+    styles.input,
+    isValid ? styles.noValid : '',
+  )
   return (
     <div className={styles.wrap}>
       <label htmlFor={id} className={classesLabel}>
@@ -23,7 +34,11 @@ export const InputVsLabel: React.FC<TInputVsLabel> = ({
         id={id}
         className={classesInput}
         onChange={onChange}
+        value={value ? value : ''}
       />
+      <span className={styles.errorMesage}>
+        {validMesage ? validMesage : ''}
+      </span>
     </div>
   )
 }

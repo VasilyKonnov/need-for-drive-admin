@@ -7,31 +7,36 @@ import { TOrderStatusView } from './OrderStatusTypes'
 import { InputVsLabel } from './../../components/InputVsLabel/InputVsLabel'
 
 export const OrderStatusView: React.FC<TOrderStatusView> = ({
-  isOpen,
-  isEdit,
-  handleOpen,
-  handleClose,
-  handleEdit,
+  isOpenAdd,
+  isOpenEdit,
+  handleOpenAdd,
+  handleCloseAdd,
+  handleOpenEdit,
+  handleCloseEdit,
   orderStatus,
+  handleAddStatus,
+  handleEditStatus,
+  addStatus,
+  editStatus,
 }) => {
   return (
     <>
       <h1 className="admin-page-title">Статус заказа</h1>
       <div className="content-wrap withOutHeaderFooter">
         {orderStatus.length > 0 ? (
-          <Table handlerOpenAdd={handleOpen} tableHeadData={['Статус']}>
-            {orderStatus.map((statys) => {
+          <Table handlerOpenAdd={handleOpenAdd} tableHeadData={['Статус']}>
+            {orderStatus.map((status) => {
               return (
                 <TableRow>
                   <TableCell component="th" scope="row">
                     <ButtonPrimary
-                      onClick={handleEdit}
+                      onClick={() => handleOpenEdit(status.id)}
                       className={'buttonInTable'}
                     >
                       <CreateIcon />
                     </ButtonPrimary>
                   </TableCell>
-                  <TableCell>{statys.name}</TableCell>
+                  <TableCell>{status.name}</TableCell>
                 </TableRow>
               )
             })}
@@ -41,16 +46,33 @@ export const OrderStatusView: React.FC<TOrderStatusView> = ({
         )}
       </div>
       <Modal
-        open={isOpen}
-        onClose={handleClose}
-        title={isEdit ? 'Редактировать' : 'Добавить' + ' статус заказа'}
+        open={isOpenAdd}
+        onClose={handleCloseAdd}
+        title={'Добавить статус заказа'}
         buttonClick={() => console.log('r')}
         buttonTitle="Сохранить"
+        isBtnDisable={addStatus.length < 1}
       >
         <InputVsLabel
           id="status"
           label="Введите статус"
-          onChange={() => console.log('k')}
+          onChange={handleAddStatus}
+          value={addStatus}
+        />
+      </Modal>
+      <Modal
+        open={isOpenEdit}
+        onClose={handleCloseEdit}
+        title={'Редактировать статус заказа'}
+        buttonClick={() => console.log('r')}
+        buttonTitle="Сохранить"
+        isBtnDisable={editStatus.length < 1}
+      >
+        <InputVsLabel
+          id="status"
+          label="Введите статус"
+          onChange={handleEditStatus}
+          value={editStatus}
         />
       </Modal>
     </>
