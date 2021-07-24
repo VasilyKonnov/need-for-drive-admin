@@ -1,11 +1,14 @@
 import { Grid } from '@material-ui/core'
 import TableCell from '@material-ui/core/TableCell'
+import { FetchingStateTypes } from '../../store'
 import TableRow from '@material-ui/core/TableRow'
 import { ButtonPrimary } from './../../components/ButtonPrimary/ButtonPrimary'
 import CreateIcon from '@material-ui/icons/Create'
-import { Modal, Spinner, Table } from '../../components'
+import { Modal, Table, SpinnerOrListEmpty } from '../../components'
 import { TCitiesAndStreetsList } from './CitiesAndStreetsListTypes'
 import { InputVsLabel } from './../../components/InputVsLabel/InputVsLabel'
+import { routes } from '../../constans/constans'
+import { Redirect } from 'react-router-dom'
 
 export const CitiesAndStreetsListView: React.FC<TCitiesAndStreetsList> = ({
   isOpenCity,
@@ -20,13 +23,19 @@ export const CitiesAndStreetsListView: React.FC<TCitiesAndStreetsList> = ({
   handleEditCity,
   cities,
   cityPoints,
+  fetchingStateCityPoints,
+  fetchingStateCities,
 }) => {
   return (
     <Grid container className="gridContainer">
       <Grid item xs={12} sm={6} className={'gridItem '}>
         <h2 className="admin-page-title">Города</h2>
         <div className="content-wrap withOutHeaderFooter">
-          {cities.length > 0 ? (
+          {fetchingStateCities === FetchingStateTypes.failed ? (
+            <Redirect to={routes.ERROR_500} />
+          ) : null}
+          {fetchingStateCities === FetchingStateTypes.success &&
+          cities.length > 0 ? (
             <Table
               handlerOpenAdd={handleOpenModalCity}
               tableHeadData={['Город']}
@@ -48,14 +57,20 @@ export const CitiesAndStreetsListView: React.FC<TCitiesAndStreetsList> = ({
               })}
             </Table>
           ) : (
-            <Spinner />
+            <SpinnerOrListEmpty
+              isSpin={fetchingStateCities === FetchingStateTypes.loading}
+            />
           )}
         </div>
       </Grid>
       <Grid item xs={12} sm={6} className={'gridItem'}>
         <h2 className="admin-page-title">Точки выдачи</h2>
         <div className="content-wrap withOutHeaderFooter">
-          {cityPoints.length > 0 ? (
+          {fetchingStateCityPoints === FetchingStateTypes.failed ? (
+            <Redirect to={routes.ERROR_500} />
+          ) : null}
+          {fetchingStateCityPoints === FetchingStateTypes.success &&
+          cityPoints.length > 0 ? (
             <Table
               handlerOpenAdd={handleOpenModalStreet}
               tableHeadData={['Город', 'Улица', 'Точка выдачи']}
@@ -81,7 +96,9 @@ export const CitiesAndStreetsListView: React.FC<TCitiesAndStreetsList> = ({
               })}
             </Table>
           ) : (
-            <Spinner />
+            <SpinnerOrListEmpty
+              isSpin={fetchingStateCityPoints === FetchingStateTypes.loading}
+            />
           )}
         </div>
       </Grid>

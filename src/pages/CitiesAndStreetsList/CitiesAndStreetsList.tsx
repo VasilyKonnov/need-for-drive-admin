@@ -5,7 +5,6 @@ import { FetchingStateTypes } from '../../store'
 import { useDispatch, useSelector } from 'react-redux'
 import { citiesSelector } from '../../store/cities/citiesSelector'
 import { citiesAction } from '../../store/cities/citiesAction'
-
 import { cityPointsAction } from './../../store/cityPoints/cityPointsAction'
 import { cityPointsSelector } from '../../store/cityPoints/cityPointsSelector'
 
@@ -80,6 +79,8 @@ export const CitiesAndStreetsList: React.FC = () => {
         handleEditCity={handleEditCity}
         cities={cities}
         cityPoints={cityPoints}
+        fetchingStateCities={fetchingStateCities}
+        fetchingStateCityPoints={fetchingStateCityPoints}
       />
     </Layout>
   )

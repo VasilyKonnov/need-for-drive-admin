@@ -14,4 +14,6 @@ export type TCitiesAndStreetsList = {
   handleEditCity: () => void
   cities: TCity[]
   cityPoints: TCityPoint[]
+  fetchingStateCityPoints: string
+  fetchingStateCities: string
 }

@@ -1,7 +1,7 @@
 import TableCell from '@material-ui/core/TableCell'
 import TableRow from '@material-ui/core/TableRow'
 import CreateIcon from '@material-ui/icons/Create'
-import { Modal, Spinner, Table } from '../../components'
+import { ListEmpty, Modal, Table } from '../../components'
 import { ButtonPrimary } from './../../components/ButtonPrimary/ButtonPrimary'
 import { TOrderStatusView } from './OrderStatusTypes'
 import { InputVsLabel } from './../../components/InputVsLabel/InputVsLabel'
@@ -37,7 +37,7 @@ export const OrderStatusView: React.FC<TOrderStatusView> = ({
             })}
           </Table>
         ) : (
-          <Spinner />
+          <ListEmpty />
         )}
       </div>
       <Modal

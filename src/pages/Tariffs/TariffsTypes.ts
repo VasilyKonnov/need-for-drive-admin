@@ -14,4 +14,6 @@ export type TTariffs = {
   handleEditRateType: () => void
   rates: TRate[]
   rateTypes: TRateType[]
+  fetchingStateRates: string
+  fetchingStateRateTypes: string
 }

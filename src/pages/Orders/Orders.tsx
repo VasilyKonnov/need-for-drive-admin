@@ -3,7 +3,7 @@ import { OrdersView } from './OrdersView'
 import { useEffect, useState } from 'react'
 import { FetchingStateTypes } from '../../store'
 import { useDispatch, useSelector } from 'react-redux'
-import { Redirect, useHistory } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 
 import { ordersSelector } from '../../store/orders/ordersSelector'
 import { ordersAction } from '../../store/orders/ordersAction'
@@ -17,7 +17,6 @@ import { TOrder } from '../../store/orders'
 import { perPage, routes } from '../../constans/constans'
 
 export const Orders: React.FC = () => {
-  const history = useHistory()
   const dispatch = useDispatch()
 
   const [city, setCity] = useState<string | null>(null)
@@ -31,7 +30,6 @@ export const Orders: React.FC = () => {
   const handlePaginationClick = (data: { selected: number }) => {
     setCurrentPage(data.selected + 1)
   }
-
   const { data: orders, fetchingState: fetchingStateOrders } = useSelector(
     ordersSelector,
   )
@@ -49,7 +47,6 @@ export const Orders: React.FC = () => {
   const handleStatus = (event: React.ChangeEvent<{ value: unknown }>) => {
     setStatus(event.target.value as string)
   }
-
   const handleFilterOrders = () => {
     if (!status && city && city.length > 0 && ordersState.length > 0) {
       const data = ordersState.filter((order) => {

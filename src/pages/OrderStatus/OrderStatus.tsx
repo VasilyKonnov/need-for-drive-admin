@@ -1,10 +1,12 @@
-import { Layout } from '../../components'
+import { Layout, Spinner } from '../../components'
 import { OrderStatusView } from './OrderStatusView'
 import { useEffect, useState } from 'react'
 import { FetchingStateTypes } from '../../store'
 import { useDispatch, useSelector } from 'react-redux'
 import { orderStatusSelector } from '../../store/orderStatus/orderStatusSelector'
 import { orderStatusAction } from '../../store/orderStatus/orderStatusAction'
+import { routes } from '../../constans/constans'
+import { Redirect } from 'react-router-dom'
 
 export const OrderStatus: React.FC = () => {
   const dispatch = useDispatch()
@@ -35,14 +37,24 @@ export const OrderStatus: React.FC = () => {
 
   return (
     <Layout>
-      <OrderStatusView
-        isOpen={isOpen}
-        isEdit={isEdit}
-        handleOpen={handleOpen}
-        handleClose={handleClose}
-        handleEdit={handleEdit}
-        orderStatus={orderStatus}
-      />
+      {fetchingStateOrderStatus === FetchingStateTypes.loading ? (
+        <Spinner />
+      ) : null}
+
+      {fetchingStateOrderStatus === FetchingStateTypes.failed ? (
+        <Redirect to={routes.ERROR_500} />
+      ) : null}
+
+      {fetchingStateOrderStatus === FetchingStateTypes.success ? (
+        <OrderStatusView
+          isOpen={isOpen}
+          isEdit={isEdit}
+          handleOpen={handleOpen}
+          handleClose={handleClose}
+          handleEdit={handleEdit}
+          orderStatus={orderStatus}
+        />
+      ) : null}
     </Layout>
   )
 }

@@ -75,6 +75,8 @@ export const Tariffs: React.FC = () => {
         handleEditRateType={handleEditRateType}
         rates={rates}
         rateTypes={rateTypes}
+        fetchingStateRates={fetchingStateRates}
+        fetchingStateRateTypes={fetchingStateRateTypes}
       />
     </Layout>
   )

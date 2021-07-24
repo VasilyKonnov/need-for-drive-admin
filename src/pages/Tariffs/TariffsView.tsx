@@ -1,12 +1,14 @@
+import { FetchingStateTypes } from '../../store'
 import { Grid } from '@material-ui/core'
 import TableCell from '@material-ui/core/TableCell'
 import TableRow from '@material-ui/core/TableRow'
 import CreateIcon from '@material-ui/icons/Create'
 import { ButtonPrimary } from './../../components/ButtonPrimary/ButtonPrimary'
 import { TTariffs } from './TariffsTypes'
-import { Modal, Table } from '../../components'
+import { Modal, SpinnerOrListEmpty, Table } from '../../components'
 import { InputVsLabel } from './../../components/InputVsLabel/InputVsLabel'
-import { Spinner } from '../../components'
+import { Redirect } from 'react-router-dom'
+import { routes } from '../../constans/constans'
 
 export const TariffsView: React.FC<TTariffs> = ({
   isModalRate,
@@ -21,13 +23,19 @@ export const TariffsView: React.FC<TTariffs> = ({
   handleEditRateType,
   rates,
   rateTypes,
+  fetchingStateRates,
+  fetchingStateRateTypes,
 }) => {
   return (
     <Grid container spacing={5}>
       <Grid item xs={12} sm={6}>
         <h2 className="admin-page-title">Тарифы</h2>
         <div className="content-wrap withOutHeaderFooter">
-          {rates.length > 0 ? (
+          {fetchingStateRates === FetchingStateTypes.failed ? (
+            <Redirect to={routes.ERROR_500} />
+          ) : null}
+          {fetchingStateRates === FetchingStateTypes.success &&
+          rates.length > 0 ? (
             <Table
               handlerOpenAdd={handleModalRateOpen}
               tableHeadData={['Название', 'Цена']}
@@ -50,14 +58,20 @@ export const TariffsView: React.FC<TTariffs> = ({
               })}
             </Table>
           ) : (
-            <Spinner />
+            <SpinnerOrListEmpty
+              isSpin={fetchingStateRates === FetchingStateTypes.loading}
+            />
           )}
         </div>
       </Grid>
       <Grid item xs={12} sm={6}>
         <h2 className="admin-page-title">Типы тарифов</h2>
         <div className="content-wrap withOutHeaderFooter">
-          {rateTypes.length > 0 ? (
+          {fetchingStateRateTypes === FetchingStateTypes.failed ? (
+            <Redirect to={routes.ERROR_500} />
+          ) : null}
+          {fetchingStateRateTypes === FetchingStateTypes.success &&
+          rateTypes.length > 0 ? (
             <Table
               handlerOpenAdd={handleModalRateTypeOpen}
               tableHeadData={['Название', 'Единици измерения']}
@@ -80,7 +94,9 @@ export const TariffsView: React.FC<TTariffs> = ({
               })}
             </Table>
           ) : (
-            <Spinner />
+            <SpinnerOrListEmpty
+              isSpin={fetchingStateRateTypes === FetchingStateTypes.loading}
+            />
           )}
         </div>
       </Grid>

@@ -4,7 +4,7 @@ import CreateIcon from '@material-ui/icons/Create'
 import { ButtonPrimary } from './../../components/ButtonPrimary/ButtonPrimary'
 import { TCarCategoryView } from './CarCategoryTypes'
 import styles from './CarCategory.module.scss'
-import { Modal } from '../../components'
+import { ListEmpty, Modal } from '../../components'
 import { InputVsLabel } from './../../components/InputVsLabel/InputVsLabel'
 import { memo } from 'react'
 import { Table } from '../../components'
@@ -15,27 +15,31 @@ export const CarCategoryView: React.FC<TCarCategoryView> = memo(
       <>
         <h1 className="admin-page-title">Категории машин</h1>
         <div className="content-wrap withOutHeaderFooter">
-          <Table
-            handlerOpenAdd={handlerOpen}
-            tableHeadData={['Название', 'Описание']}
-          >
-            {carCategory.map((category) => {
-              return (
-                <TableRow>
-                  <TableCell component="th" scope="row">
-                    <ButtonPrimary
-                      onClick={handlerOpen}
-                      className={'buttonInTable'}
-                    >
-                      <CreateIcon />
-                    </ButtonPrimary>
-                  </TableCell>
-                  <TableCell>{category.name}</TableCell>
-                  <TableCell>{category.description}</TableCell>
-                </TableRow>
-              )
-            })}
-          </Table>
+          {carCategory.length > 0 ? (
+            <Table
+              handlerOpenAdd={handlerOpen}
+              tableHeadData={['Название', 'Описание']}
+            >
+              {carCategory.map((category) => {
+                return (
+                  <TableRow>
+                    <TableCell component="th" scope="row">
+                      <ButtonPrimary
+                        onClick={handlerOpen}
+                        className={'buttonInTable'}
+                      >
+                        <CreateIcon />
+                      </ButtonPrimary>
+                    </TableCell>
+                    <TableCell>{category.name}</TableCell>
+                    <TableCell>{category.description}</TableCell>
+                  </TableRow>
+                )
+              })}
+            </Table>
+          ) : (
+            <ListEmpty />
+          )}
         </div>
         <Modal
           open={isOpen}
