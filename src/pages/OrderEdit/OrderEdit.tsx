@@ -8,10 +8,10 @@ import { TOrder } from '../../store/orders'
 export const OrderEdit = () => {
   let paramId: { id: string } = useParams()
   const [order, setOrder] = useState<TOrder>()
-  const [_city, set_City] = useState<null | string>('')
-  const [_point, set_Point] = useState<null | string>('')
-  const [_orderStatus, set_OrderStatus] = useState<null | string>('')
-  const [_rate, set_Rate] = useState<null | string>('')
+  const [_city, set_City] = useState<null | string>(null)
+  const [_point, set_Point] = useState<null | string>(null)
+  const [_orderStatus, set_OrderStatus] = useState<null | string>(null)
+  const [_rate, set_Rate] = useState<null | string>(null)
 
   const [startDate, setStartDate] = useState(null)
   const [endDate, setEndDate] = useState(null)
@@ -80,16 +80,11 @@ export const OrderEdit = () => {
       setIsBabyChair(order.isNeedChildChair)
       setIsRightHandDrive(order.isRightWheel)
     }
-  }, [order, set_City])
+  }, [order])
 
   return (
     <OrderEditView
       order={order ? order : null}
-      city={_city ? _city : ''}
-      point={_point ? _point : ''}
-      status={_orderStatus ? _orderStatus : ''}
-      rate={_rate ? _rate : ''}
-      // ---
       handleCity={handleCity}
       handlePoint={handlePoint}
       handleOrderStatus={handleOrderStatus}

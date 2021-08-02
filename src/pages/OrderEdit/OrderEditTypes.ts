@@ -2,10 +2,6 @@ import { TOrder } from '../../store/orders'
 
 export type TOrderEditView = {
   order: TOrder | null
-  city?: string | null
-  point?: string | null
-  status?: string | null
-  rate?: string | null
   handleCity: (event: React.ChangeEvent<{ value: unknown }>) => void
   handlePoint: (event: React.ChangeEvent<{ value: unknown }>) => void
   handleOrderStatus: (event: React.ChangeEvent<{ value: unknown }>) => void

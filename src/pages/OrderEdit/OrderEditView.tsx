@@ -14,10 +14,6 @@ import { useEffect } from 'react'
 
 export const OrderEditView: React.FC<TOrderEditView> = ({
   order,
-  city,
-  point,
-  status,
-  rate,
   handleCity,
   handlePoint,
   handleOrderStatus,
@@ -43,7 +39,7 @@ export const OrderEditView: React.FC<TOrderEditView> = ({
   const orderRate = order ? order.rateId : null
   const startDate = order ? new Date(order.dateFrom) : undefined
   const endDate = order ? new Date(order.dateTo) : undefined
-  const colors = order ? order.carId.colors : []
+  const orderColor = selectedColor ? selectedColor.toLowerCase() : 'любой'
 
   return (
     <Layout>
@@ -61,11 +57,12 @@ export const OrderEditView: React.FC<TOrderEditView> = ({
                   labelId="labelId-1"
                   id="select-1"
                   handlerChange={handleCity}
-                  value={city ? city : ''}
+                  value={orderCity ? orderCity.id : undefined}
                 >
-                  <MenuItem value={orderCity ? orderCity.id : ''}>
-                    {orderCity ? orderCity.name : ''}
+                  <MenuItem value={orderCity ? orderCity.id : undefined}>
+                    {orderCity ? orderCity.name : undefined}
                   </MenuItem>
+
                   <MenuItem value="2">{'category.name - 2'}</MenuItem>
                 </SelectVsLabel>
                 <SelectVsLabel
@@ -73,7 +70,7 @@ export const OrderEditView: React.FC<TOrderEditView> = ({
                   labelId="labelId-1"
                   id="select-1"
                   handlerChange={handlePoint}
-                  value={point ? point : ''}
+                  value={orderPoint ? orderPoint.id : undefined}
                 >
                   <MenuItem value={orderPoint ? orderPoint.id : ''}>
                     {orderPoint
@@ -86,7 +83,7 @@ export const OrderEditView: React.FC<TOrderEditView> = ({
                   labelId="labelId-1"
                   id="select-1"
                   handlerChange={handleOrderStatus}
-                  value={status ? status : ''}
+                  value={orderStatus ? orderStatus.id : undefined}
                 >
                   {
                     <MenuItem value={orderStatus ? orderStatus.id : ''}>
@@ -99,7 +96,7 @@ export const OrderEditView: React.FC<TOrderEditView> = ({
                   labelId="labelId-1"
                   id="select-1"
                   handlerChange={handleRate}
-                  value={rate ? rate : ''}
+                  value={orderRate ? orderRate.id : undefined}
                 >
                   {
                     <MenuItem value={orderRate ? orderRate.id : ''}>
@@ -141,25 +138,44 @@ export const OrderEditView: React.FC<TOrderEditView> = ({
                 <div className="additionalServices">
                   <p className="additionalServices--title">Цвет</p>
 
-                  {colors.map((color: string, id: number) => {
-                    return (
-                      <FormControlLabel
-                        className="LabelRadioBtn"
-                        value={color}
-                        control={
-                          <Radio
-                            checked={selectedColor === color}
-                            onChange={handleRadioButton}
-                            value={color}
-                            name="radio-button"
-                            inputProps={{ 'aria-label': 'A' }}
-                            className="radioButton"
-                          />
-                        }
-                        label={color}
-                      />
-                    )
-                  })}
+                  {order.carId && order.carId.colors.length > 0 ? (
+                    order.carId.colors.map((color: string, id: number) => {
+                      const _color = color.toLowerCase()
+                      return (
+                        <FormControlLabel
+                          className="LabelRadioBtn"
+                          value={_color}
+                          control={
+                            <Radio
+                              checked={orderColor === _color}
+                              onChange={handleRadioButton}
+                              value={_color}
+                              name="radio-button"
+                              inputProps={{ 'aria-label': 'A' }}
+                              className="radioButton"
+                            />
+                          }
+                          label={_color}
+                        />
+                      )
+                    })
+                  ) : (
+                    <FormControlLabel
+                      className="LabelRadioBtn"
+                      value={orderColor}
+                      control={
+                        <Radio
+                          checked={true}
+                          onChange={handleRadioButton}
+                          value={orderColor}
+                          name="radio-button"
+                          inputProps={{ 'aria-label': 'A' }}
+                          className="radioButton"
+                        />
+                      }
+                      label={orderColor}
+                    />
+                  )}
                 </div>
                 <div className="additionalServices">
                   <p className="additionalServices--title">Дополнительно</p>
