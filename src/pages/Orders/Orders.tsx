@@ -3,7 +3,7 @@ import { OrdersView } from './OrdersView'
 import { useEffect, useState } from 'react'
 import { FetchingStateTypes } from '../../store'
 import { useDispatch, useSelector } from 'react-redux'
-import { Redirect } from 'react-router-dom'
+import { Redirect, useHistory } from 'react-router-dom'
 
 import { ordersSelector } from '../../store/orders/ordersSelector'
 import { ordersAction } from '../../store/orders/ordersAction'
@@ -18,6 +18,10 @@ import { perPage, routes } from '../../constans/constans'
 
 export const Orders: React.FC = () => {
   const dispatch = useDispatch()
+  const history = useHistory()
+  const editOrder = (id: string) => {
+    history.push('/edit-order/' + id)
+  }
 
   const [city, setCity] = useState<string | null>(null)
   const [status, setStatus] = useState<string | null>(null)
@@ -108,11 +112,13 @@ export const Orders: React.FC = () => {
       dispatch(orderStatusAction.list())
     }
   }, [dispatch, fetchingStateOrderStatus, orderStatus])
+
   useEffect(() => {
     console.log('cities ', cities)
     console.log('orderStatus ', orderStatus)
     console.log('orders ', orders)
   }, [cities, orderStatus, orders])
+
   useEffect(() => {
     if (orders) {
       setOrdersState(orders)
@@ -146,6 +152,7 @@ export const Orders: React.FC = () => {
           orders={_orders}
           handlePaginationClick={handlePaginationClick}
           handleFilterOrders={handleFilterOrders}
+          editOrder={editOrder}
         />
       ) : null}
       {fetchingStateOrders === FetchingStateTypes.failed ? (

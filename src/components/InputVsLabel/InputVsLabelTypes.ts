@@ -5,7 +5,7 @@ export type TInputVsLabel = {
   id: string
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   type?: string
-  value?: string | number
+  value?: string | number | null | undefined
   isValid?: boolean
   validMesage?: string
 }

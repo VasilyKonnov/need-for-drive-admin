@@ -4,14 +4,14 @@ import { crudAxios } from '../../serviсes/axios'
 import { TCar } from '../../store/cars'
 import { TOrder } from '../../store/orders'
 
-const stringifyConfig = {
-  skipNull: true,
-}
-
 const crud = {
+  async getOrder(id: string) {
+    const response = await crudAxios.get(`${routes.ORDER}/${id}`)
+    return await response.data.data
+  },
   async getOrders() {
-    // const response = await crudAxios.get(`${routes.ORDER}?limit=25`)
-    const response = await crudAxios.get(`${routes.ORDER}`)
+    const response = await crudAxios.get(`${routes.ORDER}?limit=105`)
+    // const response = await crudAxios.get(`${routes.ORDER}`)
     return response.data.data
   },
   async putOrder(id: string, data: TOrder) {

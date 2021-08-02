@@ -1,26 +1,37 @@
-import { useState } from 'react'
-import { ButtonPrimary, ButtonSecondary } from '../../components'
-import { Layout } from './../../components/Layout/Layout'
-import { Grid, MenuItem } from '@material-ui/core'
-import DatePicker from 'react-datepicker'
-import Checkbox from '@material-ui/core/Checkbox'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import 'react-datepicker/dist/react-datepicker.css'
-import './datePickerStyled.scss'
-import Radio from '@material-ui/core/Radio'
-import './OrderEdit.scss'
-import { SelectVsLabel } from './../../components/SelectVsLabel/SelectVsLabel'
-
-const data = ['раз', 'два', 'три', 'четыре', 'пять']
+import { useEffect, useState } from 'react'
+import { OrderEditView } from './OrderEditView'
+import { useParams } from 'react-router-dom'
+import crud from '../../utils/api/crud'
+import { setOrderStatus } from '../../store/orderStatus'
+import { TOrder } from '../../store/orders'
 
 export const OrderEdit = () => {
-  const [model, setModel] = useState<string | null>(null)
+  let paramId: { id: string } = useParams()
+  const [order, setOrder] = useState<TOrder>()
+  const [_city, set_City] = useState<null | string>('')
+  const [_point, set_Point] = useState<null | string>('')
+  const [_orderStatus, set_OrderStatus] = useState<null | string>('')
+  const [_rate, set_Rate] = useState<null | string>('')
+
+  const [startDate, setStartDate] = useState(null)
+  const [endDate, setEndDate] = useState(null)
+  const [selectedColor, setSelectedColor] = useState('a')
   const [isFullTank, setIsFullTank] = useState(true)
   const [isBabyChair, setIsBabyChair] = useState(true)
   const [isRightHandDrive, setIsRightHandDrive] = useState(true)
-  const [startDate, setStartDate] = useState(null)
-  const [endDate, setEndDate] = useState(null)
-  const [selectedValue, setSelectedValue] = useState('a')
+
+  const handleCity = (event: React.ChangeEvent<{ value: unknown }>) => {
+    set_City(event.target.value as string)
+  }
+  const handlePoint = (event: React.ChangeEvent<{ value: unknown }>) => {
+    set_Point(event.target.value as string)
+  }
+  const handleOrderStatus = (event: React.ChangeEvent<{ value: unknown }>) => {
+    set_OrderStatus(event.target.value as string)
+  }
+  const handleRate = (event: React.ChangeEvent<{ value: unknown }>) => {
+    set_Rate(event.target.value as string)
+  }
 
   const handleTank = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsFullTank(event.target.checked)
@@ -31,13 +42,8 @@ export const OrderEdit = () => {
   const handleRightHandDrive = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsRightHandDrive(event.target.checked)
   }
-
-  const handlerModel = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setModel(event.target.value as string)
-  }
-
   const handleRadioButton = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedValue(event.target.value)
+    setSelectedColor(event.target.value)
   }
 
   const filterPassedTime = (time: any) => {
@@ -45,7 +51,6 @@ export const OrderEdit = () => {
     const selectedDate = new Date(time)
     return currentDate.getTime() < selectedDate.getTime()
   }
-
   const filterPassedEndTime = (time: any) => {
     const currentDate = new Date()
     const selectedDate = new Date(time)
@@ -57,198 +62,50 @@ export const OrderEdit = () => {
     }
   }
 
+  useEffect(() => {
+    crud.getOrder(paramId.id).then((data) => {
+      setOrder(data)
+    })
+  }, [paramId.id])
+
+  useEffect(() => {
+    if (order) {
+      console.log('order - ', order)
+      set_City(order.cityId ? order.cityId.id : null)
+      set_Point(order.pointId ? order.pointId.id : null)
+      set_OrderStatus(order.orderStatusId ? order.orderStatusId.id : null)
+      set_Rate(order.rateId ? order.rateId.id : null)
+      setSelectedColor(order.color)
+      setIsFullTank(order.isFullTank)
+      setIsBabyChair(order.isNeedChildChair)
+      setIsRightHandDrive(order.isRightWheel)
+    }
+  }, [order, set_City])
+
   return (
-    <Layout>
-      <h1 className="admin-page-title">Список машин</h1>
-      <div className="content-wrap">
-        <div className="content-wrap--header">
-          <p>Заказ: 123</p>
-        </div>
-        <div className="content-wrap--body">
-          <Grid container className="gridContainer">
-            <Grid item xs={12} sm={6} className={'gridItem '}>
-              <SelectVsLabel
-                label="Город"
-                labelId="labelId-1"
-                id="select-1"
-                handlerChange={handlerModel}
-              >
-                {<MenuItem value={''}>{'category.name'}</MenuItem>}
-              </SelectVsLabel>
-              <SelectVsLabel
-                label="Пункт выдачи"
-                labelId="labelId-1"
-                id="select-1"
-                handlerChange={handlerModel}
-              >
-                {<MenuItem value={''}>{'category.name'}</MenuItem>}
-              </SelectVsLabel>
-              <SelectVsLabel
-                label="Статус"
-                labelId="labelId-1"
-                id="select-1"
-                handlerChange={handlerModel}
-              >
-                {<MenuItem value={''}>{'category.name'}</MenuItem>}
-              </SelectVsLabel>
-              <SelectVsLabel
-                label="Тариф"
-                labelId="labelId-1"
-                id="select-1"
-                handlerChange={handlerModel}
-              >
-                {<MenuItem value={''}>{'category.name'}</MenuItem>}
-              </SelectVsLabel>
-              <div className="wrapperDate">
-                <span>Аренда от</span>
-                <DatePicker
-                  minDate={startDate ? startDate : new Date()}
-                  showTimeSelect
-                  dateFormat={'dd-MM-yyyy, hh:mm'}
-                  filterTime={filterPassedTime}
-                  selected={startDate}
-                  onChange={(date: any) => {
-                    date ? setStartDate(date.getTime()) : setStartDate(null)
-                    setEndDate(null)
-                  }}
-                  isClearable
-                />
-              </div>
-              <div className="wrapperDate">
-                <span>Аренда до</span>
-                <DatePicker
-                  minDate={startDate ? startDate : new Date()}
-                  showTimeSelect
-                  dateFormat={'dd-MM-yyyy, hh:mm'}
-                  filterTime={filterPassedEndTime}
-                  selected={endDate}
-                  onChange={(date: any) =>
-                    date ? setEndDate(date.getTime()) : setEndDate(null)
-                  }
-                  isClearable
-                />
-              </div>
-            </Grid>
-            <Grid item xs={12} sm={6} className={'gridItem '}>
-              <div className="additionalServices">
-                <p className="additionalServices--title">Цвет</p>
-                <FormControlLabel
-                  className="LabelRadioBtn"
-                  value="female"
-                  control={
-                    <Radio
-                      checked={selectedValue === 'a'}
-                      onChange={handleRadioButton}
-                      value="a"
-                      name="radio-button-demo"
-                      inputProps={{ 'aria-label': 'A' }}
-                      className="radioButton"
-                    />
-                  }
-                  label="Синий"
-                />
-                <FormControlLabel
-                  className="LabelRadioBtn"
-                  value="female"
-                  control={
-                    <Radio
-                      checked={selectedValue === 'b'}
-                      onChange={handleRadioButton}
-                      value="b"
-                      name="radio-button-demo"
-                      inputProps={{ 'aria-label': 'B' }}
-                      className="radioButton"
-                    />
-                  }
-                  label="Красный"
-                />
-                <FormControlLabel
-                  className="LabelRadioBtn"
-                  value="female"
-                  control={
-                    <Radio
-                      checked={selectedValue === 'd'}
-                      onChange={handleRadioButton}
-                      value="d"
-                      name="radio-button-demo"
-                      inputProps={{ 'aria-label': 'D' }}
-                      className="radioButton"
-                    />
-                  }
-                  label="Зелёный"
-                />
-                <FormControlLabel
-                  className="LabelRadioBtn"
-                  value="female"
-                  control={
-                    <Radio
-                      checked={selectedValue === 'e'}
-                      onChange={handleRadioButton}
-                      value="e"
-                      name="radio-button-demo"
-                      inputProps={{ 'aria-label': 'E' }}
-                      className="radioButton"
-                    />
-                  }
-                  label="Белый"
-                />
-              </div>
-              <div className="additionalServices">
-                <p className="additionalServices--title">Дополнительно</p>
-                <FormControlLabel
-                  className="LabelCheckboxPrimary"
-                  control={
-                    <Checkbox
-                      className="checkboxPrimary"
-                      checked={isFullTank}
-                      color="primary"
-                      onChange={handleTank}
-                    />
-                  }
-                  label="Полный бак"
-                />
-                <FormControlLabel
-                  className="LabelCheckboxPrimary"
-                  control={
-                    <Checkbox
-                      className="checkboxPrimary"
-                      checked={isBabyChair}
-                      color="primary"
-                      onChange={handleBabyChair}
-                    />
-                  }
-                  label="Детское кресло"
-                />
-                <FormControlLabel
-                  className="LabelCheckboxPrimary"
-                  control={
-                    <Checkbox
-                      className="checkboxPrimary"
-                      checked={isRightHandDrive}
-                      color="primary"
-                      onChange={handleRightHandDrive}
-                    />
-                  }
-                  label="Правый руль"
-                />
-              </div>
-              <div className="additionalServices">
-                <p className="additionalServices--title">
-                  Цена: <b> 7000 р.</b>
-                </p>
-              </div>
-            </Grid>
-          </Grid>
-        </div>
-        <div className="content-wrap--footer edit-order-footer">
-          <ButtonPrimary className="edit-order-footer--btn-primary">
-            Применить
-          </ButtonPrimary>
-          <ButtonSecondary className="edit-order-footer--btn-secondary ">
-            Отменить
-          </ButtonSecondary>
-        </div>
-      </div>
-    </Layout>
+    <OrderEditView
+      order={order ? order : null}
+      city={_city ? _city : ''}
+      point={_point ? _point : ''}
+      status={_orderStatus ? _orderStatus : ''}
+      rate={_rate ? _rate : ''}
+      // ---
+      handleCity={handleCity}
+      handlePoint={handlePoint}
+      handleOrderStatus={handleOrderStatus}
+      handleRate={handleRate}
+      setStartDate={setStartDate}
+      setEndDate={setEndDate}
+      filterPassedTime={filterPassedTime}
+      filterPassedEndTime={filterPassedEndTime}
+      selectedColor={selectedColor}
+      handleRadioButton={handleRadioButton}
+      isFullTank={isFullTank}
+      handleTank={handleTank}
+      isBabyChair={isBabyChair}
+      handleBabyChair={handleBabyChair}
+      isRightHandDrive={isRightHandDrive}
+      handleRightHandDrive={handleRightHandDrive}
+    />
   )
 }

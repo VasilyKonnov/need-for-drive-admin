@@ -97,12 +97,14 @@ export const LoginPage = () => {
               id="inputMail"
               label="Почта"
               onChange={handlerUserName}
+              value={userName}
             />
             <InputVsLabel
               id="inputPass"
               label="Пароль"
               type="password"
               onChange={handlerUserLogin}
+              value={userLogin}
             />
             <div className={styles.footerForm}>
               <span className={styles.requestAccess}>Запросить доступ</span>

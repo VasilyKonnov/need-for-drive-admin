@@ -13,7 +13,8 @@ export const OrderCard: React.FC<TOrderCard> = ({
   isNeedChildChair,
   isRightWheel,
   price,
-  colors,
+  color,
+  editOrder,
 }) => {
   return (
     <div className={styles.cardWrap}>
@@ -37,13 +38,11 @@ export const OrderCard: React.FC<TOrderCard> = ({
             <span>{carName}</span> в <span>{city}</span>, {pointAddress}
           </p>
           <p>
-            {dateFrom} — {dateTo}
+            {new Date(dateFrom).toLocaleString('ru')} —{' '}
+            {new Date(dateTo).toLocaleString('ru')}
           </p>
           <p>
-            Цвет:{' '}
-            {colors.map((color: string, id: number) => (
-              <span key={id}>{color} </span>
-            ))}
+            Цвет: <span>{color} </span>
           </p>
         </div>
       </div>
@@ -58,7 +57,9 @@ export const OrderCard: React.FC<TOrderCard> = ({
       <div className={styles.buttons}>
         <button className={styles.btnDone}>Готово</button>
         <button className={styles.btnUndo}>Отмена</button>
-        <button className={styles.btnChange}>Изменить</button>
+        <button className={styles.btnChange} onClick={() => editOrder()}>
+          Изменить
+        </button>
       </div>
     </div>
   )

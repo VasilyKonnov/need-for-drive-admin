@@ -18,6 +18,7 @@ export const OrdersView: React.FC<TOrdersView> = ({
   handleStatus,
   handlePaginationClick,
   handleFilterOrders,
+  editOrder,
 }) => {
   return (
     <>
@@ -65,7 +66,7 @@ export const OrdersView: React.FC<TOrdersView> = ({
                 key={id}
                 imgSrc={order.carId ? order.carId.thumbnail.path : null}
                 carName={order.carId ? order.carId.name : '---'}
-                colors={order.carId ? order.carId.colors : []}
+                color={order.color ? order.color : 'любой'}
                 city={order.cityId ? order.cityId.name : '---'}
                 pointAddress={order.pointId ? order.pointId.address : '---'}
                 dateFrom={order.dateFrom}
@@ -74,6 +75,7 @@ export const OrdersView: React.FC<TOrdersView> = ({
                 isNeedChildChair={order.isNeedChildChair}
                 isRightWheel={order.isRightWheel}
                 price={order.price}
+                editOrder={() => editOrder(order.id)}
               />
             ))
           ) : (

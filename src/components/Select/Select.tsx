@@ -9,6 +9,7 @@ export const CustomSelect: React.FC<TSelect> = ({
   id,
   children,
   label,
+  value,
 }) => {
   return (
     <FormControl className="CustomSelect" variant="outlined">
@@ -18,6 +19,7 @@ export const CustomSelect: React.FC<TSelect> = ({
         id={id}
         IconComponent={() => <UnfoldMoreIcon />}
         onChange={handlerChange}
+        defaultValue={value ? value : null}
       >
         <MenuItem value="">
           <em>-----</em>

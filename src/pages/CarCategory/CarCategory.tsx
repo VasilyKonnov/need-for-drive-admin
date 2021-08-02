@@ -1,4 +1,3 @@
-import { useCallback } from 'react'
 import { Layout, Spinner } from '../../components'
 import { CarCategoryView } from './CarCategoryView'
 import { useEffect, useState } from 'react'
@@ -15,22 +14,40 @@ export const CarCategory: React.FC = () => {
     carCategorySelector,
   )
 
-  const [isOpen, setIsOpen] = useState(false)
-  const [isEdit, setIsEdit] = useState(false)
+  const [isCategoryAdd, setIsCategoryAdd] = useState(false)
+  const [isCategoryEdit, setIsCategoryEdit] = useState(false)
+  const [nameCategoryAdd, setIsNameCategoryAdd] = useState('')
+  const [descCategoryAdd, setDescCategoryAdd] = useState('')
+  const [nameCategoryEdit, setIsNameCategoryEdit] = useState('')
+  const [descCategoryEdit, setDescCategoryEdit] = useState('')
 
-  const handlerEdit = useCallback(() => {
-    setIsEdit(true)
-    setIsOpen(true)
-  }, [setIsEdit])
+  const toggleCategoryAdd = () => {
+    setIsCategoryAdd(!isCategoryAdd)
+    setIsNameCategoryAdd('')
+    setDescCategoryAdd('')
+  }
 
-  const handlerOpen = useCallback(() => {
-    setIsOpen(true)
-  }, [setIsOpen])
+  const toggleCategoryEdit = () => {
+    setIsCategoryEdit(!isCategoryEdit)
+    setIsNameCategoryEdit('')
+    setDescCategoryEdit('')
+  }
 
-  const handlerClose = useCallback(() => {
-    setIsOpen(false)
-    setIsEdit(false)
-  }, [setIsOpen])
+  const handleNameCategoryAdd = (e: React.FormEvent<HTMLInputElement>) => {
+    setIsNameCategoryAdd(e.currentTarget.value)
+  }
+  const handleDescCategoryAdd = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setDescCategoryAdd(e.target.value)
+  }
+
+  const handleNameCategoryEdit = (e: React.FormEvent<HTMLInputElement>) => {
+    setIsNameCategoryEdit(e.currentTarget.value)
+  }
+  const handleDescCategoryEdit = (
+    e: React.ChangeEvent<HTMLTextAreaElement>,
+  ) => {
+    setDescCategoryEdit(e.target.value)
+  }
 
   useEffect(() => {
     if (fetchingCarCategory === FetchingStateTypes.none) {
@@ -46,11 +63,20 @@ export const CarCategory: React.FC = () => {
       ) : null}
       {fetchingCarCategory === FetchingStateTypes.success ? (
         <CarCategoryView
-          isOpen={isOpen}
-          handlerOpen={handlerOpen}
-          handlerClose={handlerClose}
-          handlerEdit={handlerEdit}
-          isEdit={isEdit}
+          isCategoryAdd={isCategoryAdd}
+          toggleCategoryAdd={toggleCategoryAdd}
+          nameCategoryAdd={nameCategoryAdd}
+          descCategoryAdd={descCategoryAdd}
+          handleNameCategoryAdd={handleNameCategoryAdd}
+          handleDescCategoryAdd={handleDescCategoryAdd}
+          // ---
+          isCategoryEdit={isCategoryEdit}
+          toggleCategoryEdit={toggleCategoryEdit}
+          nameCategoryEdit={nameCategoryEdit}
+          descCategoryEdit={descCategoryEdit}
+          handleNameCategoryEdit={handleNameCategoryEdit}
+          handleDescCategoryEdit={handleDescCategoryEdit}
+          // ---
           carCategory={carCategory}
         />
       ) : null}

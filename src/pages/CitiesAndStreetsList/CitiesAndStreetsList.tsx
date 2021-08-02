@@ -17,33 +17,69 @@ export const CitiesAndStreetsList: React.FC = () => {
     data: cityPoints,
     fetchingState: fetchingStateCityPoints,
   } = useSelector(cityPointsSelector)
-  const [isOpenCity, setIsOpenCity] = useState(false)
-  const [isOpenStreet, setIsOpenStreet] = useState(false)
-  const [isEditStreet, setIsEditStreet] = useState(false)
-  const [isEditCity, setIsEditCity] = useState(false)
+  const [isCityAdd, setIsCityAdd] = useState(false)
+  const [isCityEdit, setIsCityEdit] = useState(false)
+  const [isStreetAdd, setIsStreetEdd] = useState(false)
+  const [isStreetEdit, setIsStreetEdit] = useState(false)
+  const [cityAdd, setCityAdd] = useState('')
+  const [cityEdit, setCityEdit] = useState('')
 
-  const handleOpenModalCity = () => {
-    setIsOpenCity(true)
+  const [pointCityAdd, setPointCityAdd] = useState('')
+  const [pointStreetAdd, setPointStreetAdd] = useState('')
+  const [pointAdd, setPointAdd] = useState('')
+
+  const [pointCityEdit, setPointCityEdit] = useState('')
+  const [pointStreetEdit, setPointStreetEdit] = useState('')
+  const [pointEdit, setPointEdit] = useState('')
+
+  const toggleModalCityAdd = () => {
+    setIsCityAdd(!isCityAdd)
+    setCityAdd('')
   }
-  const handleCloseModalCity = () => {
-    setIsOpenCity(false)
-    setIsEditCity(false)
+  const toggleModalCityEdit = () => {
+    setIsCityEdit(!isCityEdit)
+    setCityEdit('')
   }
-  const handleOpenModalStreet = () => {
-    setIsOpenStreet(true)
+  const toggleModalStreetAdd = () => {
+    setIsStreetEdd(!isStreetAdd)
+    setPointCityAdd('')
+    setPointStreetAdd('')
+    setPointAdd('')
   }
-  const handleCloseModalStreet = () => {
-    setIsOpenStreet(false)
-    setIsEditStreet(false)
+  const toggleModalStreetEdit = () => {
+    setIsStreetEdit(!isStreetEdit)
+    setPointCityEdit('')
+    setPointStreetEdit('')
+    setPointEdit('')
   }
-  const handleEditStreet = () => {
-    setIsOpenStreet(true)
-    setIsEditStreet(true)
+
+  const handleCityAdd = (e: React.FormEvent<HTMLInputElement>) => {
+    setCityAdd(e.currentTarget.value)
   }
-  const handleEditCity = () => {
-    setIsOpenCity(true)
-    setIsEditCity(true)
+  const handleCityEdit = (e: React.FormEvent<HTMLInputElement>) => {
+    setCityEdit(e.currentTarget.value)
   }
+
+  const handlePointCityAdd = (e: React.FormEvent<HTMLInputElement>) => {
+    setPointCityAdd(e.currentTarget.value)
+  }
+  const handlePointStreetAdd = (e: React.FormEvent<HTMLInputElement>) => {
+    setPointStreetAdd(e.currentTarget.value)
+  }
+  const handlePointAdd = (e: React.FormEvent<HTMLInputElement>) => {
+    setPointAdd(e.currentTarget.value)
+  }
+
+  const handlePointCityEdit = (e: React.FormEvent<HTMLInputElement>) => {
+    setPointCityEdit(e.currentTarget.value)
+  }
+  const handlePointStreetEdit = (e: React.FormEvent<HTMLInputElement>) => {
+    setPointStreetEdit(e.currentTarget.value)
+  }
+  const handlePointEdit = (e: React.FormEvent<HTMLInputElement>) => {
+    setPointEdit(e.currentTarget.value)
+  }
+
   useEffect(() => {
     if (fetchingStateCities === FetchingStateTypes.none) {
       dispatch(citiesAction.list())
@@ -67,16 +103,34 @@ export const CitiesAndStreetsList: React.FC = () => {
   return (
     <Layout>
       <CitiesAndStreetsListView
-        isOpenCity={isOpenCity}
-        isOpenStreet={isOpenStreet}
-        isEditStreet={isEditStreet}
-        isEditCity={isEditCity}
-        handleOpenModalCity={handleOpenModalCity}
-        handleCloseModalCity={handleCloseModalCity}
-        handleOpenModalStreet={handleOpenModalStreet}
-        handleCloseModalStreet={handleCloseModalStreet}
-        handleEditStreet={handleEditStreet}
-        handleEditCity={handleEditCity}
+        isCityAdd={isCityAdd}
+        toggleModalCityAdd={toggleModalCityAdd}
+        cityAdd={cityAdd}
+        handleCityAdd={handleCityAdd}
+        // ---
+        isCityEdit={isCityEdit}
+        toggleModalCityEdit={toggleModalCityEdit}
+        cityEdit={cityEdit}
+        handleCityEdit={handleCityEdit}
+        // ---
+        isStreetAdd={isStreetAdd}
+        toggleModalStreetAdd={toggleModalStreetAdd}
+        handlePointCityAdd={handlePointCityAdd}
+        pointCityAdd={pointCityAdd}
+        handlePointStreetAdd={handlePointStreetAdd}
+        pointStreetAdd={pointStreetAdd}
+        handlePointAdd={handlePointAdd}
+        pointAdd={pointAdd}
+        // ---
+        isStreetEdit={isStreetEdit}
+        toggleModalStreetEdit={toggleModalStreetEdit}
+        handlePointCityEdit={handlePointCityEdit}
+        pointCityEdit={pointCityEdit}
+        handlePointStreetEdit={handlePointStreetEdit}
+        pointStreetEdit={pointStreetEdit}
+        handlePointEdit={handlePointEdit}
+        pointEdit={pointEdit}
+        // ---
         cities={cities}
         cityPoints={cityPoints}
         fetchingStateCities={fetchingStateCities}

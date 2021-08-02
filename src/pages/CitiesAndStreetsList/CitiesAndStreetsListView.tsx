@@ -11,16 +11,34 @@ import { routes } from '../../constans/constans'
 import { Redirect } from 'react-router-dom'
 
 export const CitiesAndStreetsListView: React.FC<TCitiesAndStreetsList> = ({
-  isOpenCity,
-  isOpenStreet,
-  isEditStreet,
-  isEditCity,
-  handleOpenModalCity,
-  handleCloseModalCity,
-  handleOpenModalStreet,
-  handleCloseModalStreet,
-  handleEditStreet,
-  handleEditCity,
+  isCityAdd,
+  toggleModalCityAdd,
+  cityAdd,
+  handleCityAdd,
+  // ---
+  isCityEdit,
+  toggleModalCityEdit,
+  cityEdit,
+  handleCityEdit,
+  // ---
+  isStreetAdd,
+  toggleModalStreetAdd,
+  handlePointCityAdd,
+  pointCityAdd,
+  handlePointStreetAdd,
+  pointStreetAdd,
+  handlePointAdd,
+  pointAdd,
+  // ---
+  isStreetEdit,
+  toggleModalStreetEdit,
+  handlePointCityEdit,
+  pointCityEdit,
+  handlePointStreetEdit,
+  pointStreetEdit,
+  handlePointEdit,
+  pointEdit,
+  // ---
   cities,
   cityPoints,
   fetchingStateCityPoints,
@@ -37,7 +55,7 @@ export const CitiesAndStreetsListView: React.FC<TCitiesAndStreetsList> = ({
           {fetchingStateCities === FetchingStateTypes.success &&
           cities.length > 0 ? (
             <Table
-              handlerOpenAdd={handleOpenModalCity}
+              handlerOpenAdd={toggleModalCityAdd}
               tableHeadData={['Город']}
             >
               {cities.map((city, id: number) => {
@@ -45,7 +63,7 @@ export const CitiesAndStreetsListView: React.FC<TCitiesAndStreetsList> = ({
                   <TableRow key={id}>
                     <TableCell component="th" scope="row">
                       <ButtonPrimary
-                        onClick={handleEditCity}
+                        onClick={toggleModalCityEdit}
                         className={'buttonInTable'}
                       >
                         <CreateIcon />
@@ -72,7 +90,7 @@ export const CitiesAndStreetsListView: React.FC<TCitiesAndStreetsList> = ({
           {fetchingStateCityPoints === FetchingStateTypes.success &&
           cityPoints.length > 0 ? (
             <Table
-              handlerOpenAdd={handleOpenModalStreet}
+              handlerOpenAdd={toggleModalStreetAdd}
               tableHeadData={['Город', 'Улица', 'Точка выдачи']}
             >
               {cityPoints.map((point, id: number) => {
@@ -80,7 +98,7 @@ export const CitiesAndStreetsListView: React.FC<TCitiesAndStreetsList> = ({
                   <TableRow key={id}>
                     <TableCell component="th" scope="row">
                       <ButtonPrimary
-                        onClick={handleEditStreet}
+                        onClick={toggleModalStreetEdit}
                         className={'buttonInTable'}
                       >
                         <CreateIcon />
@@ -104,39 +122,96 @@ export const CitiesAndStreetsListView: React.FC<TCitiesAndStreetsList> = ({
       </Grid>
 
       <Modal
-        open={isOpenCity}
-        onClose={handleCloseModalCity}
-        title={isEditCity ? 'Редактировать' : 'Добавить' + ' город'}
-        buttonClick={() => console.log('r')}
+        open={isCityAdd}
+        onClose={toggleModalCityAdd}
+        title={'Добавить город'}
+        buttonClick={toggleModalCityAdd}
         buttonTitle="Сохранить"
+        isBtnDisable={cityAdd.length < 1}
       >
         <InputVsLabel
-          id="city"
+          id="city-add"
           label="Введите город"
-          onChange={() => console.log('k')}
+          onChange={handleCityAdd}
+          value={cityAdd}
         />
       </Modal>
       <Modal
-        open={isOpenStreet}
-        onClose={handleCloseModalStreet}
-        title={isEditStreet ? 'Редактировать' : 'Добавить' + ' точку выдачи'}
-        buttonClick={() => console.log('r')}
+        open={isCityEdit}
+        onClose={toggleModalCityEdit}
+        title={'Редактировать город'}
+        buttonClick={toggleModalCityEdit}
         buttonTitle="Сохранить"
+        isBtnDisable={cityEdit.length < 1}
       >
+        <InputVsLabel
+          id="city-edit"
+          label="Введите город"
+          onChange={handleCityEdit}
+          value={cityEdit}
+        />
+      </Modal>
+
+      <Modal
+        open={isStreetAdd}
+        onClose={toggleModalStreetAdd}
+        title={'Добавить точку выдачи'}
+        buttonClick={toggleModalStreetAdd}
+        buttonTitle="Сохранить"
+        isBtnDisable={
+          pointCityAdd.length < 1 ||
+          pointStreetAdd.length < 1 ||
+          pointAdd.length < 1
+        }
+      >
+        <InputVsLabel
+          id="city-add"
+          label="Введите город"
+          onChange={handlePointCityAdd}
+          value={pointCityAdd}
+        />
+        <InputVsLabel
+          id="street-add"
+          label="Введите адрес"
+          onChange={handlePointStreetAdd}
+          value={pointStreetAdd}
+        />
         <InputVsLabel
           id="street"
           label="Введите точку выдачи"
-          onChange={() => console.log('k')}
+          onChange={handlePointAdd}
+          value={pointAdd}
         />
+      </Modal>
+      <Modal
+        open={isStreetEdit}
+        onClose={toggleModalStreetEdit}
+        title={'Редактировать точку выдачи'}
+        buttonClick={toggleModalStreetEdit}
+        buttonTitle="Сохранить"
+        isBtnDisable={
+          pointCityEdit.length < 1 ||
+          pointStreetEdit.length < 1 ||
+          pointEdit.length < 1
+        }
+      >
         <InputVsLabel
-          id="street"
+          id="street-2"
           label="Введите город"
-          onChange={() => console.log('k')}
+          onChange={handlePointCityEdit}
+          value={pointCityEdit}
         />
         <InputVsLabel
-          id="street"
+          id="street-3"
           label="Введите адрес"
-          onChange={() => console.log('k')}
+          onChange={handlePointStreetEdit}
+          value={pointStreetEdit}
+        />
+        <InputVsLabel
+          id="street-1"
+          label="Введите точку выдачи"
+          onChange={handlePointEdit}
+          value={pointEdit}
         />
       </Modal>
     </Grid>

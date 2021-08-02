@@ -11,4 +11,5 @@ export type TOrdersView = {
   handleStatus: (event: React.ChangeEvent<{ value: unknown }>) => void
   handlePaginationClick: (data: { selected: number }) => void
   handleFilterOrders: () => void
+  editOrder: (id: string) => void
 }

@@ -11,16 +11,32 @@ import { Redirect } from 'react-router-dom'
 import { routes } from '../../constans/constans'
 
 export const TariffsView: React.FC<TTariffs> = ({
-  isModalRate,
-  isModalRateType,
-  isEditRate,
-  isEditRateType,
-  handleModalRateOpen,
-  handleModalRateClose,
-  handleModalRateTypeOpen,
-  handleModalRateTypeClose,
-  handleEditRate,
+  isModalRateAdd,
+  handleModalRateAddToggle,
+  isModalRateEdit,
+  handleModalRateEditToggle,
+  addRateName,
+  addRatePrice,
+  handleAddRateName,
+  handleAddRatePrice,
+  editRateName,
+  editRatePrice,
+  handleEditRateName,
+  handleEditRatePrice,
+  // ---
+  isModalRateTypeAdd,
+  handleModalRateTypeAddToggle,
+  isModalRateTypeEdit,
+  handleModalRateTypeEditToggle,
+  addRateType,
+  editRateType,
+  addRateUnits,
+  editRateUnits,
+  handleAddRateType,
   handleEditRateType,
+  handleAddRateUnits,
+  handleEditRateUnits,
+  // ---
   rates,
   rateTypes,
   fetchingStateRates,
@@ -37,7 +53,7 @@ export const TariffsView: React.FC<TTariffs> = ({
           {fetchingStateRates === FetchingStateTypes.success &&
           rates.length > 0 ? (
             <Table
-              handlerOpenAdd={handleModalRateOpen}
+              handlerOpenAdd={handleModalRateAddToggle}
               tableHeadData={['Название', 'Цена']}
             >
               {rates.map((rate) => {
@@ -45,7 +61,7 @@ export const TariffsView: React.FC<TTariffs> = ({
                   <TableRow>
                     <TableCell component="th" scope="row">
                       <ButtonPrimary
-                        onClick={handleEditRate}
+                        onClick={handleModalRateEditToggle}
                         className={'buttonInTable'}
                       >
                         <CreateIcon />
@@ -73,7 +89,7 @@ export const TariffsView: React.FC<TTariffs> = ({
           {fetchingStateRateTypes === FetchingStateTypes.success &&
           rateTypes.length > 0 ? (
             <Table
-              handlerOpenAdd={handleModalRateTypeOpen}
+              handlerOpenAdd={handleModalRateTypeAddToggle}
               tableHeadData={['Название', 'Единици измерения']}
             >
               {rateTypes.map((type) => {
@@ -81,7 +97,7 @@ export const TariffsView: React.FC<TTariffs> = ({
                   <TableRow>
                     <TableCell component="th" scope="row">
                       <ButtonPrimary
-                        onClick={handleEditRateType}
+                        onClick={handleModalRateTypeEditToggle}
                         className={'buttonInTable'}
                       >
                         <CreateIcon />
@@ -100,40 +116,90 @@ export const TariffsView: React.FC<TTariffs> = ({
           )}
         </div>
       </Grid>
+
       <Modal
-        open={isModalRate}
-        onClose={handleModalRateClose}
-        title={isEditRate ? 'Редактировать' : 'Добавить' + ' тариф'}
-        buttonClick={() => console.log('r')}
+        open={isModalRateAdd}
+        onClose={handleModalRateAddToggle}
+        title={'Добавить тариф'}
+        buttonClick={handleModalRateAddToggle} //TODO: добавить отправку данных на сервер
         buttonTitle="Сохранить"
+        isBtnDisable={addRateName.length < 1 || addRatePrice.length < 1}
       >
         <InputVsLabel
           id="rate-name"
           label="Введите название"
-          onChange={() => console.log('k')}
+          onChange={handleAddRateName}
+          value={addRateName}
         />
         <InputVsLabel
           id="rate-price"
           label="Введите цену"
-          onChange={() => console.log('k')}
+          onChange={handleAddRatePrice}
+          value={addRatePrice}
         />
       </Modal>
       <Modal
-        open={isModalRateType}
-        onClose={handleModalRateTypeClose}
-        title={isEditRateType ? 'Редактировать' : 'Добавить' + ' тариф'}
-        buttonClick={() => console.log('r')}
+        open={isModalRateEdit}
+        onClose={handleModalRateEditToggle}
+        title={'Редактировать тариф'}
+        buttonClick={handleModalRateEditToggle} //TODO: добавить запрос на сервер
         buttonTitle="Сохранить"
+        isBtnDisable={editRateName.length < 1 || editRatePrice.length < 1}
       >
         <InputVsLabel
           id="rate-name"
           label="Введите название"
-          onChange={() => console.log('k')}
+          onChange={handleEditRateName}
+          value={editRateName}
         />
         <InputVsLabel
           id="rate-price"
+          label="Введите цену"
+          onChange={handleEditRatePrice}
+          value={editRatePrice}
+        />
+      </Modal>
+
+      <Modal
+        open={isModalRateTypeAdd}
+        onClose={handleModalRateTypeAddToggle}
+        title={'Добавить тип тарифа'}
+        buttonClick={handleModalRateTypeAddToggle}
+        buttonTitle="Сохранить"
+        isBtnDisable={addRateType.length < 1 || addRateUnits.length < 1}
+      >
+        <InputVsLabel
+          id="rate-name"
+          label="Введите название"
+          onChange={handleAddRateType}
+          value={addRateType}
+        />
+        <InputVsLabel
+          id="rate-units"
           label="Введите единицу измерения"
-          onChange={() => console.log('k')}
+          onChange={handleAddRateUnits}
+          value={addRateUnits}
+        />
+      </Modal>
+      <Modal
+        open={isModalRateTypeEdit}
+        onClose={handleModalRateTypeEditToggle}
+        title={'Редактировать тип тарифа'}
+        buttonClick={handleModalRateTypeEditToggle}
+        buttonTitle="Сохранить"
+        isBtnDisable={editRateType.length < 1 || editRateUnits.length < 1}
+      >
+        <InputVsLabel
+          id="rate-type"
+          label="Введите название"
+          onChange={handleEditRateType}
+          value={editRateType}
+        />
+        <InputVsLabel
+          id="rate-units"
+          label="Введите единицу измерения"
+          onChange={handleEditRateUnits}
+          value={editRateUnits}
         />
       </Modal>
     </Grid>
