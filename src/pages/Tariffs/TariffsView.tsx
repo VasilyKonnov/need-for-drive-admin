@@ -23,6 +23,7 @@ export const TariffsView: React.FC<TTariffs> = ({
   editRatePrice,
   handleEditRateName,
   handleEditRatePrice,
+  handleModalRateEditOpen,
   // ---
   isModalRateTypeAdd,
   handleModalRateTypeAddToggle,
@@ -36,6 +37,7 @@ export const TariffsView: React.FC<TTariffs> = ({
   handleEditRateType,
   handleAddRateUnits,
   handleEditRateUnits,
+  handleModalRateTypeEditOpen,
   // ---
   rates,
   rateTypes,
@@ -61,7 +63,7 @@ export const TariffsView: React.FC<TTariffs> = ({
                   <TableRow>
                     <TableCell component="th" scope="row">
                       <ButtonPrimary
-                        onClick={handleModalRateEditToggle}
+                        onClick={() => handleModalRateEditOpen(rate.id)}
                         className={'buttonInTable'}
                       >
                         <CreateIcon />
@@ -97,7 +99,7 @@ export const TariffsView: React.FC<TTariffs> = ({
                   <TableRow>
                     <TableCell component="th" scope="row">
                       <ButtonPrimary
-                        onClick={handleModalRateTypeEditToggle}
+                        onClick={() => handleModalRateTypeEditOpen(type.id)}
                         className={'buttonInTable'}
                       >
                         <CreateIcon />
@@ -123,7 +125,9 @@ export const TariffsView: React.FC<TTariffs> = ({
         title={'Добавить тариф'}
         buttonClick={handleModalRateAddToggle} //TODO: добавить отправку данных на сервер
         buttonTitle="Сохранить"
-        isBtnDisable={addRateName.length < 1 || addRatePrice.length < 1}
+        isBtnDisable={
+          addRateName.length < 1 || addRatePrice.toString().length < 1
+        }
       >
         <InputVsLabel
           id="rate-name"
@@ -144,7 +148,9 @@ export const TariffsView: React.FC<TTariffs> = ({
         title={'Редактировать тариф'}
         buttonClick={handleModalRateEditToggle} //TODO: добавить запрос на сервер
         buttonTitle="Сохранить"
-        isBtnDisable={editRateName.length < 1 || editRatePrice.length < 1}
+        isBtnDisable={
+          editRateName.length < 1 || editRatePrice.toString().length < 1
+        }
       >
         <InputVsLabel
           id="rate-name"

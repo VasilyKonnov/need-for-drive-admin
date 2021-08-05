@@ -18,3 +18,9 @@ const routes = {
 }
 const perPage = 10
 export { xApiFactory, secret, apiUrl, routes, imgUrl, perPage }
+export const rateType = {
+  week: '5f622f029d3a610b850fd820',
+  weekSale: '60b9437e2aed9a0b9b7ed337',
+  day: '5e26a082099b810b946c5d83',
+  minute: '5e26a07f099b810b946c5d82',
+}

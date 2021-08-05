@@ -11,6 +11,7 @@ export type TCitiesAndStreetsList = {
   toggleModalCityEdit: () => void
   cityEdit: string
   handleCityEdit: (e: React.FormEvent<HTMLInputElement>) => void
+  openModalCityEdit: (id: string) => void
   // ---
   isStreetAdd: boolean
   toggleModalStreetAdd: () => void
@@ -29,6 +30,7 @@ export type TCitiesAndStreetsList = {
   pointStreetEdit: string
   handlePointEdit: (e: React.FormEvent<HTMLInputElement>) => void
   pointEdit: string
+  openModalStreetEdit: (id: string) => void
   // ---
   cities: TCity[]
   cityPoints: TCityPoint[]

@@ -20,6 +20,7 @@ export const CitiesAndStreetsListView: React.FC<TCitiesAndStreetsList> = ({
   toggleModalCityEdit,
   cityEdit,
   handleCityEdit,
+  openModalCityEdit,
   // ---
   isStreetAdd,
   toggleModalStreetAdd,
@@ -38,6 +39,7 @@ export const CitiesAndStreetsListView: React.FC<TCitiesAndStreetsList> = ({
   pointStreetEdit,
   handlePointEdit,
   pointEdit,
+  openModalStreetEdit,
   // ---
   cities,
   cityPoints,
@@ -63,7 +65,7 @@ export const CitiesAndStreetsListView: React.FC<TCitiesAndStreetsList> = ({
                   <TableRow key={id}>
                     <TableCell component="th" scope="row">
                       <ButtonPrimary
-                        onClick={toggleModalCityEdit}
+                        onClick={() => openModalCityEdit(city.id)}
                         className={'buttonInTable'}
                       >
                         <CreateIcon />
@@ -98,7 +100,7 @@ export const CitiesAndStreetsListView: React.FC<TCitiesAndStreetsList> = ({
                   <TableRow key={id}>
                     <TableCell component="th" scope="row">
                       <ButtonPrimary
-                        onClick={toggleModalStreetEdit}
+                        onClick={() => openModalStreetEdit(point.id)}
                         className={'buttonInTable'}
                       >
                         <CreateIcon />

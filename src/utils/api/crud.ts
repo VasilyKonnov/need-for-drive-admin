@@ -69,6 +69,10 @@ const crud = {
   deleteRateTypes(id: string) {
     return crudAxios.delete(`${routes.RATETYPE}/${id}`)
   },
+  async getCar(id: string) {
+    const response = await crudAxios.get(`${routes.CAR}/${id}`)
+    return response.data.data
+  },
   async getCars() {
     const response = await crudAxios.get(`${routes.CAR}`)
     return response.data.data

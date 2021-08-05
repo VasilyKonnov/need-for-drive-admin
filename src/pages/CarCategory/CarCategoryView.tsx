@@ -22,6 +22,7 @@ export const CarCategoryView: React.FC<TCarCategoryView> = ({
   handleNameCategoryEdit,
   handleDescCategoryEdit,
   carCategory,
+  openCategoryEdit,
 }) => {
   return (
     <>
@@ -37,7 +38,7 @@ export const CarCategoryView: React.FC<TCarCategoryView> = ({
                 <TableRow>
                   <TableCell component="th" scope="row">
                     <ButtonPrimary
-                      onClick={toggleCategoryEdit}
+                      onClick={() => openCategoryEdit(category.id)}
                       className={'buttonInTable'}
                     >
                       <CreateIcon />

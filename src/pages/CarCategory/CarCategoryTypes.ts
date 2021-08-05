@@ -14,4 +14,5 @@ export type TCarCategoryView = {
   handleNameCategoryEdit: (e: React.FormEvent<HTMLInputElement>) => void
   handleDescCategoryEdit: (e: React.ChangeEvent<HTMLTextAreaElement>) => void
   carCategory: TCarCategory[]
+  openCategoryEdit: (id: string) => void
 }

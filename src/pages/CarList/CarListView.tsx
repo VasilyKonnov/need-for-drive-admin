@@ -59,7 +59,7 @@ export const CarListView: React.FC<TCarListView> = ({
               {cars.map((car: any, id: number) => (
                 <TableRow key={id}>
                   <TableCell component="th" scope="row">
-                    <Link to="/add-car">
+                    <Link to={`/add-car/${car.id}`}>
                       <ButtonPrimary className={'buttonInTable'}>
                         <CreateIcon />
                       </ButtonPrimary>

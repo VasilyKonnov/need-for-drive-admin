@@ -2,7 +2,7 @@ export type TSelect = {
   handlerChange: (event: React.ChangeEvent<{ value: unknown }>) => void
   labelId: string
   id: string
-  children: JSX.Element[] | JSX.Element
+  children: any
   label: string
   value?: string
 }

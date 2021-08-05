@@ -23,7 +23,7 @@ export const Tariffs: React.FC = () => {
   const [addRateName, setAddRateName] = useState('')
   const [addRatePrice, setAddRatePrice] = useState('')
   const [editRateName, setEditRateName] = useState('')
-  const [editRatePrice, setEditRatePrice] = useState('')
+  const [editRatePrice, setEditRatePrice] = useState<string | number>('')
 
   const [addRateType, setAddRateType] = useState('')
   const [addRateUnits, setAddRateUnits] = useState('')
@@ -60,6 +60,15 @@ export const Tariffs: React.FC = () => {
     setAddRateName('')
     setAddRatePrice('')
   }
+
+  const handleModalRateEditOpen = (id: number | string) => {
+    setIsModalRateEdit(true)
+    const rate = rates.find((rate) => rate.id === id)
+    if (rate) {
+      setEditRateName(rate.rateTypeId.name)
+      setEditRatePrice(rate.price)
+    }
+  }
   const handleModalRateEditToggle = () => {
     setIsModalRateEdit(!isModalRateEdit)
     setEditRateName('')
@@ -70,6 +79,15 @@ export const Tariffs: React.FC = () => {
     setIsModalRateTypeAdd(!isModalRateTypeAdd)
     setAddRateType('')
     setAddRateUnits('')
+  }
+
+  const handleModalRateTypeEditOpen = (id: number | string) => {
+    setIsModalRateTypeEdit(true)
+    const ratetype = rateTypes.find((type) => type.id === id)
+    if (ratetype) {
+      setEditRateType(ratetype.name)
+      setEditRateUnits(ratetype.unit)
+    }
   }
   const handleModalRateTypeEditToggle = () => {
     setIsModalRateTypeEdit(!isModalRateTypeEdit)
@@ -106,6 +124,7 @@ export const Tariffs: React.FC = () => {
         isModalRateEdit={isModalRateEdit}
         handleModalRateAddToggle={handleModalRateAddToggle}
         handleModalRateEditToggle={handleModalRateEditToggle}
+        handleModalRateEditOpen={handleModalRateEditOpen}
         // ---
         isModalRateTypeAdd={isModalRateTypeAdd}
         handleModalRateTypeAddToggle={handleModalRateTypeAddToggle}
@@ -119,6 +138,7 @@ export const Tariffs: React.FC = () => {
         handleEditRateType={handleEditRateType}
         handleAddRateUnits={handleAddRateUnits}
         handleEditRateUnits={handleEditRateUnits}
+        handleModalRateTypeEditOpen={handleModalRateTypeEditOpen}
         // ---
         rates={rates}
         rateTypes={rateTypes}

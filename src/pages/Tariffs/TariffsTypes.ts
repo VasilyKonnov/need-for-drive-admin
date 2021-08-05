@@ -11,9 +11,10 @@ export type TTariffs = {
   isModalRateEdit: boolean
   handleModalRateEditToggle: () => void
   editRateName: string
-  editRatePrice: string
+  editRatePrice: string | number
   handleEditRateName: (e: React.FormEvent<HTMLInputElement>) => void
   handleEditRatePrice: (e: React.FormEvent<HTMLInputElement>) => void
+  handleModalRateEditOpen: (id: number | string) => void
   // ---
   isModalRateTypeAdd: boolean
   handleModalRateTypeAddToggle: () => void
@@ -27,6 +28,7 @@ export type TTariffs = {
   handleEditRateType: (e: React.FormEvent<HTMLInputElement>) => void
   handleAddRateUnits: (e: React.FormEvent<HTMLInputElement>) => void
   handleEditRateUnits: (e: React.FormEvent<HTMLInputElement>) => void
+  handleModalRateTypeEditOpen: (id: number | string) => void
   // ---
   rates: TRate[]
   rateTypes: TRateType[]

@@ -11,9 +11,9 @@ export const Menu: React.FC<TMenu> = ({ className }) => {
   const menuClasses = classNames(className ? className : '', styles.menu)
   return (
     <div className={menuClasses}>
-      <NavLink to="/add-car" exact activeClassName={styles.active}>
+      <NavLink to="/create-car" exact activeClassName={styles.active}>
         <Button startIcon={<CreateIcon />} className={styles.menuItem}>
-          Карточка автомобиля
+          Добавить автомобиль
         </Button>
       </NavLink>
       <NavLink to="/orders" exact activeClassName={styles.active}>

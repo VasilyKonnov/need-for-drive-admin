@@ -36,6 +36,13 @@ export const CitiesAndStreetsList: React.FC = () => {
     setIsCityAdd(!isCityAdd)
     setCityAdd('')
   }
+
+  const openModalCityEdit = (id: string) => {
+    setIsCityEdit(true)
+    const city = cities.find((city) => city.id === id)
+    if (city) setCityEdit(city.name)
+  }
+
   const toggleModalCityEdit = () => {
     setIsCityEdit(!isCityEdit)
     setCityEdit('')
@@ -45,6 +52,15 @@ export const CitiesAndStreetsList: React.FC = () => {
     setPointCityAdd('')
     setPointStreetAdd('')
     setPointAdd('')
+  }
+  const openModalStreetEdit = (id: string) => {
+    setIsStreetEdit(true)
+    const street = cityPoints.find((street) => street.id === id)
+    if (street) {
+      setPointCityEdit(street.cityId ? street.cityId.name : '---')
+      setPointStreetEdit(street ? street.address : '---')
+      setPointEdit(street ? street.name : '---')
+    }
   }
   const toggleModalStreetEdit = () => {
     setIsStreetEdit(!isStreetEdit)
@@ -90,14 +106,6 @@ export const CitiesAndStreetsList: React.FC = () => {
     if (fetchingStateCityPoints === FetchingStateTypes.none) {
       dispatch(cityPointsAction.list())
     }
-    if (cityPoints) {
-      cityPoints.map((point) => {
-        return console.log(
-          'point.cityId.name ',
-          point.cityId ? point.cityId.name : '---',
-        )
-      })
-    }
   }, [dispatch, fetchingStateCityPoints, cityPoints])
 
   return (
@@ -112,6 +120,7 @@ export const CitiesAndStreetsList: React.FC = () => {
         toggleModalCityEdit={toggleModalCityEdit}
         cityEdit={cityEdit}
         handleCityEdit={handleCityEdit}
+        openModalCityEdit={openModalCityEdit}
         // ---
         isStreetAdd={isStreetAdd}
         toggleModalStreetAdd={toggleModalStreetAdd}
@@ -130,6 +139,7 @@ export const CitiesAndStreetsList: React.FC = () => {
         pointStreetEdit={pointStreetEdit}
         handlePointEdit={handlePointEdit}
         pointEdit={pointEdit}
+        openModalStreetEdit={openModalStreetEdit}
         // ---
         cities={cities}
         cityPoints={cityPoints}

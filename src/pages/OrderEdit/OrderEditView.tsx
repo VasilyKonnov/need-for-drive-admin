@@ -1,5 +1,10 @@
-import { ButtonPrimary, ButtonSecondary, Spinner } from '../../components'
-import { Layout } from './../../components/Layout/Layout'
+import {
+  ButtonPrimary,
+  ButtonSecondary,
+  Spinner,
+  TotalSum,
+  Layout,
+} from '../../components'
 import { Grid, MenuItem } from '@material-ui/core'
 import DatePicker from 'react-datepicker'
 import Checkbox from '@material-ui/core/Checkbox'
@@ -10,7 +15,10 @@ import { TOrderEditView } from './OrderEditTypes'
 import 'react-datepicker/dist/react-datepicker.css'
 import './datePickerStyled.scss'
 import './OrderEdit.scss'
-import { useEffect } from 'react'
+import { TCity } from '../../store/cities'
+import { TCityPoint } from '../../store/cityPoints'
+import { TRate } from '../../store/rates'
+import { TOrderStatus } from '../../store/orderStatus'
 
 export const OrderEditView: React.FC<TOrderEditView> = ({
   order,
@@ -18,6 +26,8 @@ export const OrderEditView: React.FC<TOrderEditView> = ({
   handlePoint,
   handleOrderStatus,
   handleRate,
+  startDate,
+  endDate,
   setStartDate,
   setEndDate,
   filterPassedEndTime,
@@ -30,16 +40,23 @@ export const OrderEditView: React.FC<TOrderEditView> = ({
   handleBabyChair,
   isRightHandDrive,
   handleRightHandDrive,
+  goBack,
+  set_Price,
+  cities,
+  cityPoints,
+  rates,
+  orderStatuses,
+  rate,
 }) => {
   const orderId = order ? order.id : ''
-  const orderPrice = order ? order.price : ''
+  const orderPrice = order ? order.price : 0
   const orderCity = order ? order.cityId : { name: '', id: '' }
   const orderPoint = order ? order.pointId : { address: '', name: '', id: '' }
   const orderStatus = order ? order.orderStatusId : { name: '', id: '' }
   const orderRate = order ? order.rateId : null
-  const startDate = order ? new Date(order.dateFrom) : undefined
-  const endDate = order ? new Date(order.dateTo) : undefined
   const orderColor = selectedColor ? selectedColor.toLowerCase() : 'любой'
+  let _startDate = startDate ? new Date(startDate) : undefined
+  let _endDate = endDate ? new Date(endDate) : undefined
 
   return (
     <Layout>
@@ -59,59 +76,67 @@ export const OrderEditView: React.FC<TOrderEditView> = ({
                   handlerChange={handleCity}
                   value={orderCity ? orderCity.id : undefined}
                 >
-                  <MenuItem value={orderCity ? orderCity.id : undefined}>
-                    {orderCity ? orderCity.name : undefined}
-                  </MenuItem>
-
-                  <MenuItem value="2">{'category.name - 2'}</MenuItem>
+                  {cities.map((city: TCity) => {
+                    return (
+                      <MenuItem key={city.id} value={city.id}>
+                        {city.name}
+                      </MenuItem>
+                    )
+                  })}
                 </SelectVsLabel>
                 <SelectVsLabel
                   label="Пункт выдачи"
                   labelId="labelId-1"
-                  id="select-1"
+                  id="select-2"
                   handlerChange={handlePoint}
                   value={orderPoint ? orderPoint.id : undefined}
                 >
-                  <MenuItem value={orderPoint ? orderPoint.id : ''}>
-                    {orderPoint
-                      ? orderPoint.address + ' ' + orderPoint.name
-                      : ''}
-                  </MenuItem>
+                  {cityPoints.map((cityPoint: TCityPoint) => {
+                    return (
+                      <MenuItem key={cityPoint.id} value={cityPoint.id}>
+                        {cityPoint.name}
+                      </MenuItem>
+                    )
+                  })}
                 </SelectVsLabel>
                 <SelectVsLabel
                   label="Статус"
                   labelId="labelId-1"
-                  id="select-1"
+                  id="select-3"
                   handlerChange={handleOrderStatus}
                   value={orderStatus ? orderStatus.id : undefined}
                 >
-                  {
-                    <MenuItem value={orderStatus ? orderStatus.id : ''}>
-                      {orderStatus ? orderStatus.name : ''}
-                    </MenuItem>
-                  }
+                  {orderStatuses.map((status: TOrderStatus) => {
+                    return (
+                      <MenuItem key={status.id} value={status.id}>
+                        {status.name}
+                      </MenuItem>
+                    )
+                  })}
                 </SelectVsLabel>
                 <SelectVsLabel
                   label="Тариф"
                   labelId="labelId-1"
-                  id="select-1"
+                  id="select-4"
                   handlerChange={handleRate}
                   value={orderRate ? orderRate.id : undefined}
                 >
-                  {
-                    <MenuItem value={orderRate ? orderRate.id : ''}>
-                      {orderRate ? orderRate.price : ''}
-                    </MenuItem>
-                  }
+                  {rates.map((rate: TRate) => {
+                    return (
+                      <MenuItem key={rate.id} value={rate.id}>
+                        {rate.price}
+                      </MenuItem>
+                    )
+                  })}
                 </SelectVsLabel>
                 <div className="wrapperDate">
                   <span>Аренда от</span>
                   <DatePicker
-                    minDate={startDate ? startDate : new Date()}
+                    minDate={_startDate ? _startDate : new Date()}
                     showTimeSelect
                     dateFormat={'dd-MM-yyyy, hh:mm'}
                     filterTime={filterPassedTime}
-                    selected={startDate}
+                    selected={_startDate}
                     onChange={(date: any) => {
                       date ? setStartDate(date.getTime()) : setStartDate(null)
                       setEndDate(null)
@@ -122,11 +147,11 @@ export const OrderEditView: React.FC<TOrderEditView> = ({
                 <div className="wrapperDate">
                   <span>Аренда до</span>
                   <DatePicker
-                    minDate={startDate ? startDate : new Date()}
+                    minDate={_startDate ? _startDate : new Date()}
                     showTimeSelect
                     dateFormat={'dd-MM-yyyy, hh:mm'}
                     filterTime={filterPassedEndTime}
-                    selected={endDate}
+                    selected={_endDate}
                     onChange={(date: any) =>
                       date ? setEndDate(date.getTime()) : setEndDate(null)
                     }
@@ -217,9 +242,15 @@ export const OrderEditView: React.FC<TOrderEditView> = ({
                   />
                 </div>
                 <div className="additionalServices">
-                  <p className="additionalServices--title">
-                    Цена: <b> {orderPrice} р.</b>
-                  </p>
+                  <TotalSum
+                    selectedRate={rate ? rate : orderRate}
+                    startDate={startDate ? startDate : undefined}
+                    endDate={endDate ? endDate : undefined}
+                    setTotalSumOrder={set_Price}
+                    isFullTank={isFullTank}
+                    isNeedChildChair={isBabyChair}
+                    isRightWheel={isRightHandDrive}
+                  />
                 </div>
               </Grid>
             </Grid>
@@ -228,7 +259,10 @@ export const OrderEditView: React.FC<TOrderEditView> = ({
             <ButtonPrimary className="edit-order-footer--btn-primary">
               Применить
             </ButtonPrimary>
-            <ButtonSecondary className="edit-order-footer--btn-secondary ">
+            <ButtonSecondary
+              onClick={goBack}
+              className="edit-order-footer--btn-secondary "
+            >
               Отменить
             </ButtonSecondary>
           </div>

@@ -7,13 +7,13 @@ import { carCategorySelector } from '../../store/carCategory/carCategorySelector
 import { carCategoryAction } from '../../store/carCategory/carCategoryAction'
 import { routes } from '../../constans/constans'
 import { Redirect } from 'react-router-dom'
+import { truncate } from 'fs'
 
 export const CarCategory: React.FC = () => {
   const dispatch = useDispatch()
   const { data: carCategory, fetchingState: fetchingCarCategory } = useSelector(
     carCategorySelector,
   )
-
   const [isCategoryAdd, setIsCategoryAdd] = useState(false)
   const [isCategoryEdit, setIsCategoryEdit] = useState(false)
   const [nameCategoryAdd, setIsNameCategoryAdd] = useState('')
@@ -27,6 +27,14 @@ export const CarCategory: React.FC = () => {
     setDescCategoryAdd('')
   }
 
+  const openCategoryEdit = (id: string) => {
+    setIsCategoryEdit(true)
+    const category = carCategory.find((category) => category.id === id)
+    if (category) {
+      setIsNameCategoryEdit(category.name)
+      setDescCategoryEdit(category.description)
+    }
+  }
   const toggleCategoryEdit = () => {
     setIsCategoryEdit(!isCategoryEdit)
     setIsNameCategoryEdit('')
@@ -76,6 +84,7 @@ export const CarCategory: React.FC = () => {
           descCategoryEdit={descCategoryEdit}
           handleNameCategoryEdit={handleNameCategoryEdit}
           handleDescCategoryEdit={handleDescCategoryEdit}
+          openCategoryEdit={openCategoryEdit}
           // ---
           carCategory={carCategory}
         />

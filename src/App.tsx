@@ -18,7 +18,8 @@ function App() {
       <Route exact path="/" component={LoginPage} />
       <Route path="/orders" component={Orders} />
       <Route path="/edit-order/:id" component={OrderEdit} />
-      <Route path="/add-car" component={AddCar} />
+      <Route path="/create-car" component={AddCar} />
+      <Route path="/add-car/:id" component={AddCar} />
       <Route path="/list-cars" component={CarList} />
       <Route path="/list-cars-category" component={CarCategory} />
       <Route path="/list-cities-and-streets" component={CitiesAndStreetsList} />

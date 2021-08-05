@@ -52,10 +52,6 @@ export const OrderStatus: React.FC = () => {
     }
   }, [dispatch, fetchingStateOrderStatus, orderStatus])
 
-  useEffect(() => {
-    console.log('editStatusId - ', editStatusId)
-  }, [editStatusId])
-
   return (
     <Layout>
       {fetchingStateOrderStatus === FetchingStateTypes.success ? (
