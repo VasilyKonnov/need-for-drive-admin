@@ -15,6 +15,7 @@ import { MenuItem } from '@material-ui/core'
 import './style.scss'
 import classNames from 'classnames'
 import { useEffect } from 'react'
+import { imgUrl } from '../../constans/constans'
 
 export const AddCarView: React.FC<TAddCarView> = ({
   goBack,
@@ -38,34 +39,47 @@ export const AddCarView: React.FC<TAddCarView> = ({
   handleColor,
   addColor,
   removeColor,
+  originalname,
+  handleOriginalname,
+  imgCarUrl,
+  handleImgUrl,
 }) => {
   const classSelect = classNames(styles.select, 'add-car-select')
-
   const _carCategory =
     selectCarCategory && carCategories ? selectCarCategory : undefined
-
   const selectCategory = carCategories.find(
     (category: TCarCategory) => category.id === selectCarCategory,
   )
   const _selectCarCategory = selectCategory ? selectCategory.name : ''
-
-  useEffect(() => {
-    console.log('_carCategory - ', _carCategory)
-  }, [_carCategory])
-
+  const _imgCarUrl =
+    imgCarUrl.toString().slice(0, 4) === 'data' ? imgCarUrl : imgUrl + imgCarUrl
   return (
     <Layout>
       <h1 className="admin-page-title">Карточка автомобиля</h1>
       <div className={styles.container}>
         <div className={styles.carRow}>
-          <img src={stabImg} alt="Картинка автомобиля" />
+          <img
+            src={_imgCarUrl ? _imgCarUrl : stabImg}
+            alt="Картинка автомобиля"
+          />
           <p className={styles.carName}>{carName ? carName : ''}</p>
           <p className={styles.carCategoty}>{_selectCarCategory}</p>
           <form>
-            <input type="text" placeholder="Выберите файл" />
+            <input
+              onChange={handleOriginalname}
+              value={originalname}
+              type="text"
+              placeholder="Выберите файл"
+            />
             <label htmlFor="car-img">
               Обзор
-              <input id="car-img" type="file" hidden />
+              <input
+                onChange={handleImgUrl}
+                // value={imgUrl}
+                id="car-img"
+                type="file"
+                hidden
+              />
             </label>
           </form>
 

@@ -33,6 +33,8 @@ export const AddCar: React.FC = () => {
   const [_tank, set_Tank] = useState(0)
   const [_colors, set_Colors] = useState<string[]>([])
   const [_color, set_Color] = useState<string>('')
+  const [_originalname, set_Originalname] = useState<string>('')
+  const [imgUrl, setImgUrl] = useState<string>('')
 
   const goBack = () => history.goBack()
 
@@ -53,6 +55,10 @@ export const AddCar: React.FC = () => {
     set_Tank(+e.target.value.replace(/\D/g, '').substr(0, 3))
   const handleColor = (e: React.ChangeEvent<HTMLInputElement>) =>
     set_Color(e.target.value)
+  const handleOriginalname = (e: React.ChangeEvent<HTMLInputElement>) =>
+    set_Originalname(e.target.value)
+  const handleImgUrl = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setImgUrl(e.target.value)
 
   const addColor = () => {
     if (_color.length > 1) {
@@ -98,10 +104,15 @@ export const AddCar: React.FC = () => {
       set_PriceMin(car.priceMin)
       set_Tank(car.tank)
       set_Colors(car.colors)
-
+      set_Originalname(car.thumbnail.originalname)
+      setImgUrl(car.thumbnail.path)
       console.log('car -', car)
     }
   }, [car])
+
+  useEffect(() => {
+    console.log('imgUrl - ', imgUrl)
+  }, [imgUrl])
 
   return (
     <AddCarView
@@ -126,6 +137,10 @@ export const AddCar: React.FC = () => {
       handleColor={handleColor}
       addColor={addColor}
       removeColor={removeColor}
+      originalname={_originalname}
+      handleOriginalname={handleOriginalname}
+      imgCarUrl={imgUrl}
+      handleImgUrl={handleImgUrl}
     />
   )
 }

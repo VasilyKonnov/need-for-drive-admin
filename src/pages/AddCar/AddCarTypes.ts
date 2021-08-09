@@ -22,4 +22,8 @@ export type TAddCarView = {
   handleColor: (event: React.ChangeEvent<HTMLInputElement>) => void
   addColor: () => void
   removeColor: (id: number) => void
+  originalname: string
+  handleOriginalname: (event: React.ChangeEvent<HTMLInputElement>) => void
+  imgCarUrl: string
+  handleImgUrl: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
