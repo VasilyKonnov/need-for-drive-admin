@@ -8,6 +8,7 @@ import { carCategorySelector } from '../../store/carCategory/carCategorySelector
 import { carCategoryAction } from '../../store/carCategory/carCategoryAction'
 import { TCarCategory } from '../../store/carCategory'
 import { TCar } from '../../store/cars'
+import { Spinner } from '../../components'
 
 export const AddCar: React.FC = () => {
   const paramId: { id: string } = useParams()

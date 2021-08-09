@@ -9,7 +9,7 @@ import stabImg from '../../assets/image/placeholder.png'
 import styles from './AddCar.module.scss'
 import { ButtonSecondary } from '../../components/ButtonSecondary/ButtonSecondary'
 import { TAddCarView } from './AddCarTypes'
-import { SelectVsLabel } from './../../components/SelectVsLabel/SelectVsLabel'
+import { SelectVsLabelAddCar } from './../../components/SelectVsLabelAddCar/SelectVsLabelAddCar'
 import { TCarCategory } from '../../store/carCategory'
 import { MenuItem } from '@material-ui/core'
 import './style.scss'
@@ -85,12 +85,12 @@ export const AddCarView: React.FC<TAddCarView> = ({
           <h2>Настройки автомобиля</h2>
           <div className={styles.settingWrap}>
             <div className={styles.settingItemsWrap}>
-              <SelectVsLabel
+              <SelectVsLabelAddCar
                 className={classSelect}
                 label="Котегория"
                 labelId="labelId-1"
                 id="select-1"
-                defaultValue={_carCategory}
+                value={_carCategory}
                 handlerChange={handleCarCategory}
               >
                 {carCategories.map((category: TCarCategory, id: number) => {
@@ -100,7 +100,7 @@ export const AddCarView: React.FC<TAddCarView> = ({
                     </MenuItem>
                   )
                 })}
-              </SelectVsLabel>
+              </SelectVsLabelAddCar>
 
               <InputVsLabel
                 classLabel={styles.settingLabel}
