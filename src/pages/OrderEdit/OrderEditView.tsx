@@ -49,7 +49,6 @@ export const OrderEditView: React.FC<TOrderEditView> = ({
   rate,
 }) => {
   const orderId = order ? order.id : ''
-  const orderPrice = order ? order.price : 0
   const orderCity = order ? order.cityId : { name: '', id: '' }
   const orderPoint = order ? order.pointId : { address: '', name: '', id: '' }
   const orderStatus = order ? order.orderStatusId : { name: '', id: '' }
@@ -74,7 +73,7 @@ export const OrderEditView: React.FC<TOrderEditView> = ({
                   labelId="labelId-1"
                   id="select-1"
                   handlerChange={handleCity}
-                  value={orderCity ? orderCity.id : undefined}
+                  defaultValue={orderCity ? orderCity.id : undefined}
                 >
                   {cities.map((city: TCity) => {
                     return (
@@ -89,7 +88,7 @@ export const OrderEditView: React.FC<TOrderEditView> = ({
                   labelId="labelId-1"
                   id="select-2"
                   handlerChange={handlePoint}
-                  value={orderPoint ? orderPoint.id : undefined}
+                  defaultValue={orderPoint ? orderPoint.id : undefined}
                 >
                   {cityPoints.map((cityPoint: TCityPoint) => {
                     return (
@@ -104,7 +103,7 @@ export const OrderEditView: React.FC<TOrderEditView> = ({
                   labelId="labelId-1"
                   id="select-3"
                   handlerChange={handleOrderStatus}
-                  value={orderStatus ? orderStatus.id : undefined}
+                  defaultValue={orderStatus ? orderStatus.id : undefined}
                 >
                   {orderStatuses.map((status: TOrderStatus) => {
                     return (
@@ -119,7 +118,7 @@ export const OrderEditView: React.FC<TOrderEditView> = ({
                   labelId="labelId-1"
                   id="select-4"
                   handlerChange={handleRate}
-                  value={orderRate ? orderRate.id : undefined}
+                  defaultValue={orderRate ? orderRate.id : undefined}
                 >
                   {rates.map((rate: TRate) => {
                     return (

@@ -1,3 +1,11 @@
+.select {
+  p {
+    line-height: 11px;
+  }
+  div {
+    max-width: 100% !important;
+  }
+}
 .container {
   display: flex;
   flex-direction: column;
@@ -202,6 +210,7 @@
   color: #495057;
   position: relative;
   padding-left: 22px;
+  cursor: pointer;
   &::before {
     content: '';
     display: block;

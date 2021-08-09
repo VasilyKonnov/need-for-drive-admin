@@ -1,6 +1,7 @@
 import { Select } from '../Select'
 import { TSelect } from './SelectVsLabelTypes'
 import styles from './SelectVsLabel.module.scss'
+import classNames from 'classnames'
 
 export const SelectVsLabel: React.FC<TSelect> = ({
   handlerChange,
@@ -8,13 +9,15 @@ export const SelectVsLabel: React.FC<TSelect> = ({
   id,
   children,
   label,
-  value,
+  defaultValue,
+  className,
 }) => {
+  const classWrap = classNames(styles.selectWrap, className ? className : '')
   return (
-    <div className={styles.selectWrap}>
+    <div className={classWrap}>
       <p className={styles.title}>{label}</p>
       <Select
-        value={value ? value : ''}
+        defaultValue={defaultValue ? defaultValue : ''}
         labelId={labelId}
         id={id}
         label=""

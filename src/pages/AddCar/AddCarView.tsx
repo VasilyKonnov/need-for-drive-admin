@@ -9,16 +9,58 @@ import stabImg from '../../assets/image/placeholder.png'
 import styles from './AddCar.module.scss'
 import { ButtonSecondary } from '../../components/ButtonSecondary/ButtonSecondary'
 import { TAddCarView } from './AddCarTypes'
+import { SelectVsLabel } from './../../components/SelectVsLabel/SelectVsLabel'
+import { TCarCategory } from '../../store/carCategory'
+import { MenuItem } from '@material-ui/core'
+import './style.scss'
+import classNames from 'classnames'
+import { useEffect } from 'react'
 
-export const AddCarView: React.FC<TAddCarView> = ({ goBack }) => {
+export const AddCarView: React.FC<TAddCarView> = ({
+  goBack,
+  carCategories,
+  handleCarCategory,
+  selectCarCategory,
+  carName,
+  carNumber,
+  description,
+  priceMax,
+  priceMin,
+  tank,
+  color,
+  colors,
+  handlerCarName,
+  handlerCarNumber,
+  handlerDescription,
+  handlerMaxPrice,
+  handlerMinPrice,
+  handlerTank,
+  handleColor,
+  addColor,
+  removeColor,
+}) => {
+  const classSelect = classNames(styles.select, 'add-car-select')
+
+  const _carCategory =
+    selectCarCategory && carCategories ? selectCarCategory : undefined
+
+  const selectCategory = carCategories.find(
+    (category: TCarCategory) => category.id === selectCarCategory,
+  )
+  const _selectCarCategory = selectCategory ? selectCategory.name : ''
+
+  useEffect(() => {
+    console.log('_carCategory - ', _carCategory)
+  }, [_carCategory])
+
   return (
     <Layout>
       <h1 className="admin-page-title">Карточка автомобиля</h1>
       <div className={styles.container}>
         <div className={styles.carRow}>
           <img src={stabImg} alt="Картинка автомобиля" />
-          <p className={styles.carName}>Hyndai, i30 N</p>
-          <p className={styles.carCategoty}>Компакт-кар</p>
+          <p className={styles.carName}>{carName ? carName : ''}</p>
+          <p className={styles.carCategoty}>{_selectCarCategory}</p>
           <form>
             <input type="text" placeholder="Выберите файл" />
             <label htmlFor="car-img">
@@ -36,37 +78,54 @@ export const AddCarView: React.FC<TAddCarView> = ({ goBack }) => {
           </div>
           <div className={styles.descriptionWrap}>
             <p className={styles.descriptionLabel}>Описание</p>
-            <p className={styles.description}>Lorem ipsum dolor sit amet...</p>
+            <p className={styles.description}>{description}</p>
           </div>
         </div>
         <div className={styles.carSettingRow}>
           <h2>Настройки автомобиля</h2>
           <div className={styles.settingWrap}>
             <div className={styles.settingItemsWrap}>
-              <InputVsLabel
-                classLabel={styles.settingLabel}
-                classInput={styles.settingInput}
-                id="row-1"
-                label="Категория"
-                onChange={() => console.log('onChange')}
-              />
+              <SelectVsLabel
+                className={classSelect}
+                label="Котегория"
+                labelId="labelId-1"
+                id="select-1"
+                defaultValue={_carCategory}
+                handlerChange={handleCarCategory}
+              >
+                {carCategories.map((category: TCarCategory, id: number) => {
+                  return (
+                    <MenuItem key={id} value={category.id}>
+                      {category.name}
+                    </MenuItem>
+                  )
+                })}
+              </SelectVsLabel>
+
               <InputVsLabel
                 classLabel={styles.settingLabel}
                 classInput={styles.settingInput}
                 id="row-2"
                 label="Модель автомобиля"
-                onChange={() => console.log('onChange')}
+                onChange={handlerCarName}
+                value={carName}
               />
               <InputVsLabel
                 classLabel={styles.settingLabel}
                 classInput={styles.settingInput}
                 id="row-3"
                 label="Номер автомобиля"
-                onChange={() => console.log('onChange')}
+                onChange={handlerCarNumber}
+                value={carNumber}
               />
               <div className={styles.descriptCar}>
                 <p>Описание</p>
-                <textarea name="descriptCar" id="descriptCar"></textarea>
+                <textarea
+                  name="descriptCar"
+                  id="descriptCar"
+                  value={description}
+                  onChange={handlerDescription}
+                />
               </div>
             </div>
 
@@ -75,22 +134,25 @@ export const AddCarView: React.FC<TAddCarView> = ({ goBack }) => {
                 classLabel={styles.settingLabel}
                 classInput={styles.settingInput}
                 id="row-4"
-                label="Количество топлива"
-                onChange={() => console.log('onChange')}
+                label="Количество топлива %"
+                onChange={handlerTank}
+                value={tank}
               />
               <InputVsLabel
                 classLabel={styles.settingLabel}
                 classInput={styles.settingInput}
                 id="row-5"
                 label="Минимальная цена"
-                onChange={() => console.log('onChange')}
+                onChange={handlerMinPrice}
+                value={priceMin}
               />
               <InputVsLabel
                 classLabel={styles.settingLabel}
                 classInput={styles.settingInput}
                 id="row-6"
                 label="Максимальная цена"
-                onChange={() => console.log('onChange')}
+                onChange={handlerMaxPrice}
+                value={priceMax}
               />
               <div className={styles.addColor}>
                 <InputVsLabel
@@ -98,12 +160,25 @@ export const AddCarView: React.FC<TAddCarView> = ({ goBack }) => {
                   classInput={styles.settingInput}
                   id="row-7"
                   label="Доступные цвета"
-                  onChange={() => console.log('onChange')}
+                  onChange={handleColor}
+                  value={color}
                 />
-                <button>+</button>
+                <button onClick={addColor}>+</button>
               </div>
               <div className={styles.colorList}>
-                <p className={styles.colorItem}>Красный</p>
+                {colors
+                  ? colors.map((color, id) => {
+                      return (
+                        <p
+                          key={id}
+                          className={styles.colorItem}
+                          onClick={() => removeColor(id)}
+                        >
+                          {color}
+                        </p>
+                      )
+                    })
+                  : ''}
               </div>
             </div>
           </div>

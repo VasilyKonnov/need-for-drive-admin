@@ -5,4 +5,6 @@ export type TSelect = {
   children: any
   label: string
   value?: string
+  defaultValue?: string
+  className?: string
 }

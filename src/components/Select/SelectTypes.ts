@@ -4,5 +4,5 @@ export type TSelect = {
   id: string
   children: JSX.Element[] | JSX.Element
   label: string
-  value?: string
+  defaultValue?: string
 }
