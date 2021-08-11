@@ -18,6 +18,9 @@ export const OrderStatusView: React.FC<TOrderStatusView> = ({
   handleEditStatus,
   addStatus,
   editStatus,
+  addOrderStatus,
+  updateOrderStatus,
+  removeOrderStatus,
 }) => {
   return (
     <>
@@ -49,7 +52,7 @@ export const OrderStatusView: React.FC<TOrderStatusView> = ({
         open={isOpenAdd}
         onClose={handleCloseAdd}
         title={'Добавить статус заказа'}
-        buttonClick={() => console.log('r')}
+        buttonClick={addOrderStatus}
         buttonTitle="Сохранить"
         isBtnDisable={addStatus.length < 1}
       >
@@ -64,7 +67,8 @@ export const OrderStatusView: React.FC<TOrderStatusView> = ({
         open={isOpenEdit}
         onClose={handleCloseEdit}
         title={'Редактировать статус заказа'}
-        buttonClick={() => console.log('r')}
+        buttonClick={updateOrderStatus}
+        buttonClickRemove={removeOrderStatus}
         buttonTitle="Сохранить"
         isBtnDisable={editStatus.length < 1}
       >

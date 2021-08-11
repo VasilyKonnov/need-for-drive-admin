@@ -24,6 +24,9 @@ export const TariffsView: React.FC<TTariffs> = ({
   handleEditRateName,
   handleEditRatePrice,
   handleModalRateEditOpen,
+  addRate,
+  editRate,
+  removeRate,
   // ---
   isModalRateTypeAdd,
   handleModalRateTypeAddToggle,
@@ -63,14 +66,21 @@ export const TariffsView: React.FC<TTariffs> = ({
                   <TableRow>
                     <TableCell component="th" scope="row">
                       <ButtonPrimary
-                        onClick={() => handleModalRateEditOpen(rate.id)}
+                        onClick={() =>
+                          handleModalRateEditOpen(
+                            rate.id,
+                            rate.rateTypeId ? rate.rateTypeId : undefined,
+                          )
+                        }
                         className={'buttonInTable'}
                       >
                         <CreateIcon />
                       </ButtonPrimary>
                     </TableCell>
-                    <TableCell>{rate.rateTypeId.name}</TableCell>
-                    <TableCell>{rate.price}</TableCell>
+                    <TableCell>
+                      {rate.rateTypeId ? rate.rateTypeId.name : '---'}
+                    </TableCell>
+                    <TableCell>{rate.price ? rate.price : '---'}</TableCell>
                   </TableRow>
                 )
               })}
@@ -123,7 +133,7 @@ export const TariffsView: React.FC<TTariffs> = ({
         open={isModalRateAdd}
         onClose={handleModalRateAddToggle}
         title={'Добавить тариф'}
-        buttonClick={handleModalRateAddToggle} //TODO: добавить отправку данных на сервер
+        buttonClick={addRate}
         buttonTitle="Сохранить"
         isBtnDisable={
           addRateName.length < 1 || addRatePrice.toString().length < 1
@@ -146,7 +156,8 @@ export const TariffsView: React.FC<TTariffs> = ({
         open={isModalRateEdit}
         onClose={handleModalRateEditToggle}
         title={'Редактировать тариф'}
-        buttonClick={handleModalRateEditToggle} //TODO: добавить запрос на сервер
+        buttonClick={editRate}
+        buttonClickRemove={removeRate}
         buttonTitle="Сохранить"
         isBtnDisable={
           editRateName.length < 1 || editRatePrice.toString().length < 1

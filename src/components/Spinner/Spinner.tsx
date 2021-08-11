@@ -10,7 +10,7 @@ const style = {
 export const Spinner = () => {
   return (
     <div style={style}>
-      <CircularProgress />
+      <CircularProgress style={{ color: '#007BFF' }} />
     </div>
   )
 }

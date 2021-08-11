@@ -8,7 +8,7 @@ import { carCategorySelector } from '../../store/carCategory/carCategorySelector
 import { carCategoryAction } from '../../store/carCategory/carCategoryAction'
 import { TCarCategory } from '../../store/carCategory'
 import { TCar } from '../../store/cars'
-import { Spinner } from '../../components'
+import { TEditCar } from './AddCarTypes'
 
 export const AddCar: React.FC = () => {
   const paramId: { id: string } = useParams()
@@ -35,7 +35,9 @@ export const AddCar: React.FC = () => {
   const [_color, set_Color] = useState<string>('')
   const [_originalname, set_Originalname] = useState<string>('')
   const [imgUrl, setImgUrl] = useState<string>('')
-
+  const [progressLineResult, setProgressLineResult] = useState(0)
+  const [stateImgFile, setStateImgFile] = useState<any>({})
+  const [editCar, setEditCar] = useState<TEditCar | null>(null)
   const goBack = () => history.goBack()
 
   const handleCarCategory = (event: React.ChangeEvent<{ value: unknown }>) => {
@@ -57,8 +59,22 @@ export const AddCar: React.FC = () => {
     set_Color(e.target.value)
   const handleOriginalname = (e: React.ChangeEvent<HTMLInputElement>) =>
     set_Originalname(e.target.value)
-  const handleImgUrl = (e: React.ChangeEvent<HTMLInputElement>) =>
+
+  const handleImgUrl = (e: React.ChangeEvent<HTMLInputElement>) => {
     setImgUrl(e.target.value)
+    e.preventDefault()
+    if (e.target.files !== null) {
+      let reader = new FileReader()
+      let file = e.target.files[0]
+      reader.onloadend = () => {
+        setStateImgFile({
+          file: file,
+          imagePreviewUrl: reader.result,
+        })
+      }
+      reader.readAsDataURL(file)
+    }
+  }
 
   const addColor = () => {
     if (_color.length > 1) {
@@ -94,6 +110,7 @@ export const AddCar: React.FC = () => {
       set_CarCategoriies(carCategories)
     }
   }, [carCategories])
+
   useEffect(() => {
     if (car) {
       setSelectCarCategory(car.categoryId ? car.categoryId.id : undefined)
@@ -111,13 +128,62 @@ export const AddCar: React.FC = () => {
   }, [car])
 
   useEffect(() => {
-    console.log('imgUrl - ', imgUrl)
-  }, [imgUrl])
+    if (stateImgFile) {
+      set_Originalname(
+        stateImgFile.file ? stateImgFile.file.name : 'Название не указано',
+      )
+      setImgUrl(stateImgFile.imagePreviewUrl)
+    }
+  }, [stateImgFile])
+
+  useEffect(() => {
+    if (
+      selectCarCategory &&
+      carName &&
+      carNumber &&
+      _description &&
+      _priceMax &&
+      _priceMin &&
+      _tank &&
+      _colors &&
+      _color &&
+      _originalname &&
+      imgUrl
+    ) {
+      const _editCar = {
+        priceMax: _priceMax,
+        priceMin: _priceMin,
+        name: carName,
+        thumbnail: {
+          originalname: _originalname,
+          path: imgUrl,
+        },
+        description: _description,
+        categoryId: {
+          id: selectCarCategory,
+        },
+        colors: _colors,
+      }
+      setEditCar(_editCar)
+    }
+  }, [
+    selectCarCategory,
+    _color,
+    _colors,
+    _description,
+    _originalname,
+    _priceMax,
+    _priceMin,
+    _tank,
+    carName,
+    carNumber,
+    imgUrl,
+  ])
 
   return (
     <AddCarView
       handleCarCategory={handleCarCategory}
-      selectCarCategory={selectCarCategory && car ? selectCarCategory : ''}
+      selectCarCategory={selectCarCategory ? selectCarCategory : ''}
       carCategories={_carCategories}
       goBack={goBack}
       carName={carName}
@@ -141,6 +207,8 @@ export const AddCar: React.FC = () => {
       handleOriginalname={handleOriginalname}
       imgCarUrl={imgUrl}
       handleImgUrl={handleImgUrl}
+      setProgressLineResult={setProgressLineResult}
+      progressLineResult={progressLineResult}
     />
   )
 }

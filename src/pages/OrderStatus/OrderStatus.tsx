@@ -7,6 +7,7 @@ import { orderStatusSelector } from '../../store/orderStatus/orderStatusSelector
 import { orderStatusAction } from '../../store/orderStatus/orderStatusAction'
 import { routes } from '../../constans/constans'
 import { Redirect } from 'react-router-dom'
+import crud from '../../utils/api/crud'
 
 export const OrderStatus: React.FC = () => {
   const dispatch = useDispatch()
@@ -19,7 +20,7 @@ export const OrderStatus: React.FC = () => {
   const [isOpenEdit, setIsOpenEdit] = useState(false)
   const [addStatus, setIsAddStatus] = useState<string>('')
   const [editStatus, setIsEditStatus] = useState<string>('')
-  const [editStatusId, setIsEditStatusId] = useState<string | number>('')
+  const [editStatusId, setIsEditStatusId] = useState<string>('')
 
   const handleAddStatus = (e: React.FormEvent<HTMLInputElement>) => {
     setIsAddStatus(e.currentTarget.value)
@@ -27,7 +28,7 @@ export const OrderStatus: React.FC = () => {
   const handleEditStatus = (e: React.FormEvent<HTMLInputElement>) => {
     setIsEditStatus(e.currentTarget.value)
   }
-  const handleOpenEdit = (id: number | string) => {
+  const handleOpenEdit = (id: string) => {
     setIsOpenEdit(true)
     setIsEditStatusId(id)
     const status = orderStatus.find((status) => status.id === id)
@@ -44,6 +45,30 @@ export const OrderStatus: React.FC = () => {
   const handleCloseAdd = () => {
     setIsOpenAdd(false)
     setIsAddStatus('')
+  }
+
+  const addOrderStatus = () => {
+    if (addStatus.length > 0) {
+      crud.postOrderStatus({ name: addStatus })
+      dispatch(orderStatusAction.remove())
+      handleCloseAdd()
+    }
+  }
+
+  const updateOrderStatus = () => {
+    if (editStatus.length > 0) {
+      crud.putOrderStatus(editStatusId, { name: editStatus })
+      dispatch(orderStatusAction.remove())
+      handleCloseEdit()
+    }
+  }
+
+  const removeOrderStatus = () => {
+    if (editStatusId.length > 0) {
+      crud.deleteOrderStatus(editStatusId)
+      dispatch(orderStatusAction.remove())
+      handleCloseEdit()
+    }
   }
 
   useEffect(() => {
@@ -67,6 +92,9 @@ export const OrderStatus: React.FC = () => {
           handleEditStatus={handleEditStatus}
           editStatus={editStatus}
           addStatus={addStatus}
+          addOrderStatus={addOrderStatus}
+          updateOrderStatus={updateOrderStatus}
+          removeOrderStatus={removeOrderStatus}
         />
       ) : null}
 

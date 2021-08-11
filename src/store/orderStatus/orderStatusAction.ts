@@ -1,5 +1,9 @@
 import crud from '../../utils/api/crud'
-import { setOrderStatus, fetchOrderStatus } from './orderStatusSlice'
+import {
+  setOrderStatus,
+  fetchOrderStatus,
+  removeOrderStatus,
+} from './orderStatusSlice'
 import { TOrderStatusAction } from './orderStatusTypes'
 
 export const orderStatusAction: TOrderStatusAction = {
@@ -9,5 +13,8 @@ export const orderStatusAction: TOrderStatusAction = {
     crud.getOrderStatuses().then((data) => {
       dispatch(setOrderStatus(data))
     })
+  },
+  remove: () => (dispatch) => {
+    dispatch(removeOrderStatus())
   },
 }

@@ -1,5 +1,6 @@
 export type TOrderStatusAction = {
   list: () => (dispatch: any) => void
+  remove: () => (dispatch: any) => void
 }
 
 export type TOrderStatus = {

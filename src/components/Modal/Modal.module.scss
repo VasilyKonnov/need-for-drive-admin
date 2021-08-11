@@ -4,6 +4,11 @@
   padding: 20px;
   box-sizing: border-box;
 }
+.btnWrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 @media screen and (min-width: '767px') {
   .modal {
     min-width: 350px;

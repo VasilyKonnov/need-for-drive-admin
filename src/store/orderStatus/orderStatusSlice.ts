@@ -23,6 +23,10 @@ const orderStatusSlice = createSlice({
       state.errorText = payload.errorText
       state.fetchingState = FetchingStateTypes.failed
     },
+    removeOrderStatus: (state) => {
+      state.data = []
+      state.fetchingState = FetchingStateTypes.none
+    },
   },
 })
 
@@ -30,6 +34,7 @@ export const {
   setOrderStatus,
   fetchOrderStatus,
   fetchErrorOrderStatus,
+  removeOrderStatus,
 } = orderStatusSlice.actions
 
 export const orderStatusReducer = orderStatusSlice.reducer

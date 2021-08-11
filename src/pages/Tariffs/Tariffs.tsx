@@ -7,6 +7,7 @@ import { ratesSelector } from '../../store/rates/ratesSelector'
 import { ratesAction } from '../../store/rates/ratesAction'
 import { rateTypesSelector } from '../../store/rateTypes/rateTypesSelector'
 import { rateTypesAction } from '../../store/rateTypes/rateTypesAction'
+import crud from '../../utils/api/crud'
 
 export const Tariffs: React.FC = () => {
   const dispatch = useDispatch()
@@ -24,11 +25,18 @@ export const Tariffs: React.FC = () => {
   const [addRatePrice, setAddRatePrice] = useState('')
   const [editRateName, setEditRateName] = useState('')
   const [editRatePrice, setEditRatePrice] = useState<string | number>('')
+  const [editRateId, setEditRateId] = useState('')
+  const [editRate_TypeId, setEditRate_TypeId] = useState({
+    id: '',
+    name: '',
+    unit: '',
+  })
 
   const [addRateType, setAddRateType] = useState('')
   const [addRateUnits, setAddRateUnits] = useState('')
   const [editRateType, setEditRateType] = useState('')
   const [editRateUnits, setEditRateUnits] = useState('')
+  const [editRateTypeId, setEditRateTypeId] = useState('')
 
   const [isModalRateTypeAdd, setIsModalRateTypeAdd] = useState(false)
   const [isModalRateTypeEdit, setIsModalRateTypeEdit] = useState(false)
@@ -61,11 +69,15 @@ export const Tariffs: React.FC = () => {
     setAddRatePrice('')
   }
 
-  const handleModalRateEditOpen = (id: number | string) => {
+  const handleModalRateEditOpen = (
+    id: number | string,
+    rateTypeId?: { id: string; name: string; unit: string },
+  ) => {
+    setEditRateId(id as string)
     setIsModalRateEdit(true)
     const rate = rates.find((rate) => rate.id === id)
     if (rate) {
-      setEditRateName(rate.rateTypeId.name)
+      setEditRateName(rate.rateTypeId ? rate.rateTypeId.name : '---')
       setEditRatePrice(rate.price)
     }
   }
@@ -73,15 +85,23 @@ export const Tariffs: React.FC = () => {
     setIsModalRateEdit(!isModalRateEdit)
     setEditRateName('')
     setEditRatePrice('')
+    setEditRateId('')
+    setEditRate_TypeId({
+      id: '',
+      name: '',
+      unit: '',
+    })
   }
 
   const handleModalRateTypeAddToggle = () => {
     setIsModalRateTypeAdd(!isModalRateTypeAdd)
     setAddRateType('')
     setAddRateUnits('')
+    setEditRateTypeId('')
   }
 
   const handleModalRateTypeEditOpen = (id: number | string) => {
+    setEditRateTypeId(id as string)
     setIsModalRateTypeEdit(true)
     const ratetype = rateTypes.find((type) => type.id === id)
     if (ratetype) {
@@ -109,6 +129,40 @@ export const Tariffs: React.FC = () => {
     }
   }, [dispatch, fetchingStateRateTypes, rateTypes])
 
+  const addRate = () => {
+    if (addRateName.length > 0 && addRatePrice.length > 0) {
+      crud.postRates({
+        rateTypeId: {
+          name: addRateName,
+        },
+        price: addRatePrice,
+      })
+      dispatch(ratesAction.remove())
+      handleModalRateAddToggle()
+    }
+  }
+  const editRate = () => {
+    if (editRateId.length > 0 && editRateName.length > 0 && editRatePrice > 0) {
+      crud.putRates(editRateId, {
+        rateTypeId: {
+          id: editRate_TypeId.id,
+          name: editRateName,
+          unit: editRate_TypeId.unit,
+        },
+        price: editRatePrice,
+      })
+      dispatch(ratesAction.remove())
+      handleModalRateEditToggle()
+    }
+  }
+  const removeRate = () => {
+    if (editRateId) {
+      crud.deleteRates(editRateId)
+      dispatch(ratesAction.remove())
+      handleModalRateEditToggle()
+    }
+  }
+
   return (
     <Layout>
       <TariffsView
@@ -125,6 +179,9 @@ export const Tariffs: React.FC = () => {
         handleModalRateAddToggle={handleModalRateAddToggle}
         handleModalRateEditToggle={handleModalRateEditToggle}
         handleModalRateEditOpen={handleModalRateEditOpen}
+        addRate={addRate}
+        editRate={editRate}
+        removeRate={removeRate}
         // ---
         isModalRateTypeAdd={isModalRateTypeAdd}
         handleModalRateTypeAddToggle={handleModalRateTypeAddToggle}

@@ -1,5 +1,6 @@
 export type TRatesAction = {
   list: () => (dispatch: any) => void
+  remove: () => (dispatch: any) => void
 }
 
 export type TRate = {

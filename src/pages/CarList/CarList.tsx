@@ -37,7 +37,7 @@ export const CarList: React.FC = () => {
     setCategory(event.target.value as string)
   }
   const addCar = () => {
-    history.push('/add-car')
+    history.push('/create-car')
   }
   const handleFilterCategory = () => {
     if (_category && _category.length > 0 && carsState.length > 0) {

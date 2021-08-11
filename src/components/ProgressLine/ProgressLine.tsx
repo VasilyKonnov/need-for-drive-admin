@@ -21,6 +21,50 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
   }),
 )(LinearProgress)
 
-export const ProgressLine: React.FC<TProgressLine> = ({ value }) => {
-  return <BorderLinearProgress variant="determinate" value={value} />
+export const ProgressLine: React.FC<TProgressLine> = ({
+  carName,
+  carNumber,
+  description,
+  priceMax,
+  priceMin,
+  tank,
+  colors,
+  imgCarUrl,
+  originalname,
+  setProgressLineResult,
+}) => {
+  const percentageLine = () => {
+    let value = 0
+    if (carName) {
+      value = value + 10
+    }
+    if (carNumber) {
+      value = value + 10
+    }
+    if (description) {
+      value = value + 10
+    }
+    if (priceMax) {
+      value = value + 10
+    }
+    if (priceMin) {
+      value = value + 10
+    }
+    if (tank) {
+      value = value + 10
+    }
+    if (colors) {
+      value = value + 10
+    }
+    if (imgCarUrl) {
+      value = value + 20
+    }
+    if (originalname) {
+      value = value + 10
+    }
+    setProgressLineResult(value)
+    return value
+  }
+
+  return <BorderLinearProgress variant="determinate" value={percentageLine()} />
 }

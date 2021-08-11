@@ -43,29 +43,38 @@ export const AddCarView: React.FC<TAddCarView> = ({
   handleOriginalname,
   imgCarUrl,
   handleImgUrl,
+  setProgressLineResult,
+  progressLineResult,
 }) => {
   const classSelect = classNames(styles.select, 'add-car-select')
+
   const _carCategory =
     selectCarCategory && carCategories ? selectCarCategory : undefined
+
   const selectCategory = carCategories.find(
     (category: TCarCategory) => category.id === selectCarCategory,
   )
+
   const _selectCarCategory = selectCategory ? selectCategory.name : ''
   const _imgCarUrl =
-    imgCarUrl.toString().slice(0, 4) === 'data' ? imgCarUrl : imgUrl + imgCarUrl
+    imgCarUrl && imgCarUrl.toString().slice(0, 4) === 'data'
+      ? imgCarUrl
+      : imgUrl + imgCarUrl
+
   return (
     <Layout>
       <h1 className="admin-page-title">Карточка автомобиля</h1>
       <div className={styles.container}>
         <div className={styles.carRow}>
           <img
-            src={_imgCarUrl ? _imgCarUrl : stabImg}
+            src={_imgCarUrl && imgCarUrl !== undefined ? _imgCarUrl : stabImg}
             alt="Картинка автомобиля"
           />
           <p className={styles.carName}>{carName ? carName : ''}</p>
           <p className={styles.carCategoty}>{_selectCarCategory}</p>
           <form>
             <input
+              accept="image/*"
               onChange={handleOriginalname}
               value={originalname}
               type="text"
@@ -86,9 +95,20 @@ export const AddCarView: React.FC<TAddCarView> = ({
           <div className={styles.progress}>
             <p className={styles.labelProgres}>
               <span>Заполненно</span>
-              <span className={styles.interest}>75%</span>
+              <span className={styles.interest}>{progressLineResult}%</span>
             </p>
-            <ProgressLine value={75} />
+            <ProgressLine
+              setProgressLineResult={setProgressLineResult}
+              carName={carName.length > 0}
+              carNumber={carNumber.length > 0}
+              description={description.length > 0}
+              priceMax={priceMax > 0}
+              priceMin={priceMin > 0}
+              tank={tank > 0}
+              colors={colors.length > 0}
+              imgCarUrl={typeof imgCarUrl === 'string' && imgCarUrl.length > 0}
+              originalname={originalname.length > 0}
+            />
           </div>
           <div className={styles.descriptionWrap}>
             <p className={styles.descriptionLabel}>Описание</p>
