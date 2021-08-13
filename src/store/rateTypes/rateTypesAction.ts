@@ -1,5 +1,5 @@
 import crud from '../../utils/api/crud'
-import { setRateTypes, fetchRateTypes } from './rateTypesSlice'
+import { setRateTypes, fetchRateTypes, removeRateTypes } from './rateTypesSlice'
 import { TRateTypesAction } from './rateTypesTypes'
 
 export const rateTypesAction: TRateTypesAction = {
@@ -9,5 +9,8 @@ export const rateTypesAction: TRateTypesAction = {
     crud.getRateTypes().then((data) => {
       dispatch(setRateTypes(data))
     })
+  },
+  remove: () => (dispatch) => {
+    dispatch(removeRateTypes())
   },
 }

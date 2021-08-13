@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core'
+import { Grid, MenuItem } from '@material-ui/core'
 import TableCell from '@material-ui/core/TableCell'
 import { FetchingStateTypes } from '../../store'
 import TableRow from '@material-ui/core/TableRow'
@@ -9,12 +9,18 @@ import { TCitiesAndStreetsList } from './CitiesAndStreetsListTypes'
 import { InputVsLabel } from './../../components/InputVsLabel/InputVsLabel'
 import { routes } from '../../constans/constans'
 import { Redirect } from 'react-router-dom'
+import { SelectVsLabelAddCar } from './../../components/SelectVsLabelAddCar/SelectVsLabelAddCar'
+import { TCity } from '../../store/cities'
+import styles from './CitiesAndStreetsList.module.scss'
 
 export const CitiesAndStreetsListView: React.FC<TCitiesAndStreetsList> = ({
   isCityAdd,
   toggleModalCityAdd,
   cityAdd,
   handleCityAdd,
+  addCityFunc,
+  editCityFunc,
+  removeCityFunc,
   // ---
   isCityEdit,
   toggleModalCityEdit,
@@ -30,6 +36,8 @@ export const CitiesAndStreetsListView: React.FC<TCitiesAndStreetsList> = ({
   pointStreetAdd,
   handlePointAdd,
   pointAdd,
+  addCityPointFunc,
+  editCityPointFunc,
   // ---
   isStreetEdit,
   toggleModalStreetEdit,
@@ -45,6 +53,7 @@ export const CitiesAndStreetsListView: React.FC<TCitiesAndStreetsList> = ({
   cityPoints,
   fetchingStateCityPoints,
   fetchingStateCities,
+  removeCityPointFunc,
 }) => {
   return (
     <Grid container className="gridContainer">
@@ -127,7 +136,7 @@ export const CitiesAndStreetsListView: React.FC<TCitiesAndStreetsList> = ({
         open={isCityAdd}
         onClose={toggleModalCityAdd}
         title={'Добавить город'}
-        buttonClick={toggleModalCityAdd}
+        buttonClick={addCityFunc}
         buttonTitle="Сохранить"
         isBtnDisable={cityAdd.length < 1}
       >
@@ -142,7 +151,8 @@ export const CitiesAndStreetsListView: React.FC<TCitiesAndStreetsList> = ({
         open={isCityEdit}
         onClose={toggleModalCityEdit}
         title={'Редактировать город'}
-        buttonClick={toggleModalCityEdit}
+        buttonClick={editCityFunc}
+        buttonClickRemove={removeCityFunc}
         buttonTitle="Сохранить"
         isBtnDisable={cityEdit.length < 1}
       >
@@ -158,7 +168,7 @@ export const CitiesAndStreetsListView: React.FC<TCitiesAndStreetsList> = ({
         open={isStreetAdd}
         onClose={toggleModalStreetAdd}
         title={'Добавить точку выдачи'}
-        buttonClick={toggleModalStreetAdd}
+        buttonClick={addCityPointFunc}
         buttonTitle="Сохранить"
         isBtnDisable={
           pointCityAdd.length < 1 ||
@@ -166,12 +176,23 @@ export const CitiesAndStreetsListView: React.FC<TCitiesAndStreetsList> = ({
           pointAdd.length < 1
         }
       >
-        <InputVsLabel
-          id="city-add"
-          label="Введите город"
-          onChange={handlePointCityAdd}
+        <SelectVsLabelAddCar
+          className={styles.select}
+          label="Выберите город"
+          labelId="labelId-1"
+          id="select-1"
           value={pointCityAdd}
-        />
+          handlerChange={handlePointCityAdd}
+        >
+          {cities.map((city: TCity, id: number) => {
+            return (
+              <MenuItem key={id} value={city.id}>
+                {city.name}
+              </MenuItem>
+            )
+          })}
+        </SelectVsLabelAddCar>
+
         <InputVsLabel
           id="street-add"
           label="Введите адрес"
@@ -189,7 +210,8 @@ export const CitiesAndStreetsListView: React.FC<TCitiesAndStreetsList> = ({
         open={isStreetEdit}
         onClose={toggleModalStreetEdit}
         title={'Редактировать точку выдачи'}
-        buttonClick={toggleModalStreetEdit}
+        buttonClick={editCityPointFunc}
+        buttonClickRemove={removeCityPointFunc}
         buttonTitle="Сохранить"
         isBtnDisable={
           pointCityEdit.length < 1 ||
@@ -197,12 +219,23 @@ export const CitiesAndStreetsListView: React.FC<TCitiesAndStreetsList> = ({
           pointEdit.length < 1
         }
       >
-        <InputVsLabel
-          id="street-2"
-          label="Введите город"
-          onChange={handlePointCityEdit}
+        <SelectVsLabelAddCar
+          className={styles.select}
+          label="Выберите город"
+          labelId="labelId-1"
+          id="select-1"
           value={pointCityEdit}
-        />
+          handlerChange={handlePointCityEdit}
+        >
+          {cities.map((city: TCity, id: number) => {
+            return (
+              <MenuItem key={id} value={city.id}>
+                {city.name}
+              </MenuItem>
+            )
+          })}
+        </SelectVsLabelAddCar>
+
         <InputVsLabel
           id="street-3"
           label="Введите адрес"

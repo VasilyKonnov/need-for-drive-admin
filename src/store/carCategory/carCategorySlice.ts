@@ -16,6 +16,10 @@ const carCategorySlice = createSlice({
       state.data = payload
       state.fetchingState = FetchingStateTypes.success
     },
+    removeCarCategory: (state) => {
+      state.data = []
+      state.fetchingState = FetchingStateTypes.none
+    },
     fetchCarCategory: (state) => {
       state.fetchingState = FetchingStateTypes.loading
     },
@@ -30,5 +34,6 @@ export const {
   setCarCategory,
   fetchCarCategory,
   fetchErrorCarCategory,
+  removeCarCategory,
 } = carCategorySlice.actions
 export const carCategoryReducer = carCategorySlice.reducer

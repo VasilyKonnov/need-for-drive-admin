@@ -1,5 +1,5 @@
 import { FetchingStateTypes } from '../../store'
-import { Grid } from '@material-ui/core'
+import { Grid, MenuItem } from '@material-ui/core'
 import TableCell from '@material-ui/core/TableCell'
 import TableRow from '@material-ui/core/TableRow'
 import CreateIcon from '@material-ui/icons/Create'
@@ -9,6 +9,10 @@ import { Modal, SpinnerOrListEmpty, Table } from '../../components'
 import { InputVsLabel } from './../../components/InputVsLabel/InputVsLabel'
 import { Redirect } from 'react-router-dom'
 import { routes } from '../../constans/constans'
+import { SelectVsLabelAddCar } from '../../components/SelectVsLabelAddCar'
+import styles from './Tariffs.module.scss'
+import { TRate } from '../../store/rates'
+import { useEffect } from 'react'
 
 export const TariffsView: React.FC<TTariffs> = ({
   isModalRateAdd,
@@ -41,12 +45,18 @@ export const TariffsView: React.FC<TTariffs> = ({
   handleAddRateUnits,
   handleEditRateUnits,
   handleModalRateTypeEditOpen,
+  addRateTypeFunc,
+  editRateTypeFunc,
+  removeRateType,
   // ---
   rates,
   rateTypes,
   fetchingStateRates,
   fetchingStateRateTypes,
 }) => {
+  useEffect(() => {
+    console.log('editRateName - ', editRateName)
+  }, [editRateName])
   return (
     <Grid container spacing={5}>
       <Grid item xs={12} sm={6}>
@@ -139,12 +149,26 @@ export const TariffsView: React.FC<TTariffs> = ({
           addRateName.length < 1 || addRatePrice.toString().length < 1
         }
       >
-        <InputVsLabel
-          id="rate-name"
-          label="Введите название"
-          onChange={handleAddRateName}
+        <SelectVsLabelAddCar
+          className={styles.select}
+          label="Выберите тип из списка"
+          labelId="labelId-1"
+          id="select-1"
           value={addRateName}
-        />
+          handlerChange={handleAddRateName}
+        >
+          {rates.map((rate: TRate, id: number) => {
+            return (
+              <MenuItem
+                key={id}
+                value={rate.rateTypeId ? rate.rateTypeId.id : '---'}
+              >
+                {rate.rateTypeId ? rate.rateTypeId.name : '---'}
+              </MenuItem>
+            )
+          })}
+        </SelectVsLabelAddCar>
+
         <InputVsLabel
           id="rate-price"
           label="Введите цену"
@@ -163,12 +187,26 @@ export const TariffsView: React.FC<TTariffs> = ({
           editRateName.length < 1 || editRatePrice.toString().length < 1
         }
       >
-        <InputVsLabel
-          id="rate-name"
-          label="Введите название"
-          onChange={handleEditRateName}
+        <SelectVsLabelAddCar
+          className={styles.select}
+          label="Выберите тип из списка"
+          labelId="labelId-1"
+          id="select-1"
           value={editRateName}
-        />
+          handlerChange={handleEditRateName}
+        >
+          {rates.map((rate: TRate, id: number) => {
+            return (
+              <MenuItem
+                key={id}
+                value={rate.rateTypeId ? rate.rateTypeId.id : '---'}
+              >
+                {rate.rateTypeId ? rate.rateTypeId.name : '---'}
+              </MenuItem>
+            )
+          })}
+        </SelectVsLabelAddCar>
+
         <InputVsLabel
           id="rate-price"
           label="Введите цену"
@@ -181,7 +219,7 @@ export const TariffsView: React.FC<TTariffs> = ({
         open={isModalRateTypeAdd}
         onClose={handleModalRateTypeAddToggle}
         title={'Добавить тип тарифа'}
-        buttonClick={handleModalRateTypeAddToggle}
+        buttonClick={addRateTypeFunc}
         buttonTitle="Сохранить"
         isBtnDisable={addRateType.length < 1 || addRateUnits.length < 1}
       >
@@ -202,7 +240,8 @@ export const TariffsView: React.FC<TTariffs> = ({
         open={isModalRateTypeEdit}
         onClose={handleModalRateTypeEditToggle}
         title={'Редактировать тип тарифа'}
-        buttonClick={handleModalRateTypeEditToggle}
+        buttonClick={editRateTypeFunc}
+        buttonClickRemove={removeRateType}
         buttonTitle="Сохранить"
         isBtnDisable={editRateType.length < 1 || editRateUnits.length < 1}
       >

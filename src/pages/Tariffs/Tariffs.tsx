@@ -41,14 +41,14 @@ export const Tariffs: React.FC = () => {
   const [isModalRateTypeAdd, setIsModalRateTypeAdd] = useState(false)
   const [isModalRateTypeEdit, setIsModalRateTypeEdit] = useState(false)
 
-  const handleEditRateName = (e: React.FormEvent<HTMLInputElement>) =>
-    setEditRateName(e.currentTarget.value)
+  const handleEditRateName = (event: React.ChangeEvent<{ value: unknown }>) =>
+    setEditRateName(event.target.value as string)
   const handleEditRatePrice = (e: React.FormEvent<HTMLInputElement>) => {
     const val = e.currentTarget.value.replace(/[^\d]/g, '')
     setEditRatePrice(val)
   }
-  const handleAddRateName = (e: React.FormEvent<HTMLInputElement>) =>
-    setAddRateName(e.currentTarget.value)
+  const handleAddRateName = (event: React.ChangeEvent<{ value: unknown }>) =>
+    setAddRateName(event.target.value as string)
   const handleAddRatePrice = (e: React.FormEvent<HTMLInputElement>) => {
     const val = e.currentTarget.value.replace(/[^\d]/g, '')
     setAddRatePrice(val)
@@ -62,22 +62,25 @@ export const Tariffs: React.FC = () => {
     setAddRateUnits(e.currentTarget.value)
   const handleEditRateUnits = (e: React.FormEvent<HTMLInputElement>) =>
     setEditRateUnits(e.currentTarget.value)
-
   const handleModalRateAddToggle = () => {
     setIsModalRateAdd(!isModalRateAdd)
     setAddRateName('')
     setAddRatePrice('')
   }
-
   const handleModalRateEditOpen = (
     id: number | string,
     rateTypeId?: { id: string; name: string; unit: string },
   ) => {
+    if (rateTypeId) {
+      setEditRateName(rateTypeId.id)
+      setEditRate_TypeId(rateTypeId)
+    }
+
     setEditRateId(id as string)
     setIsModalRateEdit(true)
     const rate = rates.find((rate) => rate.id === id)
     if (rate) {
-      setEditRateName(rate.rateTypeId ? rate.rateTypeId.name : '---')
+      setEditRateName(rate.rateTypeId ? rate.rateTypeId.id : '---')
       setEditRatePrice(rate.price)
     }
   }
@@ -130,37 +133,95 @@ export const Tariffs: React.FC = () => {
   }, [dispatch, fetchingStateRateTypes, rateTypes])
 
   const addRate = () => {
-    if (addRateName.length > 0 && addRatePrice.length > 0) {
-      crud.postRates({
-        rateTypeId: {
-          name: addRateName,
-        },
-        price: addRatePrice,
-      })
-      dispatch(ratesAction.remove())
-      handleModalRateAddToggle()
+    if (addRateName && rates) {
+      let _rate = rates.find((rate) => rate.rateTypeId.id === addRateName)
+
+      if (addRateName.length > 0 && addRatePrice.length > 0 && _rate) {
+        crud
+          .postRates({
+            rateTypeId: {
+              id: addRateName,
+              name: _rate.rateTypeId.name,
+              unit: _rate.rateTypeId.unit,
+            },
+            price: addRatePrice,
+          })
+          .then((response) => {
+            if (response.status < 400) {
+              dispatch(ratesAction.remove())
+              handleModalRateAddToggle()
+            }
+          })
+      }
     }
   }
   const editRate = () => {
     if (editRateId.length > 0 && editRateName.length > 0 && editRatePrice > 0) {
-      crud.putRates(editRateId, {
-        rateTypeId: {
-          id: editRate_TypeId.id,
-          name: editRateName,
-          unit: editRate_TypeId.unit,
-        },
-        price: editRatePrice,
-      })
-      dispatch(ratesAction.remove())
-      handleModalRateEditToggle()
+      crud
+        .putRates(editRateId, {
+          rateTypeId: {
+            id: editRateName,
+            name: editRate_TypeId.name,
+            unit: editRate_TypeId.unit,
+          },
+          price: editRatePrice,
+        })
+        .then((response) => {
+          if (response.status < 400) {
+            dispatch(ratesAction.remove())
+            handleModalRateEditToggle()
+          }
+        })
     }
   }
+
   const removeRate = () => {
     if (editRateId) {
-      crud.deleteRates(editRateId)
-      dispatch(ratesAction.remove())
-      handleModalRateEditToggle()
+      crud.deleteRates(editRateId).then((response) => {
+        if (response.status < 400) {
+          dispatch(ratesAction.remove())
+          handleModalRateEditToggle()
+        }
+      })
     }
+  }
+  const addRateTypeFunc = () => {
+    if (addRateUnits.length > 0 && addRateType.length > 0) {
+      crud
+        .postRateTypes({
+          unit: addRateUnits,
+          name: addRateType,
+        })
+        .then((response) => {
+          if (response.status < 400) {
+            dispatch(rateTypesAction.remove())
+            handleModalRateTypeAddToggle()
+          }
+        })
+    }
+  }
+  const editRateTypeFunc = () => {
+    if (editRateUnits.length > 0 && editRateType.length > 0) {
+      crud
+        .putRateTypes(editRateTypeId, {
+          unit: editRateUnits,
+          name: editRateType,
+        })
+        .then((response) => {
+          if (response.status < 400) {
+            dispatch(rateTypesAction.remove())
+            handleModalRateTypeEditToggle()
+          }
+        })
+    }
+  }
+  const removeRateType = () => {
+    crud.deleteRateTypes(editRateTypeId).then((response) => {
+      if (response.status < 400) {
+        dispatch(rateTypesAction.remove())
+        handleModalRateTypeEditToggle()
+      }
+    })
   }
 
   return (
@@ -196,6 +257,9 @@ export const Tariffs: React.FC = () => {
         handleAddRateUnits={handleAddRateUnits}
         handleEditRateUnits={handleEditRateUnits}
         handleModalRateTypeEditOpen={handleModalRateTypeEditOpen}
+        addRateTypeFunc={addRateTypeFunc}
+        editRateTypeFunc={editRateTypeFunc}
+        removeRateType={removeRateType}
         // ---
         rates={rates}
         rateTypes={rateTypes}

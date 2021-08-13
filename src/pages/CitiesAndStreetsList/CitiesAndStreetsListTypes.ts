@@ -6,6 +6,9 @@ export type TCitiesAndStreetsList = {
   toggleModalCityAdd: () => void
   cityAdd: string
   handleCityAdd: (e: React.FormEvent<HTMLInputElement>) => void
+  addCityFunc: () => void
+  editCityFunc: () => void
+  removeCityFunc: () => void
   // ---
   isCityEdit: boolean
   toggleModalCityEdit: () => void
@@ -15,16 +18,19 @@ export type TCitiesAndStreetsList = {
   // ---
   isStreetAdd: boolean
   toggleModalStreetAdd: () => void
-  handlePointCityAdd: (e: React.FormEvent<HTMLInputElement>) => void
+  handlePointCityAdd: (event: React.ChangeEvent<{ value: unknown }>) => void
   pointCityAdd: string
   handlePointStreetAdd: (e: React.FormEvent<HTMLInputElement>) => void
   pointStreetAdd: string
   handlePointAdd: (e: React.FormEvent<HTMLInputElement>) => void
   pointAdd: string
+  addCityPointFunc: () => void
+  editCityPointFunc: () => void
+  removeCityPointFunc: () => void
   // ---
   isStreetEdit: boolean
   toggleModalStreetEdit: () => void
-  handlePointCityEdit: (e: React.FormEvent<HTMLInputElement>) => void
+  handlePointCityEdit: (event: React.ChangeEvent<{ value: unknown }>) => void
   pointCityEdit: string
   handlePointStreetEdit: (e: React.FormEvent<HTMLInputElement>) => void
   pointStreetEdit: string

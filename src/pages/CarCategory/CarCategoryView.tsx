@@ -23,6 +23,9 @@ export const CarCategoryView: React.FC<TCarCategoryView> = ({
   handleDescCategoryEdit,
   carCategory,
   openCategoryEdit,
+  addCarCategoryFunc,
+  editCarCategoryFunc,
+  removeCarCategoryFunc,
 }) => {
   return (
     <>
@@ -58,7 +61,7 @@ export const CarCategoryView: React.FC<TCarCategoryView> = ({
         open={isCategoryAdd}
         onClose={toggleCategoryAdd}
         title={'Добавить категорию'}
-        buttonClick={toggleCategoryAdd}
+        buttonClick={addCarCategoryFunc}
         buttonTitle="Сохранить"
         isBtnDisable={nameCategoryAdd.length < 1 || descCategoryAdd.length < 1}
       >
@@ -79,7 +82,8 @@ export const CarCategoryView: React.FC<TCarCategoryView> = ({
         open={isCategoryEdit}
         onClose={toggleCategoryEdit}
         title={'Редактировать категорию'}
-        buttonClick={toggleCategoryEdit}
+        buttonClick={editCarCategoryFunc}
+        buttonClickRemove={removeCarCategoryFunc}
         buttonTitle="Сохранить"
         isBtnDisable={
           nameCategoryEdit.length < 1 || descCategoryEdit.length < 1

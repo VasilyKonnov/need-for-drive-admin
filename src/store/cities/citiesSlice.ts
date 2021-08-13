@@ -16,6 +16,10 @@ const citiesSlice = createSlice({
       state.data = payload
       state.fetchingState = FetchingStateTypes.success
     },
+    removeCities: (state) => {
+      state.data = []
+      state.fetchingState = FetchingStateTypes.none
+    },
     fetchCities: (state) => {
       state.fetchingState = FetchingStateTypes.loading
     },
@@ -26,5 +30,10 @@ const citiesSlice = createSlice({
   },
 })
 
-export const { setCities, fetchCities, fetchErrorCities } = citiesSlice.actions
+export const {
+  setCities,
+  fetchCities,
+  fetchErrorCities,
+  removeCities,
+} = citiesSlice.actions
 export const citiesReducer = citiesSlice.reducer

@@ -16,6 +16,10 @@ const cityPointsSlice = createSlice({
       state.data = payload
       state.fetchingState = FetchingStateTypes.success
     },
+    removeCityPoints: (state) => {
+      state.data = []
+      state.fetchingState = FetchingStateTypes.none
+    },
     fetchCityPoints: (state) => {
       state.fetchingState = FetchingStateTypes.loading
     },
@@ -30,5 +34,6 @@ export const {
   setCityPoints,
   fetchCityPoints,
   fetchErrorCityPoints,
+  removeCityPoints,
 } = cityPointsSlice.actions
 export const cityPointsReducer = cityPointsSlice.reducer

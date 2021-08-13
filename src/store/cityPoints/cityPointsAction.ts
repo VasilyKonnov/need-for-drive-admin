@@ -1,5 +1,9 @@
 import crud from '../../utils/api/crud'
-import { setCityPoints, fetchCityPoints } from './cityPointsSlice'
+import {
+  setCityPoints,
+  fetchCityPoints,
+  removeCityPoints,
+} from './cityPointsSlice'
 import { TCityPointsAction } from './cityPointsTypes'
 
 export const cityPointsAction: TCityPointsAction = {
@@ -8,5 +12,8 @@ export const cityPointsAction: TCityPointsAction = {
     crud.getCityPoints().then((data) => {
       dispatch(setCityPoints(data))
     })
+  },
+  remove: () => (dispatch) => {
+    dispatch(removeCityPoints())
   },
 }

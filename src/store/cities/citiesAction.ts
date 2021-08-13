@@ -1,5 +1,5 @@
 import crud from '../../utils/api/crud'
-import { setCities, fetchCities } from './citiesSlice'
+import { setCities, fetchCities, removeCities } from './citiesSlice'
 import { TCitiesAction } from './citiesTypes'
 
 export const citiesAction: TCitiesAction = {
@@ -8,5 +8,8 @@ export const citiesAction: TCitiesAction = {
     crud.getCities().then((data) => {
       dispatch(setCities(data))
     })
+  },
+  remove: () => (dispatch) => {
+    dispatch(removeCities())
   },
 }

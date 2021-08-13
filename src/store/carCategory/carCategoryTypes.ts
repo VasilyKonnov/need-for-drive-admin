@@ -1,5 +1,6 @@
 export type TCarCategoryAction = {
   list: () => (dispatch: any) => void
+  remove: () => (dispatch: any) => void
 }
 
 export type TCarCategory = {

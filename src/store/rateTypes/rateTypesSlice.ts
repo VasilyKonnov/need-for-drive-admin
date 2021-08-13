@@ -23,6 +23,10 @@ const rateTypesSlice = createSlice({
       state.errorText = payload.errorText
       state.fetchingState = FetchingStateTypes.failed
     },
+    removeRateTypes: (state) => {
+      state.data = []
+      state.fetchingState = FetchingStateTypes.none
+    },
   },
 })
 
@@ -30,6 +34,7 @@ export const {
   setRateTypes,
   fetchRateTypes,
   fetchErrorRateTypes,
+  removeRateTypes,
 } = rateTypesSlice.actions
 
 export const rateTypesReducer = rateTypesSlice.reducer

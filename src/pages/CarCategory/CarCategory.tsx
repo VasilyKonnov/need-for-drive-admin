@@ -7,7 +7,7 @@ import { carCategorySelector } from '../../store/carCategory/carCategorySelector
 import { carCategoryAction } from '../../store/carCategory/carCategoryAction'
 import { routes } from '../../constans/constans'
 import { Redirect } from 'react-router-dom'
-import { truncate } from 'fs'
+import crud from '../../utils/api/crud'
 
 export const CarCategory: React.FC = () => {
   const dispatch = useDispatch()
@@ -20,6 +20,7 @@ export const CarCategory: React.FC = () => {
   const [descCategoryAdd, setDescCategoryAdd] = useState('')
   const [nameCategoryEdit, setIsNameCategoryEdit] = useState('')
   const [descCategoryEdit, setDescCategoryEdit] = useState('')
+  const [categoryIdEdit, setCategoryIdEdit] = useState('')
 
   const toggleCategoryAdd = () => {
     setIsCategoryAdd(!isCategoryAdd)
@@ -29,6 +30,7 @@ export const CarCategory: React.FC = () => {
 
   const openCategoryEdit = (id: string) => {
     setIsCategoryEdit(true)
+    setCategoryIdEdit(id)
     const category = carCategory.find((category) => category.id === id)
     if (category) {
       setIsNameCategoryEdit(category.name)
@@ -39,6 +41,7 @@ export const CarCategory: React.FC = () => {
     setIsCategoryEdit(!isCategoryEdit)
     setIsNameCategoryEdit('')
     setDescCategoryEdit('')
+    setCategoryIdEdit('')
   }
 
   const handleNameCategoryAdd = (e: React.FormEvent<HTMLInputElement>) => {
@@ -62,6 +65,43 @@ export const CarCategory: React.FC = () => {
       dispatch(carCategoryAction.list())
     }
   }, [dispatch, fetchingCarCategory, carCategory])
+
+  const addCarCategoryFunc = () => {
+    crud
+      .postCarCategories({
+        name: nameCategoryAdd,
+        description: descCategoryAdd,
+      })
+      .then((response) => {
+        if (response.status < 400) {
+          dispatch(carCategoryAction.remove())
+          toggleCategoryAdd()
+        }
+      })
+  }
+
+  const editCarCategoryFunc = () => {
+    crud
+      .putCarCategories(categoryIdEdit, {
+        name: nameCategoryEdit,
+        description: descCategoryEdit,
+      })
+      .then((response) => {
+        if (response.status < 400) {
+          dispatch(carCategoryAction.remove())
+          toggleCategoryEdit()
+        }
+      })
+  }
+
+  const removeCarCategoryFunc = () => {
+    crud.deleteCarCategories(categoryIdEdit).then((response) => {
+      if (response.status < 400) {
+        dispatch(carCategoryAction.remove())
+        toggleCategoryEdit()
+      }
+    })
+  }
 
   return (
     <Layout>
@@ -87,6 +127,9 @@ export const CarCategory: React.FC = () => {
           openCategoryEdit={openCategoryEdit}
           // ---
           carCategory={carCategory}
+          addCarCategoryFunc={addCarCategoryFunc}
+          editCarCategoryFunc={editCarCategoryFunc}
+          removeCarCategoryFunc={removeCarCategoryFunc}
         />
       ) : null}
     </Layout>

@@ -49,25 +49,36 @@ export const OrderStatus: React.FC = () => {
 
   const addOrderStatus = () => {
     if (addStatus.length > 0) {
-      crud.postOrderStatus({ name: addStatus })
-      dispatch(orderStatusAction.remove())
-      handleCloseAdd()
+      crud.postOrderStatus({ name: addStatus }).then((response) => {
+        if (response.status < 400) {
+          dispatch(orderStatusAction.remove())
+          handleCloseAdd()
+        }
+      })
     }
   }
 
   const updateOrderStatus = () => {
     if (editStatus.length > 0) {
-      crud.putOrderStatus(editStatusId, { name: editStatus })
-      dispatch(orderStatusAction.remove())
-      handleCloseEdit()
+      crud
+        .putOrderStatus(editStatusId, { name: editStatus })
+        .then((response) => {
+          if (response.status < 400) {
+            dispatch(orderStatusAction.remove())
+            handleCloseEdit()
+          }
+        })
     }
   }
 
   const removeOrderStatus = () => {
     if (editStatusId.length > 0) {
-      crud.deleteOrderStatus(editStatusId)
-      dispatch(orderStatusAction.remove())
-      handleCloseEdit()
+      crud.deleteOrderStatus(editStatusId).then((response) => {
+        if (response.status < 400) {
+          dispatch(orderStatusAction.remove())
+          handleCloseEdit()
+        }
+      })
     }
   }
 

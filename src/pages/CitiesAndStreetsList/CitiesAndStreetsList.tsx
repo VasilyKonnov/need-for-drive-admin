@@ -7,6 +7,7 @@ import { citiesSelector } from '../../store/cities/citiesSelector'
 import { citiesAction } from '../../store/cities/citiesAction'
 import { cityPointsAction } from './../../store/cityPoints/cityPointsAction'
 import { cityPointsSelector } from '../../store/cityPoints/cityPointsSelector'
+import crud from '../../utils/api/crud'
 
 export const CitiesAndStreetsList: React.FC = () => {
   const dispatch = useDispatch()
@@ -23,6 +24,7 @@ export const CitiesAndStreetsList: React.FC = () => {
   const [isStreetEdit, setIsStreetEdit] = useState(false)
   const [cityAdd, setCityAdd] = useState('')
   const [cityEdit, setCityEdit] = useState('')
+  const [cityEditId, setCityEditId] = useState('')
 
   const [pointCityAdd, setPointCityAdd] = useState('')
   const [pointStreetAdd, setPointStreetAdd] = useState('')
@@ -31,22 +33,24 @@ export const CitiesAndStreetsList: React.FC = () => {
   const [pointCityEdit, setPointCityEdit] = useState('')
   const [pointStreetEdit, setPointStreetEdit] = useState('')
   const [pointEdit, setPointEdit] = useState('')
+  const [pointEditId, setPointEditId] = useState('')
 
   const toggleModalCityAdd = () => {
     setIsCityAdd(!isCityAdd)
     setCityAdd('')
   }
-
   const openModalCityEdit = (id: string) => {
+    setCityEditId(id)
     setIsCityEdit(true)
     const city = cities.find((city) => city.id === id)
     if (city) setCityEdit(city.name)
   }
-
   const toggleModalCityEdit = () => {
     setIsCityEdit(!isCityEdit)
     setCityEdit('')
+    setCityEditId('')
   }
+
   const toggleModalStreetAdd = () => {
     setIsStreetEdd(!isStreetAdd)
     setPointCityAdd('')
@@ -54,10 +58,11 @@ export const CitiesAndStreetsList: React.FC = () => {
     setPointAdd('')
   }
   const openModalStreetEdit = (id: string) => {
+    setPointEditId(id)
     setIsStreetEdit(true)
     const street = cityPoints.find((street) => street.id === id)
     if (street) {
-      setPointCityEdit(street.cityId ? street.cityId.name : '---')
+      setPointCityEdit(street.cityId ? street.cityId.id : '---')
       setPointStreetEdit(street ? street.address : '---')
       setPointEdit(street ? street.name : '---')
     }
@@ -67,6 +72,7 @@ export const CitiesAndStreetsList: React.FC = () => {
     setPointCityEdit('')
     setPointStreetEdit('')
     setPointEdit('')
+    setPointEditId('')
   }
 
   const handleCityAdd = (e: React.FormEvent<HTMLInputElement>) => {
@@ -76,8 +82,8 @@ export const CitiesAndStreetsList: React.FC = () => {
     setCityEdit(e.currentTarget.value)
   }
 
-  const handlePointCityAdd = (e: React.FormEvent<HTMLInputElement>) => {
-    setPointCityAdd(e.currentTarget.value)
+  const handlePointCityAdd = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setPointCityAdd(event.target.value as string)
   }
   const handlePointStreetAdd = (e: React.FormEvent<HTMLInputElement>) => {
     setPointStreetAdd(e.currentTarget.value)
@@ -86,9 +92,12 @@ export const CitiesAndStreetsList: React.FC = () => {
     setPointAdd(e.currentTarget.value)
   }
 
-  const handlePointCityEdit = (e: React.FormEvent<HTMLInputElement>) => {
-    setPointCityEdit(e.currentTarget.value)
+  const handlePointCityEdit = (
+    event: React.ChangeEvent<{ value: unknown }>,
+  ) => {
+    setPointCityEdit(event.target.value as string)
   }
+
   const handlePointStreetEdit = (e: React.FormEvent<HTMLInputElement>) => {
     setPointStreetEdit(e.currentTarget.value)
   }
@@ -108,6 +117,91 @@ export const CitiesAndStreetsList: React.FC = () => {
     }
   }, [dispatch, fetchingStateCityPoints, cityPoints])
 
+  const addCityFunc = () => {
+    if (cityAdd) {
+      crud
+        .postCities({
+          name: cityAdd,
+        })
+        .then((response) => {
+          if (response.status < 400) {
+            dispatch(citiesAction.remove())
+            toggleModalCityAdd()
+          }
+        })
+    }
+  }
+  const editCityFunc = () => {
+    crud
+      .putCities(cityEditId, {
+        name: cityEdit,
+      })
+      .then((response) => {
+        if (response.status < 400) {
+          dispatch(citiesAction.remove())
+          toggleModalCityEdit()
+        }
+      })
+  }
+  const removeCityFunc = () => {
+    crud.deleteCities(cityEditId).then((response) => {
+      if (response.status < 400) {
+        dispatch(citiesAction.remove())
+        toggleModalCityEdit()
+      }
+    })
+  }
+
+  const addCityPointFunc = () => {
+    let _city = cities.find((city) => city.id === pointCityAdd)
+    if (_city) {
+      crud
+        .postCityPoints({
+          name: pointAdd,
+          cityId: {
+            id: _city.id,
+            name: _city.name,
+          },
+          address: pointStreetAdd,
+        })
+        .then((response) => {
+          if (response.status < 400) {
+            toggleModalStreetAdd()
+            dispatch(cityPointsAction.remove())
+          }
+        })
+    }
+  }
+
+  const editCityPointFunc = () => {
+    let _city = cities.find((city) => city.id === pointCityEdit)
+    if (_city) {
+      crud
+        .putCityPoints(pointEditId, {
+          name: pointEdit,
+          cityId: {
+            id: _city.id,
+            name: _city.name,
+          },
+          address: pointStreetEdit,
+        })
+        .then((response) => {
+          if (response.status < 400) {
+            toggleModalStreetEdit()
+            dispatch(cityPointsAction.remove())
+          }
+        })
+    }
+  }
+  const removeCityPointFunc = () => {
+    crud.deleteCityPoints(pointEditId).then((response) => {
+      if (response.status < 400) {
+        toggleModalStreetEdit()
+        dispatch(cityPointsAction.remove())
+      }
+    })
+  }
+
   return (
     <Layout>
       <CitiesAndStreetsListView
@@ -115,6 +209,9 @@ export const CitiesAndStreetsList: React.FC = () => {
         toggleModalCityAdd={toggleModalCityAdd}
         cityAdd={cityAdd}
         handleCityAdd={handleCityAdd}
+        addCityFunc={addCityFunc}
+        editCityFunc={editCityFunc}
+        removeCityFunc={removeCityFunc}
         // ---
         isCityEdit={isCityEdit}
         toggleModalCityEdit={toggleModalCityEdit}
@@ -130,6 +227,9 @@ export const CitiesAndStreetsList: React.FC = () => {
         pointStreetAdd={pointStreetAdd}
         handlePointAdd={handlePointAdd}
         pointAdd={pointAdd}
+        addCityPointFunc={addCityPointFunc}
+        editCityPointFunc={editCityPointFunc}
+        removeCityPointFunc={removeCityPointFunc}
         // ---
         isStreetEdit={isStreetEdit}
         toggleModalStreetEdit={toggleModalStreetEdit}
