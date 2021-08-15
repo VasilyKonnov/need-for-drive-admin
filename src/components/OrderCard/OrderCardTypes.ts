@@ -13,4 +13,5 @@ export type TOrderCard = {
   isRightWheel: boolean
   price: number
   editOrder: () => void
+  removeOrder: () => void
 }

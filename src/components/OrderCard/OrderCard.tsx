@@ -15,6 +15,7 @@ export const OrderCard: React.FC<TOrderCard> = ({
   price,
   color,
   editOrder,
+  removeOrder,
 }) => {
   return (
     <div className={styles.cardWrap}>
@@ -56,7 +57,9 @@ export const OrderCard: React.FC<TOrderCard> = ({
       </div>
       <div className={styles.buttons}>
         <button className={styles.btnDone}>Готово</button>
-        <button className={styles.btnUndo}>Отмена</button>
+        <button className={styles.btnUndo} onClick={() => removeOrder()}>
+          Отмена
+        </button>
         <button className={styles.btnChange} onClick={() => editOrder()}>
           Изменить
         </button>

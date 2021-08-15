@@ -15,6 +15,7 @@ import { orderStatusAction } from '../../store/orderStatus/orderStatusAction'
 
 import { TOrder } from '../../store/orders'
 import { perPage, routes } from '../../constans/constans'
+import crud from '../../utils/api/crud'
 
 export const Orders: React.FC = () => {
   const dispatch = useDispatch()
@@ -30,6 +31,8 @@ export const Orders: React.FC = () => {
   const [ordersState, setOrdersState] = useState<TOrder[]>([])
   const [ordersFiltered, setOrdersFiltered] = useState<TOrder[] | null>([])
   const [_orders, set_Orders] = useState<TOrder[]>([])
+  const [alertSuccess, setAlertSuccess] = useState('')
+  const [alertError, setAlertError] = useState('')
 
   const handlePaginationClick = (data: { selected: number }) => {
     setCurrentPage(data.selected + 1)
@@ -94,6 +97,14 @@ export const Orders: React.FC = () => {
       setOrdersFiltered(ordersState)
     }
   }
+  const handleAlertSuccess = (message: string) => {
+    setAlertSuccess(message)
+    setTimeout(() => setAlertSuccess(''), 5000)
+  }
+  const handleAlertError = (message: string) => {
+    setAlertError(message)
+    setTimeout(() => setAlertError(''), 5000)
+  }
 
   useEffect(() => {
     if (fetchingStateOrders === FetchingStateTypes.none) {
@@ -139,8 +150,28 @@ export const Orders: React.FC = () => {
     }
   }, [currentPage, orders, ordersFiltered, ordersState])
 
+  const removeOrder = (id: string) => {
+    crud
+      .deleteOrder(id)
+      .then((response) => {
+        if (response.status < 400) {
+          handleAlertSuccess(
+            `Заказ номер № ${id} успешно удалён! Сейчас мы загрузим обновлённые данные`,
+          )
+          dispatch(ordersAction.remove())
+        } else {
+          handleAlertError('Что-то пошло не так, попробуйте ещё раз!')
+        }
+      })
+      .catch((e) => {
+        handleAlertError(
+          'Что-то пошло не так, проверьте соединение с интернетом!',
+        )
+      })
+  }
+
   return (
-    <Layout>
+    <Layout messageSuccess={alertSuccess} messageError={alertError}>
       {fetchingStateOrders === FetchingStateTypes.loading ? <Spinner /> : null}
       {fetchingStateOrders === FetchingStateTypes.success ? (
         <OrdersView
@@ -153,6 +184,7 @@ export const Orders: React.FC = () => {
           handlePaginationClick={handlePaginationClick}
           handleFilterOrders={handleFilterOrders}
           editOrder={editOrder}
+          removeOrder={removeOrder}
         />
       ) : null}
       {fetchingStateOrders === FetchingStateTypes.failed ? (

@@ -16,6 +16,9 @@ const crud = {
   async putOrder(id: string, data: TEditOrder) {
     return crudAxios.put(`${routes.ORDER}/${id}`, data)
   },
+  async deleteOrder(id: string) {
+    return crudAxios.delete(`${routes.ORDER}/${id}`)
+  },
   async getCities() {
     const response = await crudAxios.get(`${routes.CITY}`)
     return response.data.data

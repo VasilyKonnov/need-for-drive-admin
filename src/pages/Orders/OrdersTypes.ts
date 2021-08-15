@@ -12,4 +12,5 @@ export type TOrdersView = {
   handlePaginationClick: (data: { selected: number }) => void
   handleFilterOrders: () => void
   editOrder: (id: string) => void
+  removeOrder: (id: string) => void
 }

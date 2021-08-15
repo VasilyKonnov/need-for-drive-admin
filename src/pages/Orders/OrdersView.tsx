@@ -19,6 +19,7 @@ export const OrdersView: React.FC<TOrdersView> = ({
   handlePaginationClick,
   handleFilterOrders,
   editOrder,
+  removeOrder,
 }) => {
   return (
     <>
@@ -76,6 +77,7 @@ export const OrdersView: React.FC<TOrdersView> = ({
                 isRightWheel={order.isRightWheel}
                 price={order.price}
                 editOrder={() => editOrder(order.id)}
+                removeOrder={() => removeOrder(order.id)}
               />
             ))
           ) : (
