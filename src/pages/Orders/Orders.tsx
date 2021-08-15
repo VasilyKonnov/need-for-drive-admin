@@ -125,12 +125,6 @@ export const Orders: React.FC = () => {
   }, [dispatch, fetchingStateOrderStatus, orderStatus])
 
   useEffect(() => {
-    console.log('cities ', cities)
-    console.log('orderStatus ', orderStatus)
-    console.log('orders ', orders)
-  }, [cities, orderStatus, orders])
-
-  useEffect(() => {
     if (orders) {
       setOrdersState(orders)
     }

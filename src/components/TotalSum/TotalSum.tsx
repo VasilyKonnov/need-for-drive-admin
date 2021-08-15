@@ -2,7 +2,6 @@ import styles from './TotalSum.module.scss'
 import { TTotalSum } from './TotalSumTypes'
 import { getMinuteInDateDef, rounded } from '../../utils/common/common'
 import { rateType } from '../../constans/constans'
-import { useEffect } from 'react'
 
 export const TotalSum: React.FC<TTotalSum> = ({
   selectedСar,

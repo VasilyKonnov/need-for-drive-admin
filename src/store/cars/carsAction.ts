@@ -6,7 +6,6 @@ export const carsAction: TCarsAction = {
   list: () => (dispatch) => {
     dispatch(fetchCars())
     crud.getCars().then((data) => {
-      console.log('отработал акшен')
       dispatch(setCars(data))
     })
   },

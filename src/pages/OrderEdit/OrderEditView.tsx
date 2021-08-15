@@ -3,7 +3,6 @@ import {
   ButtonSecondary,
   Spinner,
   TotalSum,
-  Layout,
 } from '../../components'
 import { Grid, MenuItem } from '@material-ui/core'
 import DatePicker from 'react-datepicker'

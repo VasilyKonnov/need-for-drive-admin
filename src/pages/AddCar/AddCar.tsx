@@ -278,7 +278,6 @@ export const AddCar: React.FC = () => {
       crud
         .putCars(paramId.id, editCar)
         .then((response) => {
-          console.log('response - ', response.status)
           if (response.status < 400) {
             showAlertSuccess('Данные успешно измененны!')
             dispatch(carsAction.remove())

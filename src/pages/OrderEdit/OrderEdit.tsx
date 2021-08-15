@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { OrderEditView } from './OrderEditView'
-import { useLocation, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import crud from '../../utils/api/crud'
 import { TEditOrder, TOrder } from '../../store/orders'
 import { useHistory } from 'react-router-dom'
@@ -23,7 +23,6 @@ export const OrderEdit = () => {
   const paramId: { id: string } = useParams()
   const history = useHistory()
   const dispatch = useDispatch()
-  let location = useLocation()
 
   const { data: cities, fetchingState: fetchingStateCities } = useSelector(
     citiesSelector,
@@ -136,7 +135,6 @@ export const OrderEdit = () => {
 
   useEffect(() => {
     if (order) {
-      console.log('order - ', order)
       set_City(order.cityId ? order.cityId.id : null)
       set_Point(order.pointId ? order.pointId.id : null)
       set_OrderStatus(order.orderStatusId ? order.orderStatusId.id : null)

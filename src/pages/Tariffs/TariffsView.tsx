@@ -12,7 +12,6 @@ import { routes } from '../../constans/constans'
 import { SelectVsLabelAddCar } from '../../components/SelectVsLabelAddCar'
 import styles from './Tariffs.module.scss'
 import { TRate } from '../../store/rates'
-import { useEffect } from 'react'
 
 export const TariffsView: React.FC<TTariffs> = ({
   isModalRateAdd,
@@ -54,9 +53,6 @@ export const TariffsView: React.FC<TTariffs> = ({
   fetchingStateRates,
   fetchingStateRateTypes,
 }) => {
-  useEffect(() => {
-    console.log('editRateName - ', editRateName)
-  }, [editRateName])
   return (
     <Grid container spacing={5}>
       <Grid item xs={12} sm={6}>
