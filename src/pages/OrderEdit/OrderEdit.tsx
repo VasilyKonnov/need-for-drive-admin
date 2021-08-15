@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react'
 import { OrderEditView } from './OrderEditView'
-import { useParams } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 import crud from '../../utils/api/crud'
-import { setOrderStatus } from '../../store/orderStatus'
-import { TOrder } from '../../store/orders'
+import { TEditOrder, TOrder } from '../../store/orders'
 import { useHistory } from 'react-router-dom'
 
 import { FetchingStateTypes } from '../../store'
@@ -16,12 +15,16 @@ import { ratesSelector } from '../../store/rates/ratesSelector'
 import { ratesAction } from '../../store/rates/ratesAction'
 import { orderStatusSelector } from '../../store/orderStatus/orderStatusSelector'
 import { orderStatusAction } from '../../store/orderStatus/orderStatusAction'
+import { ordersAction } from '../../store/orders/ordersAction'
 import { TRate } from '../../store/rates'
+import { Layout } from '../../components'
 
 export const OrderEdit = () => {
   const paramId: { id: string } = useParams()
   const history = useHistory()
   const dispatch = useDispatch()
+  let location = useLocation()
+
   const { data: cities, fetchingState: fetchingStateCities } = useSelector(
     citiesSelector,
   )
@@ -59,6 +62,7 @@ export const OrderEdit = () => {
   }, [dispatch, fetchingStateOrderStatus, orderStatus])
 
   const [order, setOrder] = useState<TOrder>()
+  const [orderEdit, setOrderEdit] = useState<TEditOrder | null>(null)
   const [_city, set_City] = useState<null | string>(null)
   const [_point, set_Point] = useState<null | string>(null)
   const [_orderStatus, set_OrderStatus] = useState<null | string>(null)
@@ -71,6 +75,9 @@ export const OrderEdit = () => {
   const [isBabyChair, setIsBabyChair] = useState(true)
   const [isRightHandDrive, setIsRightHandDrive] = useState(true)
   const [_price, set_Price] = useState<number | null>(null)
+  const [isSubmitDisable, setIsSubmitDisable] = useState(true)
+  const [alertSuccess, setAlertSuccess] = useState('')
+  const [alertError, setAlertError] = useState('')
 
   const handleCity = (event: React.ChangeEvent<{ value: unknown }>) => {
     set_City(event.target.value as string)
@@ -96,6 +103,14 @@ export const OrderEdit = () => {
   }
   const handleRadioButton = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedColor(event.target.value)
+  }
+  const handleAlertSuccess = (message: string) => {
+    setAlertSuccess(message)
+    setTimeout(() => setAlertSuccess(''), 3000)
+  }
+  const handleAlertError = (message: string) => {
+    setAlertError(message)
+    setTimeout(() => setAlertError(''), 3000)
   }
 
   const filterPassedTime = (time: any) => {
@@ -135,34 +150,100 @@ export const OrderEdit = () => {
     }
   }, [order])
 
+  useEffect(() => {
+    if (
+      order &&
+      _city &&
+      _point &&
+      _orderStatus &&
+      _rate &&
+      selectedColor &&
+      _price &&
+      startDate &&
+      endDate
+    ) {
+      setOrderEdit({
+        orderStatusId: orderStatus.find((order) => order.id === _orderStatus),
+        cityId: cities.find((city) => city.id === _city),
+        pointId: cityPoints.find((point) => point.id === _point),
+        carId: order.carId,
+        color: selectedColor,
+        dateFrom: startDate,
+        dateTo: endDate,
+        rateId: order.rateId,
+        price: _price,
+        isFullTank: isFullTank,
+        isNeedChildChair: isBabyChair,
+        isRightWheel: isRightHandDrive,
+      })
+      setIsSubmitDisable(false)
+    } else {
+      setIsSubmitDisable(true)
+      setOrderEdit(null)
+    }
+  }, [
+    _city,
+    _orderStatus,
+    _point,
+    _price,
+    _rate,
+    cities,
+    cityPoints,
+    endDate,
+    isBabyChair,
+    isFullTank,
+    isRightHandDrive,
+    order,
+    orderStatus,
+    selectedColor,
+    startDate,
+  ])
+
+  const editOrder = () => {
+    if (orderEdit) {
+      crud.putOrder(paramId.id, orderEdit).then((response) => {
+        if (response.status < 400) {
+          dispatch(ordersAction.remove())
+          handleAlertSuccess('Заказ изменён успешно!')
+        } else {
+          handleAlertError('Что-то пошло не так, попробуйте ещё раз!')
+        }
+      })
+    }
+  }
+
   return (
-    <OrderEditView
-      order={order ? order : null}
-      handleCity={handleCity}
-      handlePoint={handlePoint}
-      handleOrderStatus={handleOrderStatus}
-      handleRate={handleRate}
-      startDate={startDate}
-      endDate={endDate}
-      setStartDate={setStartDate}
-      setEndDate={setEndDate}
-      filterPassedTime={filterPassedTime}
-      filterPassedEndTime={filterPassedEndTime}
-      selectedColor={selectedColor}
-      handleRadioButton={handleRadioButton}
-      isFullTank={isFullTank}
-      handleTank={handleTank}
-      isBabyChair={isBabyChair}
-      handleBabyChair={handleBabyChair}
-      isRightHandDrive={isRightHandDrive}
-      handleRightHandDrive={handleRightHandDrive}
-      goBack={goBack}
-      set_Price={set_Price}
-      cities={cities}
-      cityPoints={cityPoints}
-      rates={rates}
-      orderStatuses={orderStatus}
-      rate={rates.find((rate: TRate) => rate.id === _rate)}
-    />
+    <Layout messageSuccess={alertSuccess} messageError={alertError}>
+      <OrderEditView
+        order={order ? order : null}
+        handleCity={handleCity}
+        handlePoint={handlePoint}
+        handleOrderStatus={handleOrderStatus}
+        handleRate={handleRate}
+        startDate={startDate}
+        endDate={endDate}
+        setStartDate={setStartDate}
+        setEndDate={setEndDate}
+        filterPassedTime={filterPassedTime}
+        filterPassedEndTime={filterPassedEndTime}
+        selectedColor={selectedColor}
+        handleRadioButton={handleRadioButton}
+        isFullTank={isFullTank}
+        handleTank={handleTank}
+        isBabyChair={isBabyChair}
+        handleBabyChair={handleBabyChair}
+        isRightHandDrive={isRightHandDrive}
+        handleRightHandDrive={handleRightHandDrive}
+        goBack={goBack}
+        set_Price={set_Price}
+        cities={cities}
+        cityPoints={cityPoints}
+        rates={rates}
+        orderStatuses={orderStatus}
+        rate={rates.find((rate: TRate) => rate.id === _rate)}
+        isSubmitDisable={isSubmitDisable}
+        editOrder={editOrder}
+      />
+    </Layout>
   )
 }

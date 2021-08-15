@@ -28,6 +28,11 @@ export type TAddCarView = {
   handleImgUrl: (event: React.ChangeEvent<HTMLInputElement>) => void
   setProgressLineResult: (val: number) => void
   progressLineResult: number
+  disablePostBtn: boolean
+  addCarData: () => void
+  editCarData: () => void
+  removeCarData: () => void
+  isCreate: boolean
 }
 
 export type TEditCar = {
@@ -35,12 +40,16 @@ export type TEditCar = {
   priceMin: number
   name: string
   thumbnail: {
+    mimetype: string
     originalname: string
     path: string
+    size: number
   }
   description: string
   categoryId: {
+    description: string
     id: string
+    name: string
   }
   colors: string[]
 }

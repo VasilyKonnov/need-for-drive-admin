@@ -1,8 +1,7 @@
-import queryString from 'query-string'
 import { routes } from '../../constans/constans'
+import { TEditCar } from '../../pages/AddCar/AddCarTypes'
 import { crudAxios } from '../../serviсes/axios'
-import { TCar } from '../../store/cars'
-import { TOrder } from '../../store/orders'
+import { TEditOrder } from '../../store/orders'
 
 const crud = {
   async getOrder(id: string) {
@@ -14,7 +13,7 @@ const crud = {
     const response = await crudAxios.get(`${routes.ORDER}`)
     return response.data.data
   },
-  async putOrder(id: string, data: TOrder) {
+  async putOrder(id: string, data: TEditOrder) {
     return crudAxios.put(`${routes.ORDER}/${id}`, data)
   },
   async getCities() {
@@ -70,17 +69,16 @@ const crud = {
     return crudAxios.delete(`${routes.RATETYPE}/${id}`)
   },
   async getCar(id: string) {
-    const response = await crudAxios.get(`${routes.CAR}/${id}`)
-    return response.data.data
+    return await crudAxios.get(`${routes.CAR}/${id}`)
   },
   async getCars() {
     const response = await crudAxios.get(`${routes.CAR}`)
     return response.data.data
   },
-  postCars(car: TCar) {
+  postCars(car: TEditCar) {
     return crudAxios.post(`${routes.CAR}`, car)
   },
-  putCars(id: string, car: TCar) {
+  putCars(id: string, car: TEditCar) {
     return crudAxios.put(`${routes.CAR}/${id}`, car)
   },
   deleteCars(id: string) {

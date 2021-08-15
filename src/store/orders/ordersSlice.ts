@@ -16,6 +16,10 @@ const ordersSlice = createSlice({
       state.data = payload
       state.fetchingState = FetchingStateTypes.success
     },
+    removeOrders: (state) => {
+      state.data = []
+      state.fetchingState = FetchingStateTypes.none
+    },
     fetchOrders: (state) => {
       state.fetchingState = FetchingStateTypes.loading
     },
@@ -26,5 +30,10 @@ const ordersSlice = createSlice({
   },
 })
 
-export const { setOrders, fetchOrders, fetchErrorOrders } = ordersSlice.actions
+export const {
+  setOrders,
+  fetchOrders,
+  fetchErrorOrders,
+  removeOrders,
+} = ordersSlice.actions
 export const ordersReducer = ordersSlice.reducer

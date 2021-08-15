@@ -47,6 +47,8 @@ export const OrderEditView: React.FC<TOrderEditView> = ({
   rates,
   orderStatuses,
   rate,
+  isSubmitDisable,
+  editOrder,
 }) => {
   const orderId = order ? order.id : ''
   const orderCity = order ? order.cityId : { name: '', id: '' }
@@ -58,7 +60,7 @@ export const OrderEditView: React.FC<TOrderEditView> = ({
   let _endDate = endDate ? new Date(endDate) : undefined
 
   return (
-    <Layout>
+    <>
       <h1 className="admin-page-title">Редактировать заказ</h1>
       {order ? (
         <div className="content-wrap">
@@ -255,7 +257,11 @@ export const OrderEditView: React.FC<TOrderEditView> = ({
             </Grid>
           </div>
           <div className="content-wrap--footer edit-order-footer">
-            <ButtonPrimary className="edit-order-footer--btn-primary">
+            <ButtonPrimary
+              disabled={isSubmitDisable}
+              className="edit-order-footer--btn-primary"
+              onClick={editOrder}
+            >
               Применить
             </ButtonPrimary>
             <ButtonSecondary
@@ -269,6 +275,6 @@ export const OrderEditView: React.FC<TOrderEditView> = ({
       ) : (
         <Spinner />
       )}
-    </Layout>
+    </>
   )
 }

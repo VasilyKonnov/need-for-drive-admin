@@ -1,5 +1,7 @@
 export type TLayout = {
   children?: any
+  messageSuccess?: string
+  messageError?: string
 }
 
 export type TLayoutView = {
@@ -11,4 +13,6 @@ export type TLayoutView = {
   anchorMenu?: Element | ((element: Element) => Element) | null | undefined
   logOut: () => void
   children?: any
+  messageSuccess: string
+  messageError: string
 }

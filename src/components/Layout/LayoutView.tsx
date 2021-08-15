@@ -14,9 +14,10 @@ import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown'
 import NotificationsIcon from '@material-ui/icons/Notifications'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import MenuIcon from '@material-ui/icons/Menu'
-import { Menu } from '../'
+import { Alert, Menu } from '../'
 import styles from './Layout.module.scss'
 import { TLayoutView } from './LayoutTypes'
+import { AlertError } from '../AlertError'
 
 export const LayoutView: React.FC<TLayoutView> = ({
   id,
@@ -27,6 +28,8 @@ export const LayoutView: React.FC<TLayoutView> = ({
   anchorMenu,
   logOut,
   children,
+  messageSuccess,
+  messageError,
 }) => {
   return (
     <>
@@ -106,7 +109,11 @@ export const LayoutView: React.FC<TLayoutView> = ({
               </div>
             </div>
           </header>
-          <div className={styles.content}>{children}</div>
+          <div className={styles.content}>
+            <Alert message={messageSuccess} />
+            <AlertError message={messageError} />
+            {children}
+          </div>
           <footer>
             <Link className={styles.footerLink} to="/">
               Главная страница

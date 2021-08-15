@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useHistory, useParams } from 'react-router-dom'
+import { useHistory, useLocation, useParams } from 'react-router-dom'
 import { AddCarView } from './AddCarView'
 import crud from '../../utils/api/crud'
 import { FetchingStateTypes } from '../../store'
@@ -9,10 +9,14 @@ import { carCategoryAction } from '../../store/carCategory/carCategoryAction'
 import { TCarCategory } from '../../store/carCategory'
 import { TCar } from '../../store/cars'
 import { TEditCar } from './AddCarTypes'
+import { AlertError, Layout, Spinner } from '../../components'
+import stabImg from '../../assets/image/placeholder.png'
+import { carsAction } from '../../store/cars'
 
 export const AddCar: React.FC = () => {
   const paramId: { id: string } = useParams()
   const history = useHistory()
+  let location = useLocation()
   const dispatch = useDispatch()
 
   const {
@@ -25,6 +29,7 @@ export const AddCar: React.FC = () => {
   const [selectCarCategory, setSelectCarCategory] = useState<
     string | undefined
   >('')
+
   const [carName, setCarName] = useState('')
   const [carNumber, setCarNumber] = useState('')
   const [_description, set_Description] = useState('')
@@ -37,8 +42,27 @@ export const AddCar: React.FC = () => {
   const [imgUrl, setImgUrl] = useState<string>('')
   const [progressLineResult, setProgressLineResult] = useState(0)
   const [stateImgFile, setStateImgFile] = useState<any>({})
+  const [carCategory, setCarCategory] = useState<TCarCategory | null>(null)
   const [editCar, setEditCar] = useState<TEditCar | null>(null)
+  const [disablePostBtn, setDisablePostBtn] = useState(true)
+  const [isLoading, setIsLoading] = useState(true)
+  const [MessageError, setMessageError] = useState(false)
+  const [alertSuccess, setAlertSuccess] = useState('')
+  const [alertError, setAlertError] = useState('')
+
   const goBack = () => history.goBack()
+
+  const showAlertSuccess = (message: string) => {
+    if (message) {
+      setAlertSuccess(message)
+      setTimeout(() => setAlertSuccess(''), 3000)
+    }
+  }
+
+  const showAlertError = (message: string) => {
+    setAlertError(message)
+    setTimeout(() => setAlertError(''), 3000)
+  }
 
   const handleCarCategory = (event: React.ChangeEvent<{ value: unknown }>) => {
     setSelectCarCategory(event.target.value as string)
@@ -59,19 +83,20 @@ export const AddCar: React.FC = () => {
     set_Color(e.target.value)
   const handleOriginalname = (e: React.ChangeEvent<HTMLInputElement>) =>
     set_Originalname(e.target.value)
-
   const handleImgUrl = (e: React.ChangeEvent<HTMLInputElement>) => {
     setImgUrl(e.target.value)
     e.preventDefault()
     if (e.target.files !== null) {
       let reader = new FileReader()
       let file = e.target.files[0]
+
       reader.onloadend = () => {
         setStateImgFile({
           file: file,
           imagePreviewUrl: reader.result,
         })
       }
+
       reader.readAsDataURL(file)
     }
   }
@@ -82,7 +107,6 @@ export const AddCar: React.FC = () => {
       set_Color('')
     }
   }
-
   const removeColor = (id: number) => {
     let colors = _colors
     if (id > -1) {
@@ -90,12 +114,32 @@ export const AddCar: React.FC = () => {
     }
     set_Colors([...colors])
   }
+  useEffect(() => {
+    if (location.pathname === '/create-car') {
+      setCar(null)
+    }
+  }, [location])
 
   useEffect(() => {
     if (paramId.id) {
-      crud.getCar(paramId.id).then((data) => {
-        setCar(data)
-      })
+      crud
+        .getCar(paramId.id)
+        .then((response) => {
+          setIsLoading(true)
+          if (response.status < 400) {
+            setCar(response.data.data)
+            setIsLoading(false)
+          } else {
+            setIsLoading(false)
+            setMessageError(true)
+          }
+        })
+        .catch((e) => {
+          setIsLoading(false)
+          setMessageError(true)
+        })
+    } else {
+      setIsLoading(false)
     }
   }, [paramId.id])
 
@@ -123,18 +167,35 @@ export const AddCar: React.FC = () => {
       set_Colors(car.colors)
       set_Originalname(car.thumbnail.originalname)
       setImgUrl(car.thumbnail.path)
-      console.log('car -', car)
+    } else {
+      setSelectCarCategory(undefined)
+      setCarName('')
+      setCarNumber('')
+      set_Description('')
+      set_PriceMax(0)
+      set_PriceMin(0)
+      set_Tank(0)
+      set_Colors([])
+      set_Originalname('')
+      setImgUrl(stabImg)
     }
   }, [car])
 
   useEffect(() => {
     if (stateImgFile) {
-      set_Originalname(
-        stateImgFile.file ? stateImgFile.file.name : 'Название не указано',
-      )
+      set_Originalname(stateImgFile.file ? stateImgFile.file.name : '')
       setImgUrl(stateImgFile.imagePreviewUrl)
     }
   }, [stateImgFile])
+
+  useEffect(() => {
+    if (selectCarCategory && _carCategories) {
+      let category = _carCategories.find(
+        (category) => category.id === selectCarCategory,
+      )
+      setCarCategory(category ? category : null)
+    }
+  }, [selectCarCategory, _carCategories])
 
   useEffect(() => {
     if (
@@ -145,26 +206,34 @@ export const AddCar: React.FC = () => {
       _priceMax &&
       _priceMin &&
       _tank &&
-      _colors &&
-      _color &&
+      _colors.length > 0 &&
       _originalname &&
-      imgUrl
+      imgUrl &&
+      carCategory &&
+      stateImgFile
     ) {
       const _editCar = {
         priceMax: _priceMax,
         priceMin: _priceMin,
         name: carName,
         thumbnail: {
-          originalname: _originalname,
+          mimetype: stateImgFile.file ? stateImgFile.file.type : '',
+          originalname: _originalname ? _originalname : '',
           path: imgUrl,
+          size: stateImgFile.file ? stateImgFile.file.size : '',
         },
         description: _description,
         categoryId: {
-          id: selectCarCategory,
+          id: carCategory.id,
+          name: carCategory.name,
+          description: carCategory.description,
         },
         colors: _colors,
       }
+      setDisablePostBtn(false)
       setEditCar(_editCar)
+    } else {
+      setDisablePostBtn(true)
     }
   }, [
     selectCarCategory,
@@ -178,37 +247,125 @@ export const AddCar: React.FC = () => {
     carName,
     carNumber,
     imgUrl,
+    carCategory,
+    stateImgFile,
   ])
 
+  const addCarData = () => {
+    if (editCar) {
+      crud
+        .postCars(editCar)
+        .then((response) => {
+          setIsLoading(true)
+          if (response.status < 400) {
+            setIsLoading(false)
+            history.push('/list-cars')
+          } else {
+            setMessageError(true)
+            setIsLoading(false)
+          }
+        })
+        .catch((e) => {
+          setIsLoading(false)
+          return (
+            <AlertError message={'Что-то прошло не так, попробуйте ещё раз!'} />
+          )
+        })
+    }
+  }
+  const editCarData = () => {
+    if (editCar) {
+      crud
+        .putCars(paramId.id, editCar)
+        .then((response) => {
+          console.log('response - ', response.status)
+          if (response.status < 400) {
+            showAlertSuccess('Данные успешно измененны!')
+            dispatch(carsAction.remove())
+          }
+        })
+        .catch((e) => {
+          setIsLoading(false)
+          return showAlertError('Что-то прошло не так, попробуйте ещё раз!')
+        })
+    }
+  }
+  const removeCarData = () => {
+    crud
+      .deleteCars(paramId.id)
+      .then((response) => {
+        setIsLoading(true)
+        if (response.status < 400) {
+          setIsLoading(false)
+          dispatch(carsAction.remove())
+          history.push('/list-cars')
+        } else {
+          setMessageError(true)
+          setIsLoading(false)
+        }
+      })
+      .catch((e) => {
+        setIsLoading(false)
+        return (
+          <AlertError message={'Что-то прошло не так, попробуйте ещё раз!'} />
+        )
+      })
+  }
+
+  if (isLoading && !MessageError) {
+    return (
+      <Layout>
+        <Spinner />
+      </Layout>
+    )
+  }
+
+  if (!isLoading && MessageError) {
+    return (
+      <Layout>
+        <h3 style={{ textAlign: 'center' }}>
+          Машины с id - {paramId.id} нет в списке!
+        </h3>
+      </Layout>
+    )
+  }
+
   return (
-    <AddCarView
-      handleCarCategory={handleCarCategory}
-      selectCarCategory={selectCarCategory ? selectCarCategory : ''}
-      carCategories={_carCategories}
-      goBack={goBack}
-      carName={carName}
-      carNumber={carNumber}
-      description={_description}
-      priceMax={_priceMax}
-      priceMin={_priceMin}
-      tank={_tank}
-      colors={_colors}
-      color={_color}
-      handlerCarName={handlerCarName}
-      handlerCarNumber={handlerCarNumber}
-      handlerDescription={handlerDescription}
-      handlerMaxPrice={handlerMaxPrice}
-      handlerMinPrice={handlerMinPrice}
-      handlerTank={handlerTank}
-      handleColor={handleColor}
-      addColor={addColor}
-      removeColor={removeColor}
-      originalname={_originalname}
-      handleOriginalname={handleOriginalname}
-      imgCarUrl={imgUrl}
-      handleImgUrl={handleImgUrl}
-      setProgressLineResult={setProgressLineResult}
-      progressLineResult={progressLineResult}
-    />
+    <Layout messageSuccess={alertSuccess} messageError={alertError}>
+      <AddCarView
+        handleCarCategory={handleCarCategory}
+        selectCarCategory={selectCarCategory ? selectCarCategory : ''}
+        carCategories={_carCategories}
+        goBack={goBack}
+        carName={carName}
+        carNumber={carNumber}
+        description={_description}
+        priceMax={_priceMax}
+        priceMin={_priceMin}
+        tank={_tank}
+        colors={_colors}
+        color={_color}
+        handlerCarName={handlerCarName}
+        handlerCarNumber={handlerCarNumber}
+        handlerDescription={handlerDescription}
+        handlerMaxPrice={handlerMaxPrice}
+        handlerMinPrice={handlerMinPrice}
+        handlerTank={handlerTank}
+        handleColor={handleColor}
+        addColor={addColor}
+        removeColor={removeColor}
+        originalname={_originalname}
+        handleOriginalname={handleOriginalname}
+        imgCarUrl={imgUrl}
+        handleImgUrl={handleImgUrl}
+        setProgressLineResult={setProgressLineResult}
+        progressLineResult={progressLineResult}
+        disablePostBtn={disablePostBtn}
+        addCarData={addCarData}
+        editCarData={editCarData}
+        removeCarData={removeCarData}
+        isCreate={location && location.pathname === '/create-car'}
+      />
+    </Layout>
   )
 }

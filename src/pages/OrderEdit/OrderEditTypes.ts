@@ -31,4 +31,6 @@ export type TOrderEditView = {
   rates: TRate[]
   orderStatuses: TOrderStatus[]
   rate: TRate | undefined
+  isSubmitDisable: boolean
+  editOrder: () => void
 }

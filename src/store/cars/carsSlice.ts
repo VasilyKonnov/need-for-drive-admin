@@ -16,6 +16,10 @@ const carsSlice = createSlice({
       state.data = payload
       state.fetchingState = FetchingStateTypes.success
     },
+    removeCars: (state) => {
+      state.data = []
+      state.fetchingState = FetchingStateTypes.none
+    },
     fetchCars: (state) => {
       state.fetchingState = FetchingStateTypes.loading
     },
@@ -26,5 +30,10 @@ const carsSlice = createSlice({
   },
 })
 
-export const { setCars, fetchCars, fetchErrorCars } = carsSlice.actions
+export const {
+  setCars,
+  fetchCars,
+  fetchErrorCars,
+  removeCars,
+} = carsSlice.actions
 export const carsReducer = carsSlice.reducer

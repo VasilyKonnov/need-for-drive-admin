@@ -2,7 +2,6 @@ import {
   ButtonDefault,
   ButtonPrimary,
   InputVsLabel,
-  Layout,
   ProgressLine,
 } from '../../components'
 import stabImg from '../../assets/image/placeholder.png'
@@ -14,7 +13,6 @@ import { TCarCategory } from '../../store/carCategory'
 import { MenuItem } from '@material-ui/core'
 import './style.scss'
 import classNames from 'classnames'
-import { useEffect } from 'react'
 import { imgUrl } from '../../constans/constans'
 
 export const AddCarView: React.FC<TAddCarView> = ({
@@ -45,6 +43,11 @@ export const AddCarView: React.FC<TAddCarView> = ({
   handleImgUrl,
   setProgressLineResult,
   progressLineResult,
+  disablePostBtn,
+  addCarData,
+  editCarData,
+  removeCarData,
+  isCreate,
 }) => {
   const classSelect = classNames(styles.select, 'add-car-select')
 
@@ -62,7 +65,7 @@ export const AddCarView: React.FC<TAddCarView> = ({
       : imgUrl + imgCarUrl
 
   return (
-    <Layout>
+    <>
       <h1 className="admin-page-title">Карточка автомобиля</h1>
       <div className={styles.container}>
         <div className={styles.carRow}>
@@ -82,13 +85,7 @@ export const AddCarView: React.FC<TAddCarView> = ({
             />
             <label htmlFor="car-img">
               Обзор
-              <input
-                onChange={handleImgUrl}
-                // value={imgUrl}
-                id="car-img"
-                type="file"
-                hidden
-              />
+              <input onChange={handleImgUrl} id="car-img" type="file" hidden />
             </label>
           </form>
 
@@ -106,7 +103,11 @@ export const AddCarView: React.FC<TAddCarView> = ({
               priceMin={priceMin > 0}
               tank={tank > 0}
               colors={colors.length > 0}
-              imgCarUrl={typeof imgCarUrl === 'string' && imgCarUrl.length > 0}
+              imgCarUrl={
+                typeof imgCarUrl === 'string' &&
+                imgCarUrl.length > 0 &&
+                imgCarUrl !== stabImg
+              }
               originalname={originalname.length > 0}
             />
           </div>
@@ -218,19 +219,28 @@ export const AddCarView: React.FC<TAddCarView> = ({
           </div>
           <div className={styles.buttonWrap}>
             <div className={styles.leftCol}>
-              <ButtonPrimary className={styles.btnPrimary}>
+              <ButtonPrimary
+                disabled={disablePostBtn}
+                className={styles.btnPrimary}
+                onClick={isCreate ? addCarData : editCarData}
+              >
                 Сохранить
               </ButtonPrimary>
               <ButtonDefault onClick={goBack} className={styles.btnDefault}>
                 Отменить
               </ButtonDefault>
             </div>
-            <ButtonSecondary className={styles.btnSecondary}>
-              Удалить
-            </ButtonSecondary>
+            {!isCreate ? (
+              <ButtonSecondary
+                onClick={removeCarData}
+                className={styles.btnSecondary}
+              >
+                Удалить
+              </ButtonSecondary>
+            ) : null}
           </div>
         </div>
       </div>
-    </Layout>
+    </>
   )
 }

@@ -9,6 +9,7 @@ import { LayoutView } from './LayoutView'
 import { useHistory } from 'react-router-dom'
 import { userAction } from '../../store/user/userAction'
 import { useDispatch } from 'react-redux'
+import { TLayout } from './LayoutTypes'
 
 const useStyles = makeStyles({
   searchBtn: {
@@ -22,7 +23,11 @@ const useStyles = makeStyles({
   },
 })
 
-export const Layout: React.FC = ({ children }) => {
+export const Layout: React.FC<TLayout> = ({
+  children,
+  messageError,
+  messageSuccess,
+}) => {
   const classes = useStyles()
   const history = useHistory()
   const dispatch = useDispatch()
@@ -63,6 +68,10 @@ export const Layout: React.FC = ({ children }) => {
       anchorMenu={anchorMenu}
       logOut={logOut}
       children={children}
+      messageSuccess={
+        messageSuccess && messageSuccess.length > 0 ? messageSuccess : ''
+      }
+      messageError={messageError && messageError.length > 0 ? messageError : ''}
     />
   )
 }
