@@ -111,7 +111,6 @@ export const OrderEdit = () => {
     setAlertError(message)
     setTimeout(() => setAlertError(''), 3000)
   }
-
   const filterPassedTime = (time: any) => {
     return time
   }
@@ -199,14 +198,16 @@ export const OrderEdit = () => {
 
   const editOrder = () => {
     if (orderEdit) {
-      crud.putOrder(paramId.id, orderEdit).then((response) => {
-        if (response.status < 400) {
+      crud
+        .putOrder(paramId.id, orderEdit)
+        .then((response) => {
           dispatch(ordersAction.remove())
           handleAlertSuccess('Заказ изменён успешно!')
-        } else {
+        })
+        .catch((e) => {
+          console.error(e)
           handleAlertError('Что-то пошло не так, попробуйте ещё раз!')
-        }
-      })
+        })
     }
   }
 

@@ -85,7 +85,13 @@ export const AddCarView: React.FC<TAddCarView> = ({
             />
             <label htmlFor="car-img">
               Обзор
-              <input onChange={handleImgUrl} id="car-img" type="file" hidden />
+              <input
+                onChange={handleImgUrl}
+                id="car-img"
+                accept="image/x-png,image/gif,image/jpeg"
+                type="file"
+                hidden
+              />
             </label>
           </form>
 
@@ -96,9 +102,9 @@ export const AddCarView: React.FC<TAddCarView> = ({
             </p>
             <ProgressLine
               setProgressLineResult={setProgressLineResult}
-              carName={carName.length > 0}
-              carNumber={carNumber.length > 0}
-              description={description.length > 0}
+              carName={Boolean(carName)}
+              carNumber={Boolean(carNumber)}
+              description={Boolean(description)}
               priceMax={priceMax > 0}
               priceMin={priceMin > 0}
               tank={tank > 0}

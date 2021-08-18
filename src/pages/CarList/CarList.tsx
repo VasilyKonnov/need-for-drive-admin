@@ -11,6 +11,7 @@ import { TCar } from '../../store/cars'
 import { perPage, routes } from '../../constans/constans'
 import { carCategorySelector } from '../../store/carCategory/carCategorySelector'
 import { carCategoryAction } from '../../store/carCategory/carCategoryAction'
+import { ErrorPage } from './../ErrorPage/ErrorPage'
 
 export const CarList: React.FC = () => {
   const history = useHistory()
@@ -89,6 +90,7 @@ export const CarList: React.FC = () => {
   return (
     <Layout>
       {fetchingStateCars === FetchingStateTypes.loading ? <Spinner /> : null}
+      {fetchingStateCars === FetchingStateTypes.failed ? <ErrorPage /> : null}
       {fetchingStateCars === FetchingStateTypes.success ? (
         <CarListView
           amountPages={amountPages}

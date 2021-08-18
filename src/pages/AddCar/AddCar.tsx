@@ -67,22 +67,34 @@ export const AddCar: React.FC = () => {
   const handleCarCategory = (event: React.ChangeEvent<{ value: unknown }>) => {
     setSelectCarCategory(event.target.value as string)
   }
+
   const handlerCarName = (e: React.ChangeEvent<HTMLInputElement>) =>
     setCarName(e.target.value)
+
   const handlerCarNumber = (e: React.ChangeEvent<HTMLInputElement>) =>
     setCarNumber(e.target.value)
-  const handlerDescription = (e: React.ChangeEvent<HTMLTextAreaElement>) =>
+
+  const handlerDescription = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     set_Description(e.target.value)
-  const handlerMaxPrice = (e: React.ChangeEvent<HTMLInputElement>) =>
-    set_PriceMax(+e.target.value.replace(/\D/g, '').substr(0, 9))
-  const handlerMinPrice = (e: React.ChangeEvent<HTMLInputElement>) =>
+  }
+
+  const handlerMinPrice = (e: React.ChangeEvent<HTMLInputElement>) => {
     set_PriceMin(+e.target.value.replace(/\D/g, '').substr(0, 9))
+  }
+
+  const handlerMaxPrice = (e: React.ChangeEvent<HTMLInputElement>) => {
+    set_PriceMax(+e.target.value.replace(/\D/g, '').substr(0, 9))
+  }
+
   const handlerTank = (e: React.ChangeEvent<HTMLInputElement>) =>
     set_Tank(+e.target.value.replace(/\D/g, '').substr(0, 3))
+
   const handleColor = (e: React.ChangeEvent<HTMLInputElement>) =>
     set_Color(e.target.value)
+
   const handleOriginalname = (e: React.ChangeEvent<HTMLInputElement>) =>
     set_Originalname(e.target.value)
+
   const handleImgUrl = (e: React.ChangeEvent<HTMLInputElement>) => {
     setImgUrl(e.target.value)
     e.preventDefault()
@@ -107,6 +119,7 @@ export const AddCar: React.FC = () => {
       set_Color('')
     }
   }
+
   const removeColor = (id: number) => {
     let colors = _colors
     if (id > -1) {
@@ -114,6 +127,19 @@ export const AddCar: React.FC = () => {
     }
     set_Colors([...colors])
   }
+
+  useEffect(() => {
+    if (_tank > 100) {
+      set_Tank(100)
+    }
+  }, [_tank])
+
+  useEffect(() => {
+    if (_priceMax > 0 && _priceMin > _priceMax) {
+      set_PriceMin(_priceMax)
+    }
+  }, [_priceMax, _priceMin])
+
   useEffect(() => {
     if (location.pathname === '/create-car') {
       setCar(null)
@@ -298,9 +324,6 @@ export const AddCar: React.FC = () => {
           setIsLoading(false)
           dispatch(carsAction.remove())
           history.push('/list-cars')
-        } else {
-          setMessageError(true)
-          setIsLoading(false)
         }
       })
       .catch((e) => {

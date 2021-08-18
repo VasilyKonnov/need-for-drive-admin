@@ -16,6 +16,7 @@ import { orderStatusAction } from '../../store/orderStatus/orderStatusAction'
 import { TOrder } from '../../store/orders'
 import { perPage, routes } from '../../constans/constans'
 import crud from '../../utils/api/crud'
+import { ErrorPage } from '../ErrorPage'
 
 export const Orders: React.FC = () => {
   const dispatch = useDispatch()
@@ -167,6 +168,7 @@ export const Orders: React.FC = () => {
   return (
     <Layout messageSuccess={alertSuccess} messageError={alertError}>
       {fetchingStateOrders === FetchingStateTypes.loading ? <Spinner /> : null}
+      {fetchingStateOrders === FetchingStateTypes.failed ? <ErrorPage /> : null}
       {fetchingStateOrders === FetchingStateTypes.success ? (
         <OrdersView
           amountPages={amountPages}

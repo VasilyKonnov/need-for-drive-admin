@@ -9,7 +9,7 @@ const crud = {
     return await response.data.data
   },
   async getOrders() {
-    // const response = await crudAxios.get(`${routes.ORDER}?limit=105`)
+    // const response = await crudAxios.get(`${routes.ORDER}?limit=75`)
     const response = await crudAxios.get(`${routes.ORDER}`)
     return response.data.data
   },
